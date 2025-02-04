@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -45,4 +48,38 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'seller_id');
+    }
+
+    /**
+     * Check if the user is an seller.
+     *
+     * @return bool
+     */
+    public function isSeller(): bool
+    {
+        return $this->role === 'seller'; // Assuming you have a 'role' column in your users table
+    }
+
+    public function isBuyer(): bool
+    {
+        return $this->role === 'buyer'; // Assuming you have a 'role' column in your users table
+    }
+
+    
+    public function canAccessPanel(Panel $panel): bool
+    {
+    return match ($panel->getId()) {
+        'admin' => $this->isSeller(), // or whatever checks you have
+        'buyer' => $this->isBuyer(), // or whatever checks you have
+        default => false,
+    };
+    }
+
+
+
+    
 }
