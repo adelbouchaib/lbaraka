@@ -26,6 +26,7 @@ class BuyerPanelProvider extends PanelProvider
             ->id('buyer')
             ->path('buyer')
             ->login()
+            ->registration()
             ->colors([
                 'primary' => Color::Amber,
             ])
