@@ -18,6 +18,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+use JaOcero\FilaChat\FilaChatPlugin;
+
 class BuyerPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -30,6 +32,7 @@ class BuyerPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->viteTheme('resources/css/filament/buyer/theme.css')
             ->discoverResources(in: app_path('Filament/Buyer/Resources'), for: 'App\\Filament\\Buyer\\Resources')
             ->discoverPages(in: app_path('Filament/Buyer/Pages'), for: 'App\\Filament\\Buyer\\Pages')
             ->pages([
@@ -56,6 +59,7 @@ class BuyerPanelProvider extends PanelProvider
               
             ])
             ->plugins([
+                FilaChatPlugin::make()
             ]);
     }
 }
