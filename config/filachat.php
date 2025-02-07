@@ -202,7 +202,7 @@ return [
     |
     | This option specifies the navigation label used in the sidebar.
     */
-    'navigation_label' => 'FilaChat',
+    'navigation_label' => 'Chat',
 
     /*
     |--------------------------------------------------------------------------

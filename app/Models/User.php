@@ -56,6 +56,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Product::class, 'seller_id');
     }
 
+    public function requests()
+    {
+        return $this->hasMany(Request::class, 'buyer_id');
+    }
+
     /**
      * Check if the user is an seller.
      *

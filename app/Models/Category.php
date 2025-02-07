@@ -13,4 +13,10 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
+    }
+
+
 }

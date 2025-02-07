@@ -20,7 +20,9 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Resources\Auth\Register;
 
 use JaOcero\FilaChat\FilaChatPlugin;
-
+use Filament\Facades\Filament;
+use Illuminate\Support\ServiceProvider;
+use App\Models\FilachatMessage;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -64,5 +66,27 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilaChatPlugin::make()
             ]);
+    }
+
+    public function boot()
+    {
+        Filament::serving(function () {
+            // Get unread message count or any dynamic data
+            $unreadCount = FilachatMessage::where(function($query) {
+                $query->where('receiverable_id', auth()->id())  // Check receiver
+                    ->whereNull('last_read_at');
+            })
+            ->orWhere(function($query) {
+                $query->where('senderable_id', auth()->id())  // Check sender
+                    ->whereNull('last_read_at');
+            })
+            ->count();
+        
+
+            // Dynamically modify the navigation label
+            config([
+                'filachat.navigation_label' => 'Chat (' . $unreadCount . ')',
+            ]);
+        });
     }
 }

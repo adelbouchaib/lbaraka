@@ -36,7 +36,10 @@ class Product extends Model
         return $this->belongsTo(User::class, 'seller_id');
     }
 
-
+    public function conversations()
+    {
+        return $this->belongsToMany(FilachatConversation::class, 'conversation_product');
+    }
 
     protected static function boot()
     {
