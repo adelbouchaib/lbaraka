@@ -5,9 +5,20 @@ namespace App\Livewire;
 use Livewire\Component;
 
 use App\Models\Product;  // Import the Product model
+use App\Models\Category;  // Import the Product model
+use Livewire\WithPagination;
+use Livewire\Attributes\Url;
+
 
 class ProductsPage extends Component
 {
+
+    use WithPagination;
+
+    #[Url]
+    public $selectedCategories = [];
+    public $searchTerm = '';
+
     public function mount()
     {
         // Check if the user is not authenticated
@@ -19,9 +30,19 @@ class ProductsPage extends Component
 
     public function render()
     {
-        $productQuery = Product::query()->where('is_active', 1);
+
+        $query = Product::where('is_active', '1');
+        if(!empty($this->selectedCategories)){
+            $query->whereIn('category_id', $this->selectedCategories);
+        }
+        if (!empty($this->searchTerm)) {
+            $query->where('name', 'like', '%' . $this->searchTerm . '%');
+        }
+
         return view('livewire.products-page', [
-            'products' => $productQuery->paginate(9),
+            'products' => $query->paginate(9),
+            'categories' => Category::all()
         ]);
+
     }
 }
