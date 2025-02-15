@@ -58,6 +58,10 @@ class BuyerPanelProvider extends PanelProvider
                 Authenticate::class,
               
             ])
+            ->renderHook( 
+                'panels::auth.login.form.after',
+                fn () => view('auth.socialite.google')
+            )
             ->plugins([
                 FilaChatPlugin::make()
             ]);

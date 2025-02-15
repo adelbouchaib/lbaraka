@@ -7,7 +7,12 @@ use App\Livewire\ProductDetailPage;
 use App\Livewire\ProductsPage;
 use App\Livewire\CategoriesPage;
 
-
+use App\Http\Controllers\SocialiteController;
+ 
+Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
+    ->name('socialite.redirect');
+Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])
+    ->name('socialite.callback');
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/products', ProductsPage::class)->name('products');
