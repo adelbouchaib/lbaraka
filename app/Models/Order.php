@@ -9,13 +9,34 @@ class Order extends Model
     protected $fillable = [
         'buyer_id',
         'seller_id',
-        'orderable_id',
-        'orderable_type',
+        'product_id',
+        'quantity',
+        'total_price',
+        'delivery_receipt',
         'status',
+        'approved'
     ];
 
-    public function orderable()
-    {
-        return $this->morphTo();
-    }
+    protected $casts = [
+        'delivery_receipt' => 'array',
+    ];
+
+     // Order belongs to a buyer (User)
+     public function buyer()
+     {
+         return $this->belongsTo(User::class, 'buyer_id');
+     }
+ 
+     // Order belongs to a seller (User)
+     public function seller()
+     {
+         return $this->belongsTo(User::class, 'seller_id');
+     }
+ 
+     // Order belongs to a product
+     public function product()
+     {
+         return $this->belongsTo(Product::class);
+     }
+   
 }

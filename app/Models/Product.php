@@ -15,11 +15,12 @@ class Product extends Model
         'name',
         'slug',
         'images',
+        'short_description',
         'description',
         'price',
-        'quantity',
+        'moq',
         'is_active',
-        'in_stock',
+        'is_approved'
     ];
 
     protected $casts = [
@@ -36,9 +37,19 @@ class Product extends Model
         return $this->belongsTo(User::class, 'seller_id');
     }
 
-    public function conversations()
+    public function inquiries()
     {
-        return $this->belongsToMany(FilachatConversation::class, 'conversation_product');
+        return $this->hasMany(Inquiry::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Favorite::class);
     }
 
     protected static function boot()

@@ -5,14 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\HomePage;
 use App\Livewire\ProductDetailPage;
 use App\Livewire\ProductsPage;
-use App\Livewire\RequestsPage;
+use App\Livewire\CategoriesPage;
 
 
-Route::get('/', HomePage::class);
-Route::get('/products', ProductsPage::class);
+
+Route::get('/', HomePage::class)->name('home');
+Route::get('/products', ProductsPage::class)->name('products');
 Route::get('/products/{product}', ProductDetailPage::class);
-Route::get('/requests', RequestsPage::class);
+Route::get('/categories', CategoriesPage::class)->name('categories');
 
+
+// Route::get('/rank', RankPage::class);
 
 // Route::post('/mark-as-deal', [DealsPage::class]);
 

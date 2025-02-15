@@ -15,9 +15,27 @@ class ProductsPage extends Component
 
     use WithPagination;
 
-    #[Url]
+    #[Url(as: 'search')]
     public $selectedCategories = [];
+    #[Url]
     public $searchTerm = '';
+
+    public function updatingSearchTerm()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedCategories()
+    {
+        $this->resetPage();
+    }
+
+    protected $listeners = ['searchUpdated']; // Listen for search input updates
+    public function searchUpdated($search)
+    {
+        $this->searchTerm = $search;
+        $this->resetPage();
+    }
 
     public function mount()
     {
@@ -26,6 +44,12 @@ class ProductsPage extends Component
             // Redirect to the buyer login page if the user is not authenticated
             return redirect('/buyer/login');
         }
+    }
+
+    public $perPage = 20; // Number of products per page
+    public function loadMore()
+    {
+        $this->perPage += 20; // Increase the number of products displayed
     }
 
     public function render()
@@ -40,7 +64,7 @@ class ProductsPage extends Component
         }
 
         return view('livewire.products-page', [
-            'products' => $query->paginate(9),
+            'products' => $query->paginate($this->perPage),
             'categories' => Category::all()
         ]);
 

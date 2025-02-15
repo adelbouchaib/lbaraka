@@ -23,6 +23,18 @@ use JaOcero\FilaChat\FilaChatPlugin;
 use Filament\Facades\Filament;
 use Illuminate\Support\ServiceProvider;
 use App\Models\FilachatMessage;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
+use App\Models\Order;
+use App\Filament\Pages\Dashboard;
+use Filament\Navigation\MenuItem;
+
+use App\Filament\Pages\Settings;
+use App\Filament\Pages\Ranking;
+
+use Filament\Navigation\NavigationItem;
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -41,12 +53,15 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                // Pages\Dashboard::class,
+                // Pages\Settings::class, // ✅ Add the settings page
+
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\AccountOverview::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -63,6 +78,17 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
                
             ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Ranking')
+                    ->url(fn (): string => Ranking::getUrl()) // ✅ Link to settings
+                    ->icon('heroicon-o-trophy'),
+                MenuItem::make()
+                    ->label('Settings')
+                    ->url(fn (): string => Settings::getUrl()) // ✅ Link to settings
+                    ->icon('heroicon-o-cog-6-tooth'),
+                
+            ])
             ->plugins([
                 FilaChatPlugin::make()
             ]);
@@ -70,23 +96,31 @@ class AdminPanelProvider extends PanelProvider
 
     public function boot()
     {
-        Filament::serving(function () {
-            // Get unread message count or any dynamic data
-            $unreadCount = FilachatMessage::where(function($query) {
-                $query->where('receiverable_id', auth()->id())  // Check receiver
-                    ->whereNull('last_read_at');
-            })
-            ->orWhere(function($query) {
-                $query->where('senderable_id', auth()->id())  // Check sender
-                    ->whereNull('last_read_at');
-            })
-            ->count();
-        
 
-            // Dynamically modify the navigation label
-            config([
-                'filachat.navigation_label' => 'Chat (' . $unreadCount . ')',
-            ]);
+        // GLOBAL_SEARCH_AFTER
+
+        Filament::serving(function () {
+            if (auth()->check()) {
+                $user = auth()->user();
+                if($user->role !== "seller"){
+                    FilamentView::registerRenderHook(
+                        PanelsRenderHook::GLOBAL_SEARCH_BEFORE ,
+                        function () {
+                           
+
+                            // Render the component with the data
+                            return Blade::renderComponent(
+                                new \App\View\Components\TopbarComponent()
+                            );
+                        }
+                    ); 
+                }
+               
+            }
         });
+
+            
+        
+       
     }
 }

@@ -14,4 +14,9 @@ class FilachatMessage extends Model
         'receiverable_id',
         'receiverable_type',
     ];
+
+    public function inquiries()
+    {
+        return $this->hasMany(Inquiry::class);
+    }
 }

@@ -20,9 +20,9 @@ return new class extends Migration
             $table->json('images')->nullable();
             $table->longText('description')->nullable();
             $table->decimal('price', 10, 2);
-            $table->decimal('quantity', 10, 2);
+            $table->decimal('moq', 10, 0);
             $table->boolean('is_active')->default(true);
-            $table->boolean('in_stock')->default(true);
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }
@@ -32,6 +32,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints(); // Disable foreign key checks
+
+        // Delete related records before dropping the table
         Schema::dropIfExists('products');
+    
+        Schema::enableForeignKeyConstraints(); // Re-enable foreign key checks    
     }
 };

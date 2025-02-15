@@ -20,13 +20,18 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Filters\SelectFilter;
 
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Forms\Components\RichEditor;
+
 
 
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
 
     public static function form(Form $form): Form
     {
@@ -44,7 +49,10 @@ class ProductResource extends Resource
                                 ->preload()
                                 ->relationship('category', 'name'),                        
 
-                            Forms\Components\MarkdownEditor::make('description')
+                                // Forms\Components\MarkdownEditor::make('description')
+                                // RichEditor::make('description')
+
+                            RichEditor::make('description')
                                 ->columnSpanFull(),
                     ])->columns(2),
 
@@ -66,19 +74,17 @@ class ProductResource extends Resource
                         ->numeric()
                         ->prefix('DZD'),
 
-                        Forms\Components\TextInput::make('quantity')
+                        Forms\Components\TextInput::make('moq')
                         ->required()
                         ->numeric(),
                     ]),
         
 
                     Section::make('Status')->schema([
-                        Forms\Components\Checkbox::make('is_active')
-                            ->required()
-                            ->default(true),
-                        Forms\Components\Checkbox::make('in_stock')
-                            ->required()
-                            ->default(true),
+                        Forms\Components\Toggle::make('is_active')
+                        ->label('Active') // Optional: Customize label
+                        ->required()
+                        ->default(true) // Default checked (true)
                     ]),
 
                 ])->columnSpan(1),
@@ -90,20 +96,28 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
                 Tables\Columns\ImageColumn::make('images')
                     ->getStateUsing(fn ($record) => $record->images[0] ?? null) // Get the first image
-                    ->circular(),
-                Tables\Columns\TextColumn::make('category.name')
-                    ->sortable(),
+                    ->size(80),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->formatStateUsing(fn ($state) => number_format($state, 2) . ' DA')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
-                Tables\Columns\IconColumn::make('in_stock')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('moq')
+                    ->sortable(),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Active') // Optional label
+                    ->sortable()
+                    ->onIcon('heroicon-o-check') // Custom icon when active
+                    ->offIcon('heroicon-o-x-circle'), // Custom icon when inactive
+                Tables\Columns\IconColumn::make('is_approved')
+                    ->label('Approved') // Optional label
+                    ->sortable()
+                    ->falseIcon('heroicon-o-clock')
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->color(fn ($state) => $state ? 'success' : 'warning')
+                    ->boolean(), // Custom icon when inactive
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -119,12 +133,15 @@ class ProductResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
+                ViewAction::make('view')
+                    // ->requiresConfirmation()
+                    ->url(fn (Product $record) => url("/products/{$record->slug}")) // Generates the correct URL
+                    ->openUrlInNewTab(), // Optional: Opens in a new tab
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
@@ -133,6 +150,11 @@ class ProductResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getNavigationSort(): int
+    {
+        return 0; // Lower number = higher priority
     }
 
     public static function getPages(): array

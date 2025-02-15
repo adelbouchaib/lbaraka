@@ -7,12 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class FilachatConversation extends Model
 {
     protected $fillable = ['senderable_id', 'senderable_type', 'receiverable_id', 'receiverable_type'];
-    public function products()
+ 
+    public function inquiries()
     {
-        return $this->belongsToMany(Product::class, 'conversation_product');
+        return $this->hasMany(Inquiry::class);
     }
-    public function requests()
-    {
-        return $this->belongsToMany(Request::class, 'conversation_request');
-    }
+
 }

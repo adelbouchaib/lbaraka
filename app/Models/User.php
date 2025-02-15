@@ -53,13 +53,34 @@ class User extends Authenticatable implements FilamentUser
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'seller_id');
+        return $this->hasMany(Product::class);
     }
 
-    public function requests()
+    public function buyerOrders()
     {
-        return $this->hasMany(Request::class, 'buyer_id');
+        return $this->hasMany(Order::class, 'buyer_id');
     }
+
+    public function sellerOrders()
+    {
+        return $this->hasMany(Order::class, 'seller_id');
+    }
+
+    public function buyerInquiries()
+    {
+        return $this->hasMany(Order::class, 'buyer_id');
+    }
+
+    public function sellerInquiries()
+    {
+        return $this->hasMany(Order::class, 'seller_id');
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
 
     /**
      * Check if the user is an seller.

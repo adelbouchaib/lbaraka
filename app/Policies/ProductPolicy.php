@@ -14,5 +14,11 @@ class ProductPolicy
         //
     }
 
+    public function delete(){
+        return false;
+    }
 
+    public function deleteAny(){
+        return false;
+    }
 }

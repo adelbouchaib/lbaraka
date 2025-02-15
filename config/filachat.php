@@ -211,7 +211,7 @@ return [
     |
     | This option specifies the user number of unread message badge in the sidebar.
     */
-    'navigation_display_unread_messages_count' => false,
+    'navigation_display_unread_messages_count' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -234,7 +234,7 @@ return [
     |
     */
 
-    'navigation_sort' => 1,
+    'navigation_sort' => 999,
 
     /*
     |--------------------------------------------------------------------------

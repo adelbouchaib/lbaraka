@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('buyer_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('seller_id')->constrained('users')->cascadeOnDelete();
-            
-             // Polymorphic relation: Can be either a product or a request
-            $table->morphs('orderable'); 
-
-            $table->string('status')->default('pending');
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
+            $table->integer('quantity')->default(0);
+            $table->integer('total_price')->default(0);
+            $table->string('status')->default('Pending');
+            $table->json('delivery_receipt')->nullable();
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }
