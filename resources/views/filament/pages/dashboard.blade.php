@@ -45,7 +45,7 @@
     </p>
 
     {{-- Badge with Icon --}}
-    <a href="{{ url('/admin/ranking') }}">
+    <a href="{{ url('/seller/ranking') }}">
     <span class="ml-2 flex items-center gap-1 px-3 py-1 text-xs font-semibold text-white rounded-full {{ $badge['color'] }}">
     <x-dynamic-component :component="$badge['icon']" class="w-4 h-4" />
     <span class="text-base font-bold">{{ explode('(', $badge['label'])[0] }}</span>  

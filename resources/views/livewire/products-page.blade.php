@@ -41,39 +41,79 @@
               </button>
           </div> -->
 
+          <div class="mr-0" x-data="{ open: false, search: '' }">
+    <!-- Button to Open Modal -->
+    <button @click="open = true" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto">
+    <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M6 12h12m-9 6h6" />
+    </svg>
+    Filters
+    <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
+    </svg>
+</button>
 
-          <div class="relative w-full sm:w-auto" x-data="{ open: false, search: '' }">
-              <!-- Dropdown Button -->
-              <button @click="open = !open" type="button" class="flex w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700">
-                  <span>Categories</span>
-                  <svg class="h-4 w-4 transition-transform duration-200" :class="{ 'rotate-180': open }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-              </button>
 
-              <!-- Dropdown List -->
-              <div x-show="open" @click.outside="open = false" class="absolute z-10 mt-2 w-full rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-600 dark:bg-gray-800">
-                  <!-- Search Input -->
-                  <div class="p-2">
-                      <input type="text" x-model="search" placeholder="Search categories..." class="w-full rounded-md border border-gray-300 px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:ring-gray-500">
-                  </div>
+    <!-- Modal -->
+    <div x-show="open" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div @click.away="open = false" class="w-full max-w-md rounded-lg bg-white shadow-lg dark:bg-gray-800">
+            
+            <!-- Modal Header -->
+            <div class="border-b px-4 py-3 dark:border-gray-600">
+                <h2 class="text-lg font-semibold text-gray-900">Filters</h2>
+            </div>
 
-                  <!-- Category List -->
-                  <ul class="max-h-60 overflow-y-auto p-2">
-                      @foreach($categories as $cat)
-                          <li wire:key="{{ $cat->id }}" class="mb-1 border" x-show="$el.textContent.toLowerCase().includes(search.toLowerCase())">
-                              <label for="{{ $cat->slug }}" class="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
-                                  <input type="checkbox" wire:model.live="selectedCategories" value="{{ $cat->id }}" id="{{ $cat->slug }}" class="border form-checkbox h-4 w-4 text-blue-600 dark:bg-gray-800">
-                                  <span class="text-sm text-gray-700 dark:text-gray-200">{{ $cat->name }}</span>
-                              </label>
-                          </li>
-                      @endforeach
-                  </ul>
-              </div>
-          </div>
+            <!-- Modal Content -->
+            <div class="p-4 space-y-6">
+                
+                <!-- Categories Section -->
+                <div>
+                    <h3 class="text-md font-medium text-gray-800 border-b pb-2">Categories</h3>
+
+                    <!-- Categories Grid -->
+                    <div class="grid grid-cols-2 gap-3 mt-3 max-h-40 overflow-y-auto p-2 border rounded-lg">
+                        @foreach($categories as $cat)
+                        <div wire:key="{{ $cat->id }}" x-show="$el.textContent.toLowerCase().includes(search.toLowerCase())">
+                            <label for="{{ $cat->slug }}" class="flex items-center space-x-2">
+                                <input type="checkbox" wire:model="selectedCategories" value="{{ $cat->id }}"
+                                    id="{{ $cat->slug }}" class="form-checkbox bg-gray-200 rounded h-4 w-4 text-blue-600">
+                                <span class="text-sm text-gray-700">{{ $cat->name }} ({{ $cat->products->count() }})</span>
+                            </label>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Advanced Filters Section -->
+                <div>
+                    <h3 class="text-md font-medium text-gray-800 border-b pb-2">Price Range</h3>
+                    
+                    <div class="flex space-x-3 mt-3">
+                        <input type="number" wire:model="selectedMinPrice" placeholder="Min"
+                            class="w-1/2 rounded-md border px-3 py-2 text-sm">
+                        <input type="number" wire:model="selectedMaxPrice" placeholder="Max"
+                            class="w-1/2 rounded-md border px-3 py-2 text-sm">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="border-t px-4 py-3 text-right">
+                
+                <button wire:click="showResults" @click="open = false"
+                    class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+                    Show Results
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
       
 
-          <button id="sortDropdownButton1" data-dropdown-toggle="dropdownSort1" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto">
+          <button id="sortDropdownButton1" data-dropdown-toggle="dropdownSort1" type="button" class="flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto">
             <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M7 4l3 3M7 4 4 7m9-3h6l-6 6h6m-6.5 10 3.5-7 3.5 7M14 18h4" />
             </svg>
@@ -86,13 +126,16 @@
           <div id="dropdownSort1" class="z-50 hidden w-40 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700" data-popper-placement="bottom">
             <ul class="p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400" aria-labelledby="sortDropdownButton">
               <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"> Newest </a>
+                <a href="#"  wire:click.prevent="setSortOption('Newest')" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"> Newest </a>
               </li>
               <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"> Increasing price </a>
+                <a href="#"  wire:click.prevent="setSortOption('Oldest')" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"> Oldest </a>
               </li>
               <li>
-                <a href="#" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"> Decreasing price </a>
+                <a href="#"  wire:click.prevent="setSortOption('Increasing price')" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"> Increasing price </a>
+              </li>
+              <li>
+                <a href="#"  wire:click.prevent="setSortOption('Decreasing price')" class="group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"> Decreasing price </a>
               </li>
             </ul>
           </div>
@@ -101,7 +144,7 @@
     </div>
 
 
-    <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="mb-4 grid gap-4 grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-5">
         @if($products->isEmpty())
         <div class="flex flex-col items-center justify-center text-center bg-gray-100 p-6 rounded-lg shadow-md">
             <svg class="w-16 h-16 text-gray-400 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -120,7 +163,7 @@
         </div>
         @else
           @foreach($products as $product)
-          <a href="{{ url('/products/' . $product->slug) }}" class="block rounded-lg border border-gray-200 bg-white p-3 sm:p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <a href="{{ url('/products/' . $product->slug) }}" class="block rounded-lg border border-gray-200 bg-white p-2 sm:p-3 shadow-sm dark:border-gray-700 dark:bg-gray-800">
               <div class="w-full aspect-square overflow-hidden rounded mb-2">
                   <img class="w-full h-full object-cover object-center" 
                       src="{{ asset('storage/' . $product->images[0]) }}" 
@@ -129,13 +172,12 @@
 
 
               <div>
-                  <p class="line-clamp-2 overflow-hidden text-ellipsis text-sm sm:text-base leading-tight text-gray-900 dark:text-white">
+                  <p class="font-arabic rtl line-clamp-2 font-light  overflow-hidden  text-base leading-tight text-gray-900 dark:text-white">
                     {{ $product->name }}</p>
-                  <div class="mt-2 flex items-center justify-between gap-4">
-                      <p class="text-lg sm:text-xl font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} da</p>
-                  </div>
-                  <p class="line-clamp-2 overflow-hidden text-ellipsis text-sm sm:text-base leading-tight text-gray-900 dark:text-white">
-                    Min. order: {{ $product->moq }} pieces</p>
+                  <p class="text-xl  sm:text-2xl  rtl mt-2  font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} دج</p>
+                  
+                  <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
+                    أقل كمية : {{ $product->moq }} قطعة</p>
                   <!-- <div class="mt-4 flex items-center justify-between gap-4">
                     <button type="button" 
                         class="w-full items-center rounded-lg bg-white px-5 py-1 sm:py-2.5 text-sm font-medium border border-gray-700 text-gray-700 

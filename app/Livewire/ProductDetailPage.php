@@ -18,35 +18,30 @@ class ProductDetailPage extends Component
     public $showModal = false;
     public $message = '';
     public $sellerId;
+    public $moq;
+    public $isFavorited;
+    public $productId;
+    public $products;
+    public $quantity;
 
 
     public function createRow($product_id, $seller_id)
     {
-        // $authenticatedBuyerId = auth()->id();
-        // $existingConversation = FilachatConversation::where(function($query) use($authenticatedBuyerId, $seller_id){
-        //     $query->where('senderable_id', $authenticatedBuyerId)
-        //         ->where('receiverable_id', $seller_id);
-        // })->orWhere(function($query) use($authenticatedBuyerId, $seller_id){
-        //     $query->where('senderable_id', $seller_id)
-        //         ->where('receiverable_id', $authenticatedBuyerId);
-        // })->first();
-
-        // if($existingConversation){
-        //     $product = Product::find($product_id);
-        //     $inquiry = Inquiry::create([
-        //         'filachat_conversation_id' => $existingConversation->id,
-        //         'product_id' => $product->id
-        //     ]);
-
-        //     return redirect()->to('buyer/filachat/' . $existingConversation->id);
-        // } 
-    
         $this->sellerId = $seller_id;
         $this->showModal = true;
     }
 
     public function createAndRedirect($product_id, $seller_id)
     {
+
+        // Validate input data
+        $validatedData = $this->validate([
+            'message' => 'required|string|min:5|max:500', // Adjust limits as needed
+        ], [
+            'message.required' => 'The message field is required.',
+            'message.min' => 'The message must be at least 5 characters.',
+            'message.max' => 'The message cannot exceed 500 characters.',
+        ]);
 
         $authenticatedBuyerId = auth()->id();
         $existingConversation = FilachatConversation::where(function($query) use($authenticatedBuyerId, $seller_id){
@@ -65,28 +60,35 @@ class ProductDetailPage extends Component
                 'receiverable_type' => 'App\Models\User'
             ]);
         }
+        $product = Product::find($product_id);
+
+        $messageQuantity = ''; // Initialize variable
+
+        if (!empty($this->quantity)) {
+            $messageQuantity = 'Quantity: ' . $this->quantity . "<br>";
+        }
 
         // Save the first message if provided
-        if (!empty($this->message)) {
-            $existingMessage = FilachatMessage::create([
-                'filachat_conversation_id' => $existingConversation->id,
-                'message' => $this->message,
-                'senderable_id' => auth()->id(),
-                'senderable_type' => 'App\Models\User',
-                'receiverable_id' => $this->sellerId,
-                'receiverable_type' => 'App\Models\User'
-            ]);
+        $customizedQuantity = ' Product: ' . $product->name . "<br>" . $messageQuantity . ' Message: ' . $this->message;
+        $existingMessage = FilachatMessage::create([
+            'filachat_conversation_id' => $existingConversation->id,
+            'message' => $customizedQuantity,
+            'senderable_id' => auth()->id(),
+            'senderable_type' => 'App\Models\User',
+            'receiverable_id' => $this->sellerId,
+            'receiverable_type' => 'App\Models\User'
+        ]);
 
-                $product = Product::find($product_id);
-                $inquiry = Inquiry::create([
-                    'buyer_id' => auth()->id(),
-                    'seller_id' => $this->sellerId,
-                    'filachat_conversation_id' => $existingConversation->id,
-                    'product_id' => $product->id,
-                    'message_id' => $existingMessage->id,
-                ]);
-            
-        }
+            $inquiry = Inquiry::create([
+                'buyer_id' => auth()->id(),
+                'seller_id' => $this->sellerId,
+                'filachat_conversation_id' => $existingConversation->id,
+                'product_id' => $product->id,
+                'message_id' => $existingMessage->id,
+                'quantity' => $this->quantity
+            ]);
+        
+        
 
         return redirect()->to('buyer/filachat/' . $existingConversation->id);    
     }
@@ -111,38 +113,32 @@ class ProductDetailPage extends Component
         }
     }
 
-    public $isFavorited;
-    public $productId;
-    public $products;
 
-    // Mount method to accept product slug from the route
+
     public function mount($product)
     {
-         // Check if the user is not authenticated
-         if (auth()->guest()) {
-            // Redirect to the buyer login page if the user is not authenticated
-            return redirect('/buyer/login');
+        if (auth()->guest()) {
+            return redirect('/login');
         }
-        // Fetch the product based on the slug
+
         $this->product = Product::where('slug', $product)->firstOrFail();
 
-        // Get products from the same category (excluding the current product)
         $this->products = Product::where('category_id', $this->product->category_id)
         ->where('id', '!=', $this->product->id)
         ->take(8)
         ->get();
 
-                $this->productId = $this->product->id;
-                $this->isFavorited = Auth::check() && Favorite::where('user_id', Auth::id())->where('product_id', $this->productId)->exists();
+        $this->productId = $this->product->id;
+        $this->isFavorited = Auth::check() && Favorite::where('user_id', Auth::id())->where('product_id', $this->productId)->exists();
 
-            }
+    }
 
 
     public function render()
     {
-        // Pass the product data to the view
         return view('livewire.product-detail-page', [
             'product' => $this->product,
+            'quantity' => $this->product->moq
         ]);
     }
 }

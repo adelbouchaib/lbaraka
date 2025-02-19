@@ -29,15 +29,20 @@ class InquiryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('seller')
+                    ->label("Supplier")
                     ->formatStateUsing(fn ($record) => $record?->seller?->name) // Display product name
                     ->disabled(), // Prevent user edits
                 Forms\Components\TextInput::make('product')
                     ->formatStateUsing(fn ($record) => $record?->product?->name) // Display product name
                     ->disabled(), // Prevent user edits
                
-                Forms\Components\Textarea::make('message')
-                    ->formatStateUsing(fn ($record) => $record?->message?->message) // Display product name
-                    ->disabled(), // Prevent user edits
+                    Forms\Components\Textarea::make('message')
+                    ->formatStateUsing(fn ($record) => 
+                        strip_tags(nl2br(preg_replace('/^.*?message:/i', '', $record?->message->message ?? '')))
+                    ) 
+                    ->disabled(),
+                
+                
                 
                 Forms\Components\TextInput::make('quantity')
                     ->required()
@@ -52,10 +57,11 @@ class InquiryResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('product.images')
                 ->getStateUsing(fn ($record) => $record->product->images[0] ?? null) // Get the first image
-                ->size(80),
+                ->size(100),
             Tables\Columns\TextColumn::make('product.name')
-                ->numeric()
-                ->sortable(),
+                ->label('Name')
+                ->extraAttributes(['class' => 'font-arabic'])
+                ->searchable(),
             Tables\Columns\TextColumn::make('quantity')
                 ->numeric()
                 ->sortable(),
@@ -79,14 +85,13 @@ class InquiryResource extends Resource
                 })
                 ->sortable(),
             Tables\Columns\TextColumn::make('seller.name')
+                ->label("Supplier")
                 ->sortable(),
             Tables\Columns\TextColumn::make('created_at')
-            ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->diffForHumans())
-            ->sortable(),
-            Tables\Columns\TextColumn::make('updated_at')
-                ->dateTime()
-                ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->diffForHumans())
+                ->label("Created")
+
+                ->sortable(),
 
                
                 ])
@@ -99,9 +104,9 @@ class InquiryResource extends Resource
                 Tables\Actions\Action::make('chat')
                 ->label('Chat') // Set the button label
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->url(fn (Inquiry $record) => url("/buyer/filachat/{$record->filachat_conversation_id}"))
+                ->url(fn (Inquiry $record) => url("/filachat/{$record->filachat_conversation_id}"))
                 ->openUrlInNewTab()
-                ->color('primary'),
+                ->color('secondary'),
                 ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

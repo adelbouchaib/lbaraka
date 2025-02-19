@@ -12,7 +12,7 @@ class Dashboard extends Page
 {
     protected ?string $heading = '';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-home';
 
     protected static string $view = 'filament.buyer.pages.dashboard';
 
@@ -22,10 +22,15 @@ class Dashboard extends Page
     public $allProducts;
 
     public $categoriesId = [
-        3,4,7
+        3,4,7,8,9,10
     ];
 
+    public $visibleCount = 6;
 
+    public function showMore()
+    {
+        $this->visibleCount += 6;
+    }
 
     public function mount(){
         $this->categories = Category::All();
@@ -34,11 +39,11 @@ class Dashboard extends Page
         foreach ($this->categoriesId as $categoryId) {
             $category = Category::find($categoryId); // Fetch category
             $this->topProducts[$category->name] = Product::where('category_id', $categoryId)
-                ->take(3)
+                ->take(2)
                 ->get();
         }
 
-        $this->newProducts = Product::latest()->take(4)->get();
+        $this->newProducts = Product::latest()->take(5)->get();
 
         $this->allProducts = Product::latest()->take(20)->get();
     }

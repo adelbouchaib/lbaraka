@@ -1,5 +1,5 @@
-@if (!request()->is('buyer/dashboard')) 
-<div class="max-w-md w-full px-2">
+@if (!request()->is('/dashboard')) 
+<div class="max-w-md w-full relative sm:absolute left-auto sm:left-20 px-2">
     <form action="{{ route('products') }}" method="GET">
         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
         <div class="relative">
@@ -14,18 +14,17 @@
                 name="searchTerm" 
                 id="default-search"
                 placeholder="Search products..." 
-                class="block w-full h-10 p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
+                class="block w-full h-10 p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500" 
             >
         </div>
     </form>
 </div>
 @endif
 
-<a href="/buyer/filachat" >
-<button class="py-4 px-1 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out sm:hidden" aria-label="Messages">
-    <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8-1.78 0-3.438-.464-4.829-1.268L3 20l1.336-4.829C3.464 13.438 3 11.78 3 10c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-    </svg>
+<a href="/filachat" >
+<button class="py-4 px-0 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out sm:hidden" aria-label="Messages">
+<x-heroicon-o-chat-bubble-left-ellipsis class="h-7 w-7" />
+
 
     @if($unreadCount > 0)
         <span class="absolute inset-0 object-right-top -mr-6 mt-1">

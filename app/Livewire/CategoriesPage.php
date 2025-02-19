@@ -46,7 +46,7 @@ class CategoriesPage extends Component
         // Check if the user is not authenticated
         if (auth()->guest()) {
             // Redirect to the buyer login page if the user is not authenticated
-            return redirect('/buyer/login');
+            return redirect('/login');
         }
     }
 

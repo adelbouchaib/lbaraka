@@ -25,12 +25,16 @@ class SocialiteController extends Controller
         if ($user) {
             $user->update([$provider . '_id' => $response->getId()]);
         } else {
-            $user = User::create([
-                $provider . '_id' => $response->getId(),
-                'name'            => $response->getName(),
-                'email'           => $response->getEmail(),
-                'password'        => '',
+            session([
+                'social_user' => [
+                    'provider' => $provider,
+                    'id'       => $response->getId(),
+                    'name'     => $response->getName(),
+                    'email'    => $response->getEmail(),
+                ]
             ]);
+    
+            return redirect()->route('complete.profile');
         }
  
         auth()->login($user);

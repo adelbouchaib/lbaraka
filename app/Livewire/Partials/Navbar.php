@@ -5,21 +5,31 @@ namespace App\Livewire\Partials;
 use Livewire\Component;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 use App\Models\FilachatMessage;
 
 class Navbar extends Component
 {
-    public function goToHome(){
-        if(auth()->user()->role == 'buyer'){
-            return redirect('/buyer');
-        }else{
-            return redirect('/admin');
-        }
-    }
+    
     public function goToLogin()
     {
-        return redirect('/buyer/login'); // Change the URL as needed
+        $user = Auth::user(); // Get the authenticated user
+
+        if (!$user) {
+            return redirect('/login'); // Redirect to login if not logged in
+        }
+    
+        // Check user role and redirect
+        if ($user->role == "seller") {
+            return redirect()->route('filament.seller.pages.dashboard');
+        } elseif ($user->role == "buyer") {
+            return redirect()->route('filament.buyer.pages.dashboard');
+        }
+    
+        // Default fallback redirect
+        return redirect('/');
     }
 
     public function goToProducts()

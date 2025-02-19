@@ -10,8 +10,9 @@ use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use JaOcero\FilaChat\Traits\HasFilaChat;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasFilaChat;
@@ -24,6 +25,7 @@ class User extends Authenticatable implements FilamentUser
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'google_id', 
         'role',
@@ -102,12 +104,11 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
     return match ($panel->getId()) {
-        'admin' => $this->isSeller(), // or whatever checks you have
+        'seller' => $this->isSeller(), // or whatever checks you have
         'buyer' => $this->isBuyer(), // or whatever checks you have
         default => false,
     };
     }
-
 
 
     

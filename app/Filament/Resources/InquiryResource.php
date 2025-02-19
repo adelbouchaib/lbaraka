@@ -29,12 +29,15 @@ class InquiryResource extends Resource
                     ->formatStateUsing(fn ($record) => $record?->buyer?->name) // Display product name
                     ->disabled(), // Prevent user edits
                 Forms\Components\TextInput::make('product')
+                    ->extraAttributes(['class' => 'font-arabic'])
                     ->formatStateUsing(fn ($record) => $record?->product?->name) // Display product name
                     ->disabled(), // Prevent user edits
                
                 Forms\Components\Textarea::make('message')
-                    ->formatStateUsing(fn ($record) => $record?->message?->message) // Display product name
-                    ->disabled(), // Prevent user edits
+                    ->formatStateUsing(fn ($record) => 
+                        strip_tags(nl2br(preg_replace('/^.*?message:/i', '', $record?->message->message ?? '')))
+                    ) 
+                    ->disabled(),
                 
                 Forms\Components\TextInput::make('quantity')
                     ->required()
@@ -45,16 +48,6 @@ class InquiryResource extends Resource
 
     public static function table(Table $table): Table
     {
-    // @php
-    //     // Get the last message in the conversation
-    //     $lastMessage = \App\Models\FilachatMessage::where('filachat_conversation_id', $inquiry->conversation->id)
-    //         ->where('senderable_id', auth()->id())
-    //         ->latest('created_at')
-    //         ->first();        
-        
-    //     // Check if this message is the last one
-    //     $hasReply = $inquiry->message->id < optional($lastMessage)->id;
-    // @endphp
 
         return $table
             ->columns([
@@ -62,6 +55,7 @@ class InquiryResource extends Resource
                     ->getStateUsing(fn ($record) => $record->product->images[0] ?? null) // Get the first image
                     ->size(80),
                 Tables\Columns\TextColumn::make('product.name')
+                    ->extraAttributes(['class' => 'font-arabic'])
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
@@ -106,7 +100,7 @@ class InquiryResource extends Resource
                 Tables\Actions\Action::make('chat')
                 ->label('Chat') // Set the button label
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->url(fn (Inquiry $record) => url("/admin/filachat/{$record->filachat_conversation_id}"))
+                ->url(fn (Inquiry $record) => url("/seller/filachat/{$record->filachat_conversation_id}"))
                 ->openUrlInNewTab()
                 ->color('primary'),
             ])

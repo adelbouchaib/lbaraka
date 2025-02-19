@@ -179,4 +179,154 @@ class FavoriteResource extends Resource
 
         </button>
         @endif
+</div>
+
+    // $authenticatedBuyerId = auth()->id();
+        // $existingConversation = FilachatConversation::where(function($query) use($authenticatedBuyerId, $seller_id){
+        //     $query->where('senderable_id', $authenticatedBuyerId)
+        //         ->where('receiverable_id', $seller_id);
+        // })->orWhere(function($query) use($authenticatedBuyerId, $seller_id){
+        //     $query->where('senderable_id', $seller_id)
+        //         ->where('receiverable_id', $authenticatedBuyerId);
+        // })->first();
+
+        // if($existingConversation){
+        //     $product = Product::find($product_id);
+        //     $inquiry = Inquiry::create([
+        //         'filachat_conversation_id' => $existingConversation->id,
+        //         'product_id' => $product->id
+        //     ]);
+
+        //     return redirect()->to('buyer/filachat/' . $existingConversation->id);
+        // } 
+
+        <section  style="background: linear-gradient(to bottom, #FFFFFF,rgb(199, 224, 254));">
+
+        <!-- <a href="/filachat">
+            <button class="py-4 px-1 mx-1 ml-4 mr-2 sm:mr-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Messages">
+                <x-heroicon-o-chat-bubble-left-ellipsis class="h-7 w-7" />
+
+
+                @if($unreadCount > 0)
+                    <span class="absolute inset-0 object-right-top -mr-6 mt-1">
+                        <div class="inline-flex items-center px-1.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
+                            {{$unreadCount}}
+                        </div>
+                    </span>
+                @endif
+            </button>
+        </a> -->
+
+
+        @php $categoryNumber = 1; @endphp
+
+<div class="grid sm:grid-cols-3 gap-6 mb-4">
+    @foreach($topProducts as $category => $products)
+                            
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h2 class="text-lg font-semibold mb-3 text-center bg-gray-100 p-2 rounded">
+                <span class="mr-2 bg-yellow-500 text-white px-2 py-1 rounded-tr-md rounded-bl-md text-sm font-bold">
+                #{{ $categoryNumber }}
+                @php $categoryNumber++; @endphp
+                </span>
+                {{ $category }}
+            </h2>
+            
+            <div class="grid gap-4">
+                @foreach($products as $index => $product)
+                <div class="flex items-center gap-3">
+                    <div class="relative w-24 shrink-0">
+                        <img src="{{ asset('storage/' . $product->images[0]) }}" 
+                            class="w-24 h-24 object-cover rounded-lg" 
+                            alt="{{ $product->name }}">
+                    </div>
+                    <div class="w-full">
+                        <p class="text-base text-gray-600">{{ $product->name }}</p>
+                    </div>
+                </div>
+
+                @endforeach
+            </div>
+        </div>
+    @endforeach
+</div>
+
+
+<div>
+    <div class="flex gap-4 flex-row items-center mb-2">
+        <h1 class="text-2xl sm:text-3xl font-bold leading-6 text-gray-950 dark:text-white">
+            Categories
+        </h1>
     </div>
+    <div x-data="{
+        selected: @entangle('selectedCategories'),
+        startIndex: 0,
+        perPage: 4, // Desktop: Show 4 items per page
+        isDesktop: window.innerWidth >= 769,
+        mobileViewWidth: window.innerWidth < 769 ? 'calc(100% / 2.5)' : '25%', // Show 2.5 items on mobile
+        updateLivewire(id) {
+            this.selected = [id]; 
+            $wire.set('selectedCategories', this.selected);
+        },
+        next() {
+            if (this.isDesktop && this.startIndex + this.perPage < {{ count($categories) }}) {
+                this.startIndex += this.perPage;
+            }
+        },
+        prev() {
+            if (this.isDesktop && this.startIndex > 0) {
+                this.startIndex -= this.perPage;
+            }
+        },
+        updateScreenSize() {
+            this.isDesktop = window.innerWidth >= 769;
+            this.mobileViewWidth = this.isDesktop ? '25%' : 'calc(100% / 2.5)'; // Adjust width dynamically
+            if (!this.isDesktop) {
+                this.startIndex = 0; // Reset for mobile
+            }
+        }
+        }" 
+        x-init="updateScreenSize(); window.addEventListener('resize', updateScreenSize)" 
+        class="w-full flex items-center justify-between">
+
+        <!-- Previous Button (Hidden on Mobile) -->
+        <button @click="prev" 
+                :disabled="startIndex === 0" 
+                class="hidden sm:hidden md:flex lg:flex w-10 h-10 md:w-14 md:h-12 items-center justify-center bg-gray-200 text-gray-800 rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition">
+            ❮
+        </button>
+
+        <!-- Scrollable Category Container -->
+        <div x-ref="scrollContainer" class="relative w-full overflow-x-auto md:overflow-hidden scroll-smooth space-x-4 py-2 scrollbar-hide">
+            <div class="flex transition-transform duration-500 ease-in-out"
+                :style="isDesktop ? 'transform: translateX(-' + (startIndex * (100 / perPage)) + '%)' : ''">
+                
+                @foreach($categories as $cat)
+                    <div class="flex-shrink-0 p-2" :style="'width: ' + mobileViewWidth">
+                        <div @click="updateLivewire({{ $cat->id }})"
+                            :class="selected.includes({{ $cat->id }}) ? 'border-blue-500 bg-blue-100' : 'border-gray-300 bg-white'"
+                            class="flex flex-col items-center rounded-full cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                            
+                            <input type="checkbox" wire:model="selectedCategories" value="{{ $cat->id }}" class="hidden">
+                            
+                            <!-- Rounded Image -->
+                            <img src="{{ asset('storage/' . $cat->image) }}" alt="{{ $cat->name }}" 
+                                class="w-full object-cover rounded-full border-2 border-gray-300 shadow-sm">
+                                
+                            <!-- <label class="text-sm font-semibold text-gray-800 dark:text-gray-200 cursor-pointer mt-2 text-center">
+                                {{ $cat->name }}
+                            </label> -->
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Next Button (Hidden on Mobile) -->
+        <button @click="next" 
+                :disabled="startIndex + perPage >= {{ count($categories) }}" 
+                class="hidden sm:hidden md:flex lg:flex w-10 h-10 md:w-14 md:h-12 items-center justify-center bg-gray-200 text-gray-800 rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 transition">
+            ❯
+        </button>
+    </div>
+</div>

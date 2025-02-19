@@ -18,6 +18,9 @@ use Filament\Tables\Columns\TextColumn;
 // use App\Models\Product;
 use Filament\Tables\Actions\ViewAction;
 
+use Filament\Tables\Filters\SelectFilter;
+
+
 
 class FavoriteResource extends Resource
 {
@@ -41,49 +44,44 @@ class FavoriteResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+       
             ->columns([
                 ImageColumn::make('product.images')
                     ->getStateUsing(fn ($record) => $record->product->images[0] ?? null) // Get the first image
-                    ->label('Product Image')
+                    ->label('Product')
                     ->size(100), // Optional: Makes the image round
                 TextColumn::make('product.name')
+                    ->extraAttributes(['class' => 'font-arabic'])
                     ->searchable()
-                    ->label('Product Name'),
+                    ->label('Name'),
                 Tables\Columns\TextColumn::make('product.price')
-                    ->formatStateUsing(fn ($state) => number_format($state, 2) . ' DA')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('product.moq')
+                    ->formatStateUsing(fn ($state) => number_format($state, 0) . ' DZD')
+                    ->label('Price')
                     ->sortable(),
                 Tables\Columns\IconColumn::make('product.is_active')
-                    ->sortable()
                     ->label('Available')
+                    ->sortable()
                     ->falseIcon('heroicon-o-clock')
                     ->trueIcon('heroicon-o-check-circle')
                     ->color(fn ($state) => $state ? 'success' : 'warning')
                     ->boolean(), // Custom icon when inactive
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+            //
+                    
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
                 ViewAction::make('view')
                 // ->requiresConfirmation()
                 ->url(fn (Favorite $record) => url("/products/{$record->product->slug}")) // Generates the correct URL
-                ->openUrlInNewTab(), // Optional: Opens in a new tab
+                , 
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 

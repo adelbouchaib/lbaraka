@@ -4,7 +4,7 @@
       <div class="w-full mb-8 md:w-1/2 md:mb-0" 
         x-data="{ mainImage: '{{ asset('storage/' . $product->images[0]) }}' }">
         <div class="sticky top-0 overflow-hidden">
-            <div class="relative w-full md:h-[500px]"> <!-- Full width, fixed height -->
+            <div class="relative w-full h-[350px] md:h-[500px]"> <!-- Full width, fixed height -->
                 <img :src="mainImage" 
                     class="w-full h-full object-contain rounded-lg border bg-gray-100">
                     <button wire:click="toggleFavorite"
@@ -24,21 +24,21 @@
             </div>
 
           <div class="flex-wrap flex">
-              <div class="w-1/2 p-2 sm:w-1/4">
+              <div class="w-1/4 p-2 sm:w-1/4">
                   <img src="https://m.media-amazon.com/images/I/71f5Eu5lJSL._SX679_.jpg"
                       alt=""
                       x-on:click="mainImage='https://m.media-amazon.com/images/I/71f5Eu5lJSL._SX679_.jpg'"
                       class="object-cover w-full aspect-square cursor-pointer hover:border hover:border-gray-500">
               </div>
 
-              <div class="w-1/2 p-2 sm:w-1/4">
+              <div class="w-1/4 p-2 sm:w-1/4">
                   <img src="https://m.media-amazon.com/images/I/61XPhYGQOQL._SX679_.jpg"
                       alt=""
                       x-on:click="mainImage='https://m.media-amazon.com/images/I/61XPhYGQOQL._SX679_.jpg'"
                       class="object-cover w-full aspect-square cursor-pointer hover:border hover:border-gray-500">
               </div>
 
-              <div class="w-1/2 p-2 sm:w-1/4">
+              <div class="w-1/4 p-2 sm:w-1/4">
                   <img src="https://m.media-amazon.com/images/I/81v5JNjZ4-L._SX679_.jpg"
                       alt=""
                       x-on:click="mainImage='https://m.media-amazon.com/images/I/81v5JNjZ4-L._SX679_.jpg'"
@@ -51,7 +51,7 @@
         </div>
         <div class="w-full px-4 md:w-1/2 ">
           <div class="lg:pl-4">
-          <h2 class="max-w-xl mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
+          <h2 class="max-w-xl mb-6 text-xl xs:text-2xl font-bold dark:text-gray-400 md:text-4xl">
           {{$product->name}}</h2>
             <div class="mb-8 rounded-md border-2 shadow-md p-6">
 
@@ -71,6 +71,8 @@
                   '/<figcaption\b[^>]*>.*?<\/figcaption>/i' // Remove <figcaption> completely
               ], ['<a>', ''], $product->short_description) !!}    
               </div>
+
+
 
 
               <button wire:click="createRow({{ $product->id }}, {{ $product->seller_id }})" 
@@ -94,28 +96,117 @@
                 @auth
                       <!-- Show the conversation modal for authenticated users -->
                       <div class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                          <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                              <h2 class="text-lg font-semibold">Start a New Conversation?</h2>
-                              <p class="text-sm text-gray-600">Write a message to start your chat:</p>
+    <div class="bg-white p-6 rounded-lg shadow-xl w-1/3">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+            <h2 class="text-xl font-semibold text-gray-900">Start a New Conversation?</h2>
+            <button wire:click="$set('showModal', false)" class="text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
 
-                              <!-- Message Input -->
-                              <textarea wire:model="message" 
-                                        class="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300" 
-                                        rows="3" 
-                                        placeholder="Write your message..."></textarea>
+        <!-- Modal Body -->
 
-                              <div class="mt-4 flex justify-end">
-                                  <button wire:click="$set('showModal', false)"
-                                          class="mr-2 px-4 py-2 bg-gray-500 text-white rounded">
-                                      Cancel
-                                  </button>
-                                  <button wire:click="createAndRedirect({{ $product->id }}, {{ $product->seller_id }})"
-                                  class="px-4 py-2 bg-blue-600 text-white rounded">
-                                      Send & Start Chat
-                                  </button>
-                              </div>
-                          </div>
-                      </div>
+        <p class="text-sm text-gray-600 mb-2">Supplier:</p>
+         <!-- Product Info -->
+         <div class="flex items-center space-x-4 mb-4">
+          
+            <input type="text" value="{{ $product->seller->name }}" 
+                   class="w-full p-2 border border-gray-300 bg-gray-100 rounded-lg text-gray-600" 
+                   disabled>
+        </div>
+
+        <p class="text-sm text-gray-600 mb-2">Produit:</p>
+         <!-- Product Info -->
+         <div class="flex items-center space-x-4 mb-4">
+          
+            <input type="text" value="{{ $product->name }}" 
+                   class="w-full p-2 border border-gray-300 bg-gray-100 rounded-lg text-gray-600" 
+                   disabled>
+        </div>
+
+         <p class="text-sm text-gray-600 mb-2">Quantity:</p>
+         <!-- Product Info -->
+<div class="flex items-center space-x-4 mb-4">
+          
+<form class="max-w-xs" x-data="{ 
+        quantity: @entangle('quantity'), 
+        min: {{$product->moq}}, 
+        showQuantity: false 
+    }">
+
+    <!-- Checkbox to toggle quantity visibility -->
+    <div class="flex items-center space-x-4 mb-3">
+        <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" 
+                   @change="showQuantity = !showQuantity; $wire.set('quantity', showQuantity ? min : 0)" 
+                   class="sr-only peer">
+            <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 peer-checked:after:translate-x-5 after:content-[''] after:absolute after:w-5 after:h-5 after:bg-white after:rounded-full after:shadow-md after:transition-all after:duration-300 after:top-0.5 after:left-0.5">
+            </div>
+        </label>
+    </div>
+
+    <div class="relative flex items-center max-w-[11rem]" x-show="showQuantity" x-cloak>
+        
+        <!-- Decrement button -->
+        <button type="button" 
+                @click="quantity = Math.max(quantity - 1, min); $wire.set('quantity', quantity)" 
+                class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+            <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+            </svg>
+        </button>
+
+        <!-- Quantity input -->
+        <input type="text" 
+              x-model="quantity" 
+              wire:model.defer="quantity" 
+              class="bg-gray-50 border-x-0 border h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+              required />
+
+        <!-- Increment button -->
+        <button type="button" 
+                @click="quantity++; $wire.set('quantity', quantity)" 
+                class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+            <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+            </svg>
+        </button>
+    </div>
+</form>
+
+
+
+</div>
+
+                    <p class="text-sm text-gray-600">Write a message to start your chat:</p>
+                    <!-- Message Input -->
+                    <textarea wire:model="message" 
+                              class="w-full mt-2 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
+                              rows="4" 
+                              placeholder="Write your message..."></textarea>
+                              @error('message')
+                                  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mt-2">
+                                      <strong class="font-bold">Error:</strong> {{ $message }}
+                                  </div>
+                              @enderror
+
+                    <!-- Modal Footer (Cancel & Send Buttons) -->
+                    <div class="mt-6 flex justify-end space-x-4">
+                        <button wire:click="$set('showModal', false)"
+                                class="px-6 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:outline-none transition-all duration-200">
+                            Cancel
+                        </button>
+                        <button wire:click="createAndRedirect({{ $product->id }}, {{ $product->seller_id }})"
+                                class="px-6 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-primary-700 focus:outline-none transition-all duration-200">
+                            Send & Start Chat
+                        </button>
+                    </div>
+                </div>
+            </div>
+
                   @else
                       <!-- Show the login modal for unauthenticated users -->
                       <div class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">

@@ -19,6 +19,13 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 use JaOcero\FilaChat\FilaChatPlugin;
+use Filament\Facades\Filament; // <-- Correct Import for Filament Facade
+use Filament\Navigation\MenuItem;
+use App\Filament\Buyer\Pages\Settings;
+
+use Filament\Support\Facades\FilamentColor;
+use App\Filament\Buyer\Pages\Auth\Register;
+
 
 class BuyerPanelProvider extends PanelProvider
 {
@@ -26,11 +33,14 @@ class BuyerPanelProvider extends PanelProvider
     {
         return $panel
             ->id('buyer')
-            ->path('buyer')
+            ->path('')
             ->login()
-            ->registration()
+            ->registration(Register::class) 
+            ->passwordReset()
+            ->emailVerification()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#0071f5',
+                'secondary' => '#fbbc04',
             ])
             ->viteTheme('resources/css/filament/buyer/theme.css')
             ->discoverResources(in: app_path('Filament/Buyer/Resources'), for: 'App\\Filament\\Buyer\\Resources')
@@ -62,8 +72,21 @@ class BuyerPanelProvider extends PanelProvider
                 'panels::auth.login.form.after',
                 fn () => view('auth.socialite.google')
             )
+            ->brandLogo(fn () => view('components.custom-logo'))
+            ->darkMode(false)
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Settings')
+                    ->url(fn (): string => Settings::getUrl()) // ✅ Link to settings
+                    ->icon('heroicon-o-cog-6-tooth'),
+                
+            ])
+
             ->plugins([
                 FilaChatPlugin::make()
             ]);
     }
+  
+   
+
 }

@@ -9,12 +9,17 @@ export default {
         './resources/**/*.js',
         './resources/**/*.vue',
         './vendor/jaocero/filachat/resources/views/**/**/*.blade.php',
+        './views/vendor/filachat/filachat/components/*.blade.php',
     ],
     theme: {
         extend: {
+            colors: {
+              primary: '#0071f5', // Primary color
+              secondary: '#fbbc04'
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                arabic: ['Tajawal', 'Noto Sans Arabic', 'Arial', 'sans-serif'],
+                arabic: ['Alexandria', 'Noto Sans Arabic', 'Arial', 'sans-serif'],
             },
             typography: {
                 DEFAULT: {

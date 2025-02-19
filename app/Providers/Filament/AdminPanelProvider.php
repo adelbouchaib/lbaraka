@@ -42,12 +42,13 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('seller')
+            ->path('seller')
             ->login()
             ->registration(Register::class)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#fbbc04',
+                'secondary' => '#fbbc04',
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -89,6 +90,8 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-cog-6-tooth'),
                 
             ])
+            ->brandLogo(fn () => view('components.custom-logo'))
+            ->darkMode(false)
             ->plugins([
                 FilaChatPlugin::make()
             ]);
