@@ -86,4 +86,7 @@ return [
 
     'livewire_loading_delay' => 'default',
 
+    'favicon' => 'path-to-your-favicon.ico', // Example: '/favicon.ico' or '/assets/favicon.png'
+
+
 ];

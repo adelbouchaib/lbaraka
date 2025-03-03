@@ -20,9 +20,9 @@ class Register extends BaseRegister
                     ->schema([
                         $this->getNameFormComponent(),
                         $this->getEmailFormComponent(),
+                        $this->getPhoneFormComponent(), 
                         $this->getPasswordFormComponent(),
                         $this->getPasswordConfirmationFormComponent(),
-                        $this->getPhoneFormComponent(), 
                     ])
                     ->statePath('data'),
             ),
@@ -33,7 +33,7 @@ class Register extends BaseRegister
     {
         return TextInput::make('phone')
         ->label('Phone Number')
-        ->prefix('+213')
+        // ->prefix('+213')
         ->required()
         ->tel(); // Example default country code (Algeria)
     

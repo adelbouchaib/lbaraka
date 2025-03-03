@@ -1,3 +1,6 @@
+@section('title', $product->name)
+
+  
   <section class="px-4 xl:px-24 overflow-hidden bg-white font-poppins dark:bg-gray-800">
     <div class=" py-8 lg:py-16 mx-auto ">
       <div class="flex flex-wrap">
@@ -7,6 +10,7 @@
             <div class="relative w-full h-[350px] md:h-[500px]"> <!-- Full width, fixed height -->
                 <img :src="mainImage" 
                     class="w-full h-full object-contain rounded-lg border bg-gray-100">
+                    @if(auth()->user()->role == 'buyer')
                     <button wire:click="toggleFavorite"
                             class="absolute top-4 right-4 border rounded-full p-2 transition 
                                 {{ $isFavorited ? 'border-red-400 bg-red-100' : 'border-gray-400 bg-white hover:bg-gray-100' }}">
@@ -21,6 +25,7 @@
                                 d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A5.98 5.98 0 0 1 16.5 3 5.5 5.5 0 0 1 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                         </svg>
                     </button>
+                    @endif
             </div>
 
           <div class="flex-wrap flex">
@@ -76,14 +81,16 @@
 
 
               <button wire:click="createRow({{ $product->id }}, {{ $product->seller_id }})" 
-                  class="w-full py-3 bg-blue-500 rounded-md dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 flex items-center justify-center gap-2">
-                  
-                  <span class="font-medium">Contact Supplier</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                      <path fill-rule="evenodd" d="M4.5 6.75A2.25 2.25 0 0 1 6.75 4.5h10.5a2.25 2.25 0 0 1 2.25 2.25v6.75a2.25 2.25 0 0 1-2.25 2.25H9.622L5.707 18.764a.75.75 0 0 1-1.207-.592V9a2.25 2.25 0 0 1 0-2.25ZM6.75 6a.75.75 0 0 0-.75.75v8.76l2.693-2.54a.75.75 0 0 1 .507-.19h7.8a.75.75 0 0 0 .75-.75V6.75a.75.75 0 0 0-.75-.75H6.75Z" clip-rule="evenodd"/>
-                  </svg>
+                    class="w-full py-3 bg-blue-500 rounded-md dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 flex items-center justify-center gap-2 
+                    @if(auth()->user()->role !== 'buyer') opacity-50 cursor-not-allowed @endif"
+                    @if(auth()->user()->role !== 'buyer') disabled @endif>
+                    
+                    <span class="font-medium">Contact Supplier</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd" d="M4.5 6.75A2.25 2.25 0 0 1 6.75 4.5h10.5a2.25 2.25 0 0 1 2.25 2.25v6.75a2.25 2.25 0 0 1-2.25 2.25H9.622L5.707 18.764a.75.75 0 0 1-1.207-.592V9a2.25 2.25 0 0 1 0-2.25ZM6.75 6a.75.75 0 0 0-.75.75v8.76l2.693-2.54a.75.75 0 0 1 .507-.19h7.8a.75.75 0 0 0 .75-.75V6.75a.75.75 0 0 0-.75-.75H6.75Z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
 
-              </button>
 
 
 
@@ -118,7 +125,7 @@
                    disabled>
         </div>
 
-        <p class="text-sm text-gray-600 mb-2">Produit:</p>
+        <p class="text-sm text-gray-600 mb-2">Product:</p>
          <!-- Product Info -->
          <div class="flex items-center space-x-4 mb-4">
           
@@ -254,47 +261,7 @@
                 </div>
             </div>
 
-            <div class="w-full mb-8 md:mb-0">
-                <!-- Horizontal Line -->
-                <hr class="border-gray-300 dark:border-gray-600 mb-10 mt-20">
-                
-                <!-- Title -->
-                <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                    Products from the same category
-                </h1>
-      <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-        @foreach($products as $product)
-          <a href="{{ url('/products/' . $product->slug) }}" class="block rounded-lg border border-gray-200 bg-white p-3 sm:p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-              <div class="w-full aspect-square overflow-hidden rounded mb-2">
-                  <img class="w-full h-full object-cover object-center" 
-                      src="{{ asset('storage/' . $product->images[0]) }}" 
-                      alt="" />
-              </div>
-
-
-              <div>
-                  <p class="line-clamp-2 overflow-hidden text-ellipsis text-sm sm:text-base leading-tight text-gray-900 dark:text-white">
-                    {{ $product->name }}</p>
-                  <div class="mt-2 flex items-center justify-between gap-4">
-                      <p class="text-lg sm:text-xl font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} da</p>
-                  </div>
-                  <p class="line-clamp-2 overflow-hidden text-ellipsis text-sm sm:text-base leading-tight text-gray-900 dark:text-white">
-                    Min. order: {{ $product->moq }} pieces</p>
-                  <!-- <div class="mt-4 flex items-center justify-between gap-4">
-                    <button type="button" 
-                        class="w-full items-center rounded-lg bg-white px-5 py-1 sm:py-2.5 text-sm font-medium border border-gray-700 text-gray-700 
-                            hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 
-                            dark:bg-white dark:hover:bg-blue-700 dark:text-blue-700 dark:hover:text-white dark:focus:ring-blue-800 
-                            @if(!auth()->check() || auth()->user()->role !== 'buyer') opacity-50 cursor-not-allowed @endif"
-                        @if(!auth()->check() || auth()->user()->role !== 'buyer') disabled @endif>
-                        Chat Now
-                    </button>
-                  </div> -->
-              </div>
-          </a>
-          @endforeach
-                      </div>
-                      </div>
+           
 
 
             

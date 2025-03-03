@@ -18,10 +18,10 @@
                     }
 
                     $steps = [
-                        ['title' => 'New Seller', 'description' => 'Start here with basic privileges.', 'color' => 'bg-green-500'],
-                        ['title' => 'Beginner', 'description' => 'Mid-level sellers with better perks and visibility.', 'color' => 'bg-green-500'],
-                        ['title' => 'Intermediate', 'description' => 'Experienced sellers with higher benefits.', 'color' => 'bg-green-500'],
-                        ['title' => 'Expert', 'description' => 'Top sellers with maximum benefits and priority support.', 'color' => 'bg-green-500']
+                        ['title' => __('New Seller'), 'description' => 'Start here with basic privileges.', 'color' => 'bg-green-500'],
+                        ['title' => __('Beginner'), 'description' => 'Mid-level sellers with better perks and visibility.', 'color' => 'bg-green-500'],
+                        ['title' => __('Intermediate'), 'description' => 'Experienced sellers with higher benefits.', 'color' => 'bg-green-500'],
+                        ['title' => __('Expert'), 'description' => 'Top sellers with maximum benefits and priority support.', 'color' => 'bg-green-500']
                     ];
                 @endphp
 

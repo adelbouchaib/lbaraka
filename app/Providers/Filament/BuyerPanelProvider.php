@@ -25,6 +25,7 @@ use App\Filament\Buyer\Pages\Settings;
 
 use Filament\Support\Facades\FilamentColor;
 use App\Filament\Buyer\Pages\Auth\Register;
+use Filament\View\PanelsRenderHook;
 
 
 class BuyerPanelProvider extends PanelProvider
@@ -73,6 +74,7 @@ class BuyerPanelProvider extends PanelProvider
                 fn () => view('auth.socialite.google')
             )
             ->brandLogo(fn () => view('components.custom-logo'))
+            ->favicon(fn () => asset('images/icon.png'))
             ->darkMode(false)
             ->userMenuItems([
                 MenuItem::make()
@@ -82,8 +84,12 @@ class BuyerPanelProvider extends PanelProvider
                 
             ])
 
+            // ->renderHook(PanelsRenderHook::SIDEBAR_FOOTER, function () {
+            //     return view('filament.buyer.sidebar-footer');
+            // })
             ->plugins([
-                FilaChatPlugin::make()
+                FilaChatPlugin::make(),
+
             ]);
     }
   

@@ -24,6 +24,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 
 
 
@@ -33,18 +34,35 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Products'); // Change Dashboard name
+    }
+
+    public static function getLabel(): string
+    {
+        return __('Product'); // Change Dashboard name
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Products');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Group::make()->schema([
-                    Section::make('Product Information')->schema([
+                    Section::make(__('Product Information'))->schema([
                             TextInput::make('name')
+                                ->translateLabel()
                                 ->required()
                                 ->maxLength(255),
 
                             Select::make('category_id')
                                 ->required()
+                                ->translateLabel()
                                 ->searchable()
                                 ->preload()
                                 ->relationship('category', 'name'),                        
@@ -52,13 +70,21 @@ class ProductResource extends Resource
                                 // Forms\Components\MarkdownEditor::make('description')
                                 // RichEditor::make('description')
 
+                                Textarea::make('short_description')
+                                ->translateLabel()
+                               
+                                    ->columnSpanFull(),
+
                             RichEditor::make('description')
+                            ->translateLabel()
                                 ->columnSpanFull(),
                     ])->columns(2),
 
-                    Section::make('Images')->schema([
+                    Section::make(__('Images'))->schema([
                         Forms\Components\FileUpload::make('images')
                             ->multiple()
+                            ->required()
+                            ->translateLabel()
                             ->directory('products')
                             ->maxFiles(5)
                             ->reorderable()
@@ -67,22 +93,26 @@ class ProductResource extends Resource
                 ])->columnSpan(2),
 
                 Group::make()->schema([
-                    Section::make('Price')->schema([
+                    Section::make(__('Price'))->schema([
                         
                         Forms\Components\TextInput::make('price')
+                        ->translateLabel()
                         ->required()
                         ->numeric()
                         ->prefix('DZD'),
 
                         Forms\Components\TextInput::make('moq')
+                        ->label('Minimum quantity')
+                        ->translateLabel()
                         ->required()
                         ->numeric(),
                     ]),
         
 
-                    Section::make('Status')->schema([
+                    Section::make(__('Status'))->schema([
                         Forms\Components\Toggle::make('is_active')
                         ->label('Active') // Optional: Customize label
+                        ->translateLabel()
                         ->required()
                         ->default(true) // Default checked (true)
                     ]),
@@ -98,21 +128,28 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('images')
                     ->getStateUsing(fn ($record) => $record->images[0] ?? null) // Get the first image
+                    ->label(__('Product'))
                     ->size(80),
                 Tables\Columns\TextColumn::make('name')
+                    ->translateLabel()
+                    ->limit(40)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->formatStateUsing(fn ($state) => number_format($state, 2) . ' DA')
+                    ->formatStateUsing(fn ($state) => number_format($state, 2) .  __(' DA'))
+                    ->translateLabel()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('moq')
+                    ->label(__('Min. quantity'))
                     ->sortable(),
                 Tables\Columns\ToggleColumn::make('is_active')
-                    ->label('Active') // Optional label
+                    ->label('Available') // Optional label
+                    ->translateLabel()
                     ->sortable()
                     ->onIcon('heroicon-o-check') // Custom icon when active
                     ->offIcon('heroicon-o-x-circle'), // Custom icon when inactive
                 Tables\Columns\IconColumn::make('is_approved')
                     ->label('Approved') // Optional label
+                    ->translateLabel()
                     ->sortable()
                     ->falseIcon('heroicon-o-clock')
                     ->trueIcon('heroicon-o-check-circle')
@@ -120,13 +157,13 @@ class ProductResource extends Resource
                     ->boolean(), // Custom icon when inactive
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->diffForHumans())
+                    ->translateLabel()
+
+                    ->sortable(),
+            
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('category')
                     ->relationship('category', 'name'),

@@ -10,7 +10,11 @@ use App\Models\Inquiry;
 
 class Stats extends ChartWidget
 {
-    protected static ?string $heading = 'Inquiries per month';
+
+    public function getHeading(): ?string
+    {
+        return __('Inquiries per month'); // Change Dashboard name
+    }
 
     protected function getData(): array
     {
@@ -25,7 +29,7 @@ class Stats extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Inquiries',
+                    'label' => __('Inquiries'),
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],

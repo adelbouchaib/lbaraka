@@ -1,3 +1,30 @@
 @import '/vendor/filament/filament/resources/css/theme.css';
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+
+:lang(ar) {
+    font-family: 'Alexandria', 'Noto Sans Arabic', 'Arial', 'sans-serif'; /* Arabic font */
+}
+
+.ltr {
+    direction: ltr;
+}
+
+.fi-sidebar-nav{
+    background-color: white;
+    box-shadow: 0px 0px 1px  rgba(0, 0, 0, 0.3); /* Right-side shadow only */
+
+}
+
+.fi-sidebar-item-active > .fi-sidebar-item-button {
+    background-color: #fbbc04;
+}
+
+.fi-sidebar-item-active > .fi-sidebar-item-button > .fi-sidebar-item-label {
+    color: white;
+}
+
+.fi-sidebar-item-active > .fi-sidebar-item-button > .fi-sidebar-item-icon {
+    color: white;
+}
 
 @config 'tailwind.config.js';

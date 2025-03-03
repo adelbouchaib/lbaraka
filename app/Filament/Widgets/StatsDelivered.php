@@ -10,7 +10,13 @@ use App\Models\Order;
 
 class StatsDelivered extends ChartWidget
 {
-    protected static ?string $heading = 'Delivered orders per month';
+    // protected static ?string $heading = 'Delivered orders per month';
+
+    public function getHeading(): ?string
+    {
+        return __('Delivered orders per month'); // Change Dashboard name
+
+    }
 
     protected function getData(): array
     {
@@ -27,7 +33,7 @@ class StatsDelivered extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Delivered orders',
+                    'label' => __('Delivered orders'),
                     'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],

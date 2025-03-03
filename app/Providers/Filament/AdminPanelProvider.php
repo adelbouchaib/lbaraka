@@ -34,6 +34,12 @@ use App\Filament\Pages\Settings;
 use App\Filament\Pages\Ranking;
 
 use Filament\Navigation\NavigationItem;
+use App\Livewire\RegisterSeller;
+use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
+
+
+use Filament\Events\ServingFilament;
+
 
 
 class AdminPanelProvider extends PanelProvider
@@ -45,10 +51,13 @@ class AdminPanelProvider extends PanelProvider
             ->id('seller')
             ->path('seller')
             ->login()
-            ->registration(Register::class)
+            // ->spa()
+            ->registration(RegisterSeller::class)
+            ->passwordReset()
+            // ->emailVerification()
             ->colors([
                 'primary' => '#fbbc04',
-                'secondary' => '#fbbc04',
+                'secondary' => '#0071f5',
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -80,17 +89,18 @@ class AdminPanelProvider extends PanelProvider
                
             ])
             ->userMenuItems([
+                // MenuItem::make()
+                //     ->label(fn() => __('Ranking'))
+                //     ->url(fn (): string => Ranking::getUrl()) // ✅ Link to settings
+                //     ->icon('heroicon-o-trophy'),
                 MenuItem::make()
-                    ->label('Ranking')
-                    ->url(fn (): string => Ranking::getUrl()) // ✅ Link to settings
-                    ->icon('heroicon-o-trophy'),
-                MenuItem::make()
-                    ->label('Settings')
+                    ->label(fn() => __('Settings'))
                     ->url(fn (): string => Settings::getUrl()) // ✅ Link to settings
                     ->icon('heroicon-o-cog-6-tooth'),
                 
             ])
             ->brandLogo(fn () => view('components.custom-logo'))
+            ->favicon(fn () => asset('images/icon.png'))
             ->darkMode(false)
             ->plugins([
                 FilaChatPlugin::make()
@@ -99,6 +109,19 @@ class AdminPanelProvider extends PanelProvider
 
     public function boot()
     {
+
+
+        Filament::serving(function () {
+            if (Filament::getCurrentPanel()?->getId() === 'seller') { 
+                app()->setLocale('ar');
+            }else{
+                app()->setLocale('en');
+            }
+        });
+        
+        
+        
+        
 
         // GLOBAL_SEARCH_AFTER
 
@@ -122,6 +145,18 @@ class AdminPanelProvider extends PanelProvider
             }
         });
 
+      
+     
+            LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+                $switch
+                    ->locales(['ar']) // also accepts a closure
+                    ->flags([
+                        'ar' => asset('storage/flags/saudi-arabia.svg'),
+                    ]);
+                    
+            });
+     
+          
             
         
        

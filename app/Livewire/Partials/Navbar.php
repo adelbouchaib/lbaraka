@@ -12,7 +12,12 @@ use App\Models\FilachatMessage;
 
 class Navbar extends Component
 {
-    
+    public function goToHome()
+    {
+        return redirect()->route('filament.buyer.pages.dashboard');
+    }
+
+
     public function goToLogin()
     {
         $user = Auth::user(); // Get the authenticated user

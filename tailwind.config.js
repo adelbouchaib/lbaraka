@@ -10,6 +10,7 @@ export default {
         './resources/**/*.vue',
         './vendor/jaocero/filachat/resources/views/**/**/*.blade.php',
         './views/vendor/filachat/filachat/components/*.blade.php',
+        './vendor/bezhansalleh/filament-language-switch/resources/views/language-switch.blade.php',
     ],
     theme: {
         extend: {

@@ -7,5 +7,6 @@ export default {
         './resources/views/filament/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
         './vendor/jaocero/filachat/resources/views/**/**/*.blade.php',
+        './vendor/filament/**/*.blade.php',
     ],
 }

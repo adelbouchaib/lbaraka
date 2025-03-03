@@ -36,28 +36,27 @@
    
 
     <div class="flex items-center ml-auto">
-    <a href="/filachat">
-    <button class="relative px-1 mx-1 ml-4 mr-2 sm:mr-4 border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Messages">
-        <x-heroicon-o-chat-bubble-left-ellipsis class="h-7 w-7" />
-
-        @if($unreadCount > 0)
-            <span class="absolute top-0 right-0 -mt-2 -mr-1">
-                <div class="inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-red-500 border-2 border-white rounded-full">
-                    {{$unreadCount}}
-                </div>
-            </span>
-        @endif
-    </button>
-</a>
-
+   
 
         @if(!auth()->user())
         <button wire:click="goToLogin" type="button" class="font-arabic ml-2 text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             الدخول</button>
-        @endif
-        
-         <!-- Mobile Avatar -->
-        <button wire:click="goToHome" 
+        @else
+        <a href="{{ auth()->user()->role === 'seller' ? '/seller/filachat' : '/filachat' }}">
+        <button class="relative px-1 mx-1 ml-4 mr-2 sm:mr-4 border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Messages">
+            <x-heroicon-o-chat-bubble-left-ellipsis class="h-7 w-7" />
+
+            @if($unreadCount > 0)
+                <span class="absolute top-0 right-0 -mt-2 -mr-1">
+                    <div class="inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-red-500 border-2 border-white rounded-full">
+                        {{$unreadCount}}
+                    </div>
+                </span>
+            @endif
+        </button>
+        </a>
+
+        <button wire:click="goToLogin" 
             type="button" 
             class="mb-2 flex items-center justify-center">
             
@@ -68,8 +67,8 @@
                     d="M12 14a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 1.79-8 4v1h16v-1c0-2.21-3.582-4-8-4z"/>
             </svg>
 
-
         </button>
+        @endif
     </div>
 
 

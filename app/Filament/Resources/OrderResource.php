@@ -22,29 +22,50 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Orders'); // Change Dashboard name
+    }
+
+    public static function getLabel(): string
+    {
+        return __('Order'); // Change Dashboard name
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Orders');
+    }
+
+
+
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Group::make()->schema([
-                Section::make('Order information')->schema([
+                Section::make(__('Order information'))->schema([
 
                 Forms\Components\TextInput::make('id')
+                ->translateLabel()
                 ->disabled(),
 
                 Forms\Components\Select::make('buyer_id')
                 ->label('Buyer')
+                ->translateLabel()
                 ->options(\App\Models\Inquiry::with('buyer')->get()->pluck('buyer.name', 'buyer.id')->toArray()) // Fetch buyer name from related User
                 ->searchable() // Allows search in dropdown
                 ->default(fn () => \App\Models\Inquiry::with('buyer')->first()?->buyer?->id) // Set default
                 ->required(),
                 
                 Forms\Components\ToggleButtons::make('status')
+                ->translateLabel()
                 ->inline()
                 ->options([
-                    'Pending' => 'Pending',
-                    'Delivered' => 'Delivered',
-                    'Cancelled' => 'Cancelled',
+                   'Pending' =>  __('Pending'),
+                    'Delivered' => __('Delivered'),
+                    'Cancelled' => __('Cancelled'),
                 ])
                 ->icons([
                         'Pending' => 'heroicon-o-clock',
@@ -62,27 +83,32 @@ class OrderResource extends Resource
                 ->required(), 
 
                 Forms\Components\FileUpload::make('delivery_receipt')
+                ->translateLabel()
                     ->label('Upload Delivery Receipt')
                     ->visible(fn ($get) => $get('status') === 'Delivered') // Show only if 'Delivered' is selected
                     ->multiple()
+                    ->required()
                     ->maxFiles(5)
                     ->reorderable()
                     ->directory('receipts') // Folder where files are stored
                     ->columnSpanFull(),
                 ])->columns(2),
 
-                Section::make('Product')->schema([
+                Section::make(__('Product'))->schema([
                     Forms\Components\Select::make('product_id') // Use 'product_id' since it stores the actual ID
                     ->label('Product')
+                    ->translateLabel()
                     ->options(\App\Models\Inquiry::with('product')->get()->pluck('product.name', 'product.id')->toArray()) // Ensure it's an array
                     ->searchable()
                     ->default(fn () => \App\Models\Inquiry::with('product')->first()?->product?->id) // Set default
                     ->required(),
     
                     Forms\Components\TextInput::make('quantity')
+                    ->translateLabel()
                     ->numeric(),
     
                     Forms\Components\TextInput::make('total_price')
+                    ->translateLabel()
                     ->numeric(),
                
                 ])->columns(3),
@@ -94,10 +120,12 @@ class OrderResource extends Resource
                 Section::make()->schema([
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
+                        ->translateLabel()
                         ->content(fn (Order $record): ?string => $record->created_at?->diffForHumans()),
 
                     Forms\Components\Placeholder::make('updated_at')
                         ->label('Last modified at')
+                        ->translateLabel()
                         ->content(fn (Order $record): ?string => $record->updated_at?->diffForHumans()),
                 ]),
 
@@ -119,10 +147,15 @@ class OrderResource extends Resource
             )
             ->columns([
                 Tables\Columns\TextColumn::make('id')
+                ->translateLabel()
+                ->formatStateUsing(fn ($state) => '#' . $state)
                 ->sortable(),
                 Tables\Columns\TextColumn::make('buyer.name')
+                ->translateLabel()
                 ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                ->translateLabel()
+
                     ->badge()
                     ->icon(fn ($state) => match ($state) {
                         'Pending' => 'heroicon-o-truck',
@@ -135,8 +168,16 @@ class OrderResource extends Resource
                         'Delivered' => 'success',
                         'Cancelled' => 'danger',
                     })
+                    ->formatStateUsing(fn ($record) => match (true) {
+                        $record->status === 'Pending' => __('Pending'),  // ❌ Pending & not approved
+                        $record->status === 'Delivered' => __('Delivered'), // ✅ Delivered & approved
+                        $record->status === 'Cancelled' => __('Cancelled'), // ✅ Delivered & approved
+                        default => 'Pending' // ❓ Default case (unknown status)
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('approved')
+                ->translateLabel()
+
                 ->badge()
                 ->icon(fn ($record) => match (true) {
                     $record->status === 'Pending' && $record->approved === 0 => 'heroicon-o-clock',  // ❌ Pending & not approved
@@ -151,30 +192,32 @@ class OrderResource extends Resource
                     default => 'success' // ❓ Default case (unknown status)
                 })
                 ->formatStateUsing(fn ($record) => match (true) {
-                    $record->status === 'Pending' && $record->approved === 0 => 'In delivery',  // ❌ Pending & not approved
-                    $record->status === 'Delivered' && $record->approved === 1 => 'Approved', // ✅ Delivered & approved
-                    $record->status === 'Delivered' && $record->approved === 0 => 'Pending', // ✅ Delivered & approved
+                    $record->status === 'Cancelled' => __(''),  // ❌ Pending & not approved
+                    $record->status === 'Pending' => __(''),  // ❌ Pending & not approved
+                    $record->status === 'Delivered' && $record->approved === 1 => __('Approval'), // ✅ Delivered & approved
+                    $record->status === 'Delivered' && $record->approved === 0 => __('Pending'), // ✅ Delivered & approved
                     default => 'Approved' // ❓ Default case (unknown status)
                 }),
                 
                
                 Tables\Columns\TextColumn::make('product.name')
+                ->translateLabel()
                     ->limit(40)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
-                    ->numeric()
+                    ->translateLabel()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_price')
                     ->sortable(),
                 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->date()
+                ->translateLabel()
+                ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->diffForHumans())
+                    // ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 ])
             ->actions([

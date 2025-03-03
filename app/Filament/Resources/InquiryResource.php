@@ -21,6 +21,21 @@ class InquiryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Inquiries'); // Change Dashboard name
+    }
+
+    public static function getLabel(): string
+    {
+        return __('Inquirie'); // Change Dashboard name
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Inquiries');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -52,16 +67,19 @@ class InquiryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('product.images')
+                    ->translateLabel()
                     ->getStateUsing(fn ($record) => $record->product->images[0] ?? null) // Get the first image
                     ->size(80),
                 Tables\Columns\TextColumn::make('product.name')
-                    ->extraAttributes(['class' => 'font-arabic'])
-                    ->numeric()
+                    ->label('Name')
+                    ->searchable()
+                    ->translateLabel()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
-                    ->numeric()
+                ->translateLabel()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->translateLabel()
                     ->badge() // Enables the badge style
                     ->formatStateUsing(function ($state, $record) {
                         // Get the last message sent by the authenticated user in this conversation
@@ -74,22 +92,23 @@ class InquiryResource extends Resource
                         $hasReply = $record->message->id < optional($lastMessage)->id;
                 
                         // Change the status based on the condition
-                        return $hasReply ? 'Replied' : 'Pending';
+                        return $hasReply ? __('Replied') : __('Pending');
                     })
                     ->color(function ($state) {
                         return $state === 'Replied' ? 'success' : 'warning';
                     })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('buyer.name')
+                    ->searchable()
+                    ->translateLabel()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                ->translateLabel()
                 ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->diffForHumans())
                 ->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+               
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
@@ -98,7 +117,8 @@ class InquiryResource extends Resource
                 Tables\Actions\ViewAction::make(),
 
                 Tables\Actions\Action::make('chat')
-                ->label('Chat') // Set the button label
+                ->label('Chat') // Set the button 
+                ->translateLabel()
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
                 ->url(fn (Inquiry $record) => url("/seller/filachat/{$record->filachat_conversation_id}"))
                 ->openUrlInNewTab()

@@ -23,6 +23,12 @@ class Dashboard extends Page
 
     protected static string $view = 'filament.pages.dashboard';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Dashboard'); // Change Dashboard name
+    }
+
+
 
     public $inquiries;
 

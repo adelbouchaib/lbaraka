@@ -37,6 +37,7 @@ class CompleteProfile extends Component
         // Create the user
         $user = User::create([
             $this->provider . '_id' => $this->provider_id,
+            'email_verified_at' => now(),
             'name' => $this->name,
             'phone' => $this->phone,
             'email' => $this->email,
@@ -55,6 +56,6 @@ class CompleteProfile extends Component
 
     public function render()
     {
-        return view('livewire.complete-profile');
+        return view('livewire.complete-profile')->layout('components.layouts.guest');
     }
 }

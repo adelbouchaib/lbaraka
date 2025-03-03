@@ -12,7 +12,8 @@ use Filament\Panel;
 use JaOcero\FilaChat\Traits\HasFilaChat;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail
+
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasFilaChat;
@@ -28,6 +29,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'phone',
         'password',
         'google_id', 
+        'email_verified_at',
         'role',
     ];
 
@@ -82,6 +84,16 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function favorites()
     {
         return $this->hasMany(Favorite::class);
+    }
+
+    public function buyerReports()
+    {
+        return $this->hasMany(Report::class, 'buyer_id');
+    }
+
+    public function sellerReports()
+    {
+        return $this->hasMany(Report::class, 'seller_id');
     }
 
 

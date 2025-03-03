@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Support\Htmlable;
 
 class Settings extends Page
 {
@@ -17,6 +18,10 @@ class Settings extends Page
 
     protected static bool $shouldRegisterNavigation = false;
 
+    public function getTitle(): string | Htmlable
+{
+    return __('Settings');
+}
     
     public $name;
     public $email;

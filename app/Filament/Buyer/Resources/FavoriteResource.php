@@ -65,7 +65,14 @@ class FavoriteResource extends Resource
                     ->trueIcon('heroicon-o-check-circle')
                     ->color(fn ($state) => $state ? 'success' : 'warning')
                     ->boolean(), // Custom icon when inactive
+                Tables\Columns\TextColumn::make('created_at')
+                    ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->diffForHumans())
+                    ->label("Created")
+    
+                    ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
+
             ->filters([
             //
                     

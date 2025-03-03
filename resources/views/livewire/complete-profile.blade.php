@@ -1,3 +1,6 @@
+@section('title', 'Complete Profile')
+
+
 <div class="bg-white w-full h-screen">
 <div class="flex items-center justify-center bg-white dark:bg-gray-900 w-full pt-28">
     <div class="w-full max-w-md p-6 bg-white dark:bg-gray-800">
@@ -17,14 +20,11 @@
             </div>
 
             <div>
-                <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone</label>
+                <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone Number</label>
                 <div class="relative mt-1">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-600 dark:text-gray-300">
-                        +213
-                    </span>
+                    
                     <input type="tel" id="phone" wire:model="phone"
-                        class="block w-full pl-14 pr-4 py-2 text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="0XXXXXXXXX"
+                        class="block w-full px-4 pr-4 py-2 text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         required>
                 </div>
                 @error('phone') <span class="text-sm text-red-500">{{ $message }}</span> @enderror

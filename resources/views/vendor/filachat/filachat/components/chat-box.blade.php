@@ -2,13 +2,14 @@
 <!-- Right Section (Chat Conversation) -->
 <div
     x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('filachat-styles', package: 'jaocero/filachat'))]"
-    class="flex flex-col w-full md:w-2/3 overflow-hidden">
+    class="flex flex-col border-r w-full md:w-2/3 overflow-hidden">
     @if ($selectedConversation)
         <!-- Chat Header -->
         <div class="flex items-center h-20 gap-2 p-5 border-b dark:border-gray-800/60 border-gray-200/90">
             <x-filament::avatar
                 src="https://ui-avatars.com/api/?name={{ urlencode($selectedConversation->other_person_name) }}"
                 alt="Profile" size="lg" />
+                
             <div class="flex flex-col">
                 <p class="text-base font-bold">{{ $selectedConversation->other_person_name }}</p>
                 @php
@@ -18,21 +19,15 @@
                         $isOtherPersonAgent = $selectedConversation->receiverable->isAgent();
                     }
                 @endphp
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                    @if ($isOtherPersonAgent)
-                        {{__('Agent')}}
-                    @else
-                        {{__('User')}}
-                    @endif
-                </p>
+                
             </div>
 
 @if(auth()->user()->isSeller())
 
 <div class="w-full flex justify-end" x-data="{ isOpen: false, currentStep: 1 }">
     <!-- Button to Trigger Modal -->
-    <x-filament::button wire:click="markAsDeal({{ $selectedConversation->id }})" icon="heroicon-m-paper-airplane" color="success" size="sm" @click="isOpen = true">
-        New order
+    <x-filament::button wire:click="markAsDeal({{ $selectedConversation->id }})" icon="heroicon-m-paper-airplane" color="primary" size="sm" @click="isOpen = true">
+        {{__('New order')}}
     </x-filament::button>
 
     <!-- Modal Overlay -->
@@ -50,8 +45,8 @@
             <!-- Modal Header -->
             <div class="flex justify-between items-center border-b pb-3">
                 <h2 class="text-lg font-semibold text-gray-900">
-                    <span x-show="currentStep === 1">Create New Order</span>
-                    <span x-show="currentStep === 2">Order Details</span>
+                    <span x-show="currentStep === 1">{{__('Create New Order')}}</span>
+                    <span x-show="currentStep === 2">{{__('Order Details')}}</span>
                 </h2>
                 <button @click="isOpen = false" class="text-gray-500 hover:text-gray-700">✕</button>
             </div>
@@ -60,11 +55,11 @@
             <div x-show="currentStep === 1" class="mt-4">
                 <!-- Product Selection -->
                 <label for="selectedProduct" class="text-sm font-medium text-gray-950 mb-2 block">
-                    Select a Product
+                {{__('Select a Product')}}
                 </label>
                 <div class="max-h-[500px] overflow-y-auto space-y-4">
                     @foreach ($selectedInquiries as $selectedInquiry)
-                    <label class="border rounded-md p-4 flex items-center cursor-pointer shadow-sm hover:bg-gray-100 transition"
+                        <label class="border rounded-md p-4 flex items-center cursor-pointer shadow-sm hover:bg-gray-100 transition"
                         x-data="{ isChecked: false }"
                         :class="{ 'bg-primary-100 border-primary-500': isChecked }"
                         x-init="$watch('isChecked', value => { 
@@ -83,7 +78,7 @@
                             <!-- Hidden Radio Input -->
                             <input type="radio" value="{{ $selectedInquiry->id }}" name="inquiry_selection"
                                 wire:model="selectedInquiry"
-                                wire:click="processStepTwo({{ $selectedInquiry->quantity }})"
+                                wire:click="processStepTwo({{ $selectedInquiry->quantity ?? 0}})"
                                 class="hidden"
                                 x-on:change="isChecked = true">
 
@@ -109,8 +104,8 @@
 
 
                 <div class="flex justify-end space-x-2 mt-4 border-t pt-3">
-                    <x-filament::button @click="currentStep = 2" color="primary">Next</x-filament::button>
-                    <x-filament::button type="button" color="danger" @click="isOpen = false">Cancel</x-filament::button>
+                    <x-filament::button @click="currentStep = 2" color="primary">{{__('Next')}}</x-filament::button>
+                    <x-filament::button type="button" color="danger" @click="isOpen = false">{{__('Cancel')}}</x-filament::button>
                 </div>
             </div>
 
@@ -118,7 +113,7 @@
             <div x-show="currentStep === 2" class="mt-4">
               <!-- Buyer Input -->
                 <div class="space-y-1 mt-3">
-                    <label class="text-sm font-medium text-gray-700">Buyer</label>
+                    <label class="text-sm font-medium text-gray-700">{{__('Buyer')}}</label>
                     <div class="relative">
                         <input type="text" value="{{$selectedConversation->other_person_name}}" 
                             class="w-full border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-lg shadow-sm bg-gray-100 text-gray-700 px-3 py-2"
@@ -129,7 +124,7 @@
 
                 <!-- Quantity Input -->
                 <div class="space-y-1 mt-3">
-                    <label class="text-sm font-medium text-gray-700">Quantity</label>
+                    <label class="text-sm font-medium text-gray-700">{{__('Quantity')}}</label>
                     <div class="relative">
                     <input type="number" wire:model.defer="quantity" x-init="$wire.quantity = '{{ $selectedInquiryQuantity }}'"
                         class="w-full border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-lg shadow-sm px-3 py-2">
@@ -138,8 +133,8 @@
 
                 <!-- Modal Footer (Back & Submit) -->
                 <div class="flex justify-between space-x-2 mt-4 border-t pt-3">
-                    <x-filament::button @click="currentStep = 1" color="gray">Back</x-filament::button>
-                    <x-filament::button wire:click="submitForm" color="success">Submit</x-filament::button>
+                    <x-filament::button @click="currentStep = 1" color="gray">{{__('Back')}}</x-filament::button>
+                    <x-filament::button wire:click="submitForm" color="success">{{__('Submit')}}</x-filament::button>
                 </div>
             </div>
         </div>
@@ -147,6 +142,113 @@
 </div>
 
 
+@else 
+<div class="w-full flex justify-end" x-data="{ isOpen: false, currentStep: 1 }">
+    <!-- Button to Trigger Modal -->
+    <x-filament::button wire:click="reportSupplier({{ $selectedConversation->id }})" icon="heroicon-s-flag" color="gray" size="sm" @click="isOpen = true">
+        {{__('Report supplier')}}
+    </x-filament::button>
+
+    <!-- Modal Overlay -->
+    <div x-show="isOpen"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+
+        <!-- Modal Content -->
+        <div class="bg-white rounded-lg shadow-xl xl:w-1/3 p-6">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center border-b pb-3">
+                <h2 class="text-lg font-semibold text-gray-900">
+                    <span>{{__('Report Supplier')}}</span>
+                </h2>
+                <button @click="isOpen = false" class="text-gray-500 hover:text-gray-700">✕</button>
+            </div>
+
+           
+                <div class="space-y-1 mt-3">
+                    <label class="text-sm font-medium text-gray-700">{{__('Supplier')}}</label>
+                    <div class="relative">
+                        <input type="text" value="{{$selectedConversation->other_person_name}}" 
+                            class="w-full border-gray-300 focus:border-gray-300 focus:ring-gray-300 rounded-lg shadow-sm bg-gray-100 text-gray-700 px-3 py-2"
+                            readonly>
+                        <input type="hidden" wire:model="sellerId">
+                    </div>
+                </div>
+                <div class="space-y-1 mt-3">
+                    <label class="text-sm font-medium text-gray-700">{{__('Reason*')}}</label>
+                    <div class="relative">
+                    <textarea wire:model="reportReason"
+                        class="w-full border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-lg shadow-sm text-gray-700 px-3 py-2">
+                    </textarea>
+                    @error('reportReason') <span class="text-red-500">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
+            <div class="space-y-1 mt-3">
+                <label for="selectedProduct" class="text-sm font-medium text-gray-700">
+                    {{__('Select a product if this report concerns one')}}
+                </label>
+                <div class="max-h-[500px] overflow-y-auto space-y-4">
+                        @foreach ($selectedInquiries as $selectedInquiry)
+                            <label class="border rounded-md p-4 flex items-center cursor-pointer shadow-sm hover:bg-gray-100 transition"
+                            x-data="{ isChecked: false }"
+                            :class="{ 'bg-primary-100 border-primary-500': isChecked }"
+                            x-init="$watch('isChecked', value => { 
+                                if (value) { 
+                                    $wire.set('selectedInquiry', {{ $selectedInquiry->id }});
+                                    $wire.set('selectedProduct', {{ $selectedInquiry->product->id }});
+                                } 
+                            })"                        
+                            x-effect="isChecked = ($wire.selectedInquiry == {{ $selectedInquiry->id }})">
+                                
+                                <!-- Visible Custom Radio -->
+                                <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center mr-4">
+                                    <div class="w-3 h-3 bg-primary-500 rounded-full" x-show="isChecked"></div>
+                                </div>
+
+                                <!-- Hidden Radio Input -->
+                                <input type="radio" value="{{ $selectedInquiry->id }}" name="inquiry_selection"
+                                    wire:model="selectedInquiry"
+                                    wire:click="processStepTwo({{ $selectedInquiry->quantity ?? 0}})"
+                                    class="hidden"
+                                    x-on:change="isChecked = true">
+
+                                <!-- Product Image -->
+                                @if ($selectedInquiry->product->images[0])  
+                                    <img src="{{ asset('storage/' . $selectedInquiry->product->images[0]) }}" 
+                                        alt="{{ $selectedInquiry->product->name }}" 
+                                        class="w-20 h-20 object-cover rounded mr-4">
+                                @else
+                                    <div class="w-20 h-20 bg-gray-300 rounded flex items-center justify-center"> 
+                                        <span class="text-gray-500">No Image</span>
+                                    </div>
+                                @endif
+
+                                <!-- Product Info -->
+                                <div class="text-sm">
+                                    <p class="font-arabic font-medium text-gray-900">{{ $selectedInquiry->product->name }}</p>
+                                    <p class="text-gray-500">{{ $selectedInquiry->product->price }} DZD</p>
+                                </div>
+                            </label>
+                        @endforeach
+                </div>
+            </div>
+
+
+                <!-- Modal Footer (Back & Submit) -->
+                <div class="flex justify-end space-x-2 mt-4 border-t pt-3">
+                    <x-filament::button wire:click="submitReport" color="success">{{__('Submit')}}</x-filament::button>
+                </div>
+
+           
+        </div>
+    </div>
+</div>
 @endif
 
 

@@ -78,19 +78,17 @@
                 :style="isDesktop ? 'transform: translateX(-' + (startIndex * (100 / perPage)) + '%)' : ''">
                 
                 @foreach($categories as $cat)
+
                     <div class="flex-shrink-0 p-2" :style="'width: ' + mobileViewWidth">
-                        <div @click="updateLivewire({{ $cat->id }})"
-                            :class="selected.includes({{ $cat->id }}) ? 'border-blue-500 bg-blue-100' : 'border-gray-300 bg-white'"
+                        <div
                             class="flex flex-col items-center rounded-full cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
                             
-                            
                             <a href="/products?categories[0]={{$cat->id}}">
-                            </a>
-                            
-                            <!-- Rounded Image -->
+
                             <img src="{{ asset('storage/' . $cat->image) }}" alt="{{ $cat->name }}" 
                                 class="w-full object-cover rounded-full border-2 border-gray-300 shadow-sm">
-                                
+                            </a>
+
                             <!-- <label class="text-sm font-semibold text-gray-800 dark:text-gray-200 cursor-pointer mt-2 text-center">
                                 {{ $cat->name }}
                             </label> -->

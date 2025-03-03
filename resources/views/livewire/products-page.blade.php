@@ -1,4 +1,7 @@
-<section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
+@section('title', 'Products')
+
+
+<section class="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12 min-h-screen">
 
 <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <!-- Heading & Filters -->
@@ -144,24 +147,26 @@
     </div>
 
 
-    <div class="mb-4 grid gap-4 grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-5">
         @if($products->isEmpty())
-        <div class="flex flex-col items-center justify-center text-center bg-gray-100 p-6 rounded-lg shadow-md">
-            <svg class="w-16 h-16 text-gray-400 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3-3m0 0l3 3m-3-3v12M4 13h16"/>
-            </svg>
+        <div class="flex items-center justify-center">
+        <div class="flex flex-col max-w-xl items-center justify-center text-center bg-gray-100 p-6 rounded-lg shadow-md">
+            <x-heroicon-o-magnifying-glass class="w-16 h-16 text-gray-400 mb-4" />
+
             <h2 class="text-lg font-semibold text-gray-800">Your search did not match any products.</h2>
-            <p class="text-gray-600 mt-2">You may consider:</p>
-            <ul class="text-gray-500 text-sm mt-2">
-                <li>✅ Check the spelling</li>
-                <li>✅ Use fewer keywords</li>
-                <li>✅ Try different keywords</li>
+            <ul class="text-gray-500 text-left text-sm mt-2">
+                <li>- Check the spelling</li>
+                <li>- Use fewer keywords</li>
+                <li>- Try different keywords</li>
             </ul>
-            <a href="{{ route('products') }}" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+            <a href="{{ route('products') }}" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition">
                 Browse All Products
             </a>
         </div>
+    </div>
+
         @else
+        <div class="mb-4 grid gap-4 grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-5">
+
           @foreach($products as $product)
           <a href="{{ url('/products/' . $product->slug) }}" class="block rounded-lg border border-gray-200 bg-white p-2 sm:p-3 shadow-sm dark:border-gray-700 dark:bg-gray-800">
               <div class="w-full aspect-square overflow-hidden rounded mb-2">
@@ -191,6 +196,8 @@
               </div>
           </a>
           @endforeach
+          </div>
+
           </div>
           <div class="mt-6 flex justify-center">
         <div class="inline-flex space-x-2 items-center bg-white p-2 rounded-lg shadow">

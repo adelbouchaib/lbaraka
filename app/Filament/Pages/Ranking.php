@@ -6,6 +6,8 @@ use Filament\Pages\Page;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use Illuminate\Contracts\Support\Htmlable;
+
 
 class Ranking extends Page
 {
@@ -14,6 +16,12 @@ class Ranking extends Page
     protected static string $view = 'filament.pages.ranking';
 
     protected static bool $shouldRegisterNavigation = false;
+
+    public function getTitle(): string | Htmlable
+    {
+        return __('Ranking');
+    }
+
 
     public $deliveredOrdersCount;
     public function mount()

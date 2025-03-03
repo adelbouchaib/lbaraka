@@ -30,12 +30,14 @@ class Performance extends BaseWidget
             Stat::make('Inquiries', Inquiry::whereHas('conversation', function ($query) {
                 $query->where('receiverable_id', auth()->id())
                       ->orWhere('senderable_id', auth()->id());
-            })->count())          
+            })->count())   
+            ->label(__('Inquiries'))       
                 ->color('success'),
 
             Stat::make('Orders', Order::where('seller_id', auth()->id())->count())
                 ->color('success')
-                ->description($inquiryCount > 0 ? round(($orderCount / $inquiryCount) * 100, 2) . '% conversion' : 'No inquiries yet')
+                ->label(__('Orders'))       
+                ->description($inquiryCount > 0 ? round(($orderCount / $inquiryCount) * 100, 2) . __('% conversion') : __('No inquiries yet'))
                 ->descriptionIcon('heroicon-m-arrow-trending-up'),
 
             Stat::make('Delivered Orders', Order::where('seller_id', auth()->id())
@@ -43,7 +45,8 @@ class Performance extends BaseWidget
                 ->where('approved', 1)
                 ->count())
             ->color('success')
-            ->description($orderCount > 0 ? round(($deliveredCount / $orderCount) * 100, 2) . '% conversion' : 'No inquiries yet')
+            ->label(__('Delivered Orders'))       
+            ->description($orderCount > 0 ? round(($deliveredCount / $orderCount) * 100, 2) . __('% conversion') : __('No inquiries yet'))
             ->descriptionIcon('heroicon-m-arrow-trending-up'),
                 
         ];

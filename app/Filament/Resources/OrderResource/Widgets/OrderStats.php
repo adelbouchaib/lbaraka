@@ -32,14 +32,14 @@ class OrderStats extends BaseWidget
             ->count();
 
         return [
-            Stat::make('Orders', $this->getPageTableQuery()->count())
-                ->chart(
+            Stat::make(__('Total orders'), $this->getPageTableQuery()->count())
+            ->chart(
                     $orderData
                         ->map(fn (TrendValue $value) => $value->aggregate)
                         ->toArray()
                 ),
-            Stat::make('Open orders', $this->getPageTableQuery()->where('status', 'pending')->count()),
-            Stat::make('Delivered orders', $this->getPageTableQuery()->where('status', 'delivered')->where('approved', 1)->count()),
+            Stat::make(__('Open orders'), $this->getPageTableQuery()->where('status', 'pending')->count()),
+            Stat::make(__('Delivered orders'), $this->getPageTableQuery()->where('status', 'delivered')->where('approved', 1)->count()),
            
         ];
     }
