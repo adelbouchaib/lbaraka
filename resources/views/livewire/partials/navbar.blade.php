@@ -3,7 +3,7 @@
 <nav class="bg-white border-gray-200 dark:bg-gray-900 border">
   <div class="max-w-screen-xl px-3 py-3 sm:mx-auto flex flex-wrap items-center">
     <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="/images/logo.png"  class="h-7" alt="Flowbite Logo" />
+        <img src="/images/LOGO.png"  class="h-7" alt="Flowbite Logo" />
     </a>
     
     <div class="max-w-md ml-2 md:ml-20 lg:ml-44 flex-1 lg:w-full">   
