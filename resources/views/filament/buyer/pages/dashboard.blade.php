@@ -21,7 +21,7 @@
                         
                         <!-- Search Button -->
                         <button type="submit" class="flex justify-center items-center absolute right-2 top-1/2 -translate-y-1/2 bg-primaryx text-white px-3 py-1.5 rounded-full hover:bg-blue-600">
-                            <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                             Search
@@ -35,7 +35,7 @@
 
 <div>
     <div class="flex gap-4 flex-row items-center mb-2">
-        <h1 class="text-2xl sm:text-3xl font-bold leading-6 text-gray-950 dark:text-white">
+        <h1 class="text-2xl sm:text-3xl font-bold leading-6 text-gray-950">
             Categories
         </h1>
     </div>
@@ -81,7 +81,7 @@
 
                     <div class="flex-shrink-0 p-2" :style="'width: ' + mobileViewWidth">
                         <div
-                            class="flex flex-col items-center rounded-full cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                            class="flex flex-col items-center rounded-full cursor-pointer hover:bg-gray-100 transition-all">
                             
                             <a href="/products?categories[0]={{$cat->id}}">
 
@@ -89,7 +89,7 @@
                                 class="w-full object-cover rounded-full border-2 border-gray-300 shadow-sm">
                             </a>
 
-                            <!-- <label class="text-sm font-semibold text-gray-800 dark:text-gray-200 cursor-pointer mt-2 text-center">
+                            <!-- <label class="text-sm font-semibold text-gray-800 cursor-pointer mt-2 text-center">
                                 {{ $cat->name }}
                             </label> -->
                         </div>
@@ -112,11 +112,11 @@
      x-init="window.addEventListener('resize', () => isMobile = window.innerWidth < 640)">
 
     <div class="flex gap-4 flex-row items-center mb-4">
-        <h1 class="text-2xl sm:text-3xl font-bold leading-6 text-gray-950 dark:text-white">
+        <h1 class="text-2xl sm:text-3xl font-bold leading-6 text-gray-950">
             Products
         </h1>
         <a href="/products" class="ml-auto mr-4">
-        <h1 class="text-lg leading-6 text-gray-950 dark:text-white">
+        <h1 class="text-lg leading-6 text-gray-950">
             <span class="hidden sm:inline underline">View more</span>
             <span class="text-2xl font-bold">-></span>
         </h1>
@@ -128,7 +128,7 @@
         
         @foreach($newProducts as $product)
         <a href="{{ url('/products/' . $product->slug) }}" 
-               class="flex-none w-2/3 sm:w-1/2 md:w-full snap-center rounded-lg border border-gray-200 bg-white p-2 sm:p-3  shadow-sm dark:border-gray-700 dark:bg-gray-800">
+               class="flex-none w-2/3 sm:w-1/2 md:w-full snap-center rounded-lg border border-gray-200 bg-white p-2 sm:p-3  shadow-sm">
                 
                 <div class="w-full aspect-square overflow-hidden rounded mb-2">
                     <img class="w-full h-full object-cover object-center" 
@@ -136,11 +136,11 @@
                 </div>
 
                 <div>
-                <p class="font-arabic rtl line-clamp-2 font-light  overflow-hidden  text-base leading-tight text-gray-900 dark:text-white">
+                <p class="font-arabic rtl line-clamp-2 font-light  overflow-hidden  text-base leading-tight text-gray-900">
                     {{ $product->name }}</p>
-                  <p class="text-xl  sm:text-2xl  rtl mt-2  font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} دج</p>
+                  <p class="text-xl  sm:text-2xl  rtl mt-2  font-bold leading-tight text-gray-900 mt-2">{{ $product->price }} دج</p>
                   
-                  <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
+                  <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800">
                     أقل كمية : {{ $product->moq }} قطعة</p>
                     
                 </div>

@@ -5,7 +5,7 @@
     class="flex flex-col border-r w-full md:w-2/3 overflow-hidden">
     @if ($selectedConversation)
         <!-- Chat Header -->
-        <div class="flex items-center h-20 gap-2 p-5 border-b dark:border-gray-800/60 border-gray-200/90">
+        <div class="flex items-center h-20 gap-2 p-5 border-b border-gray-200/90">
             <x-filament::avatar
                 src="https://ui-avatars.com/api/?name={{ urlencode($selectedConversation->other_person_name) }}"
                 alt="Profile" size="lg" />
@@ -290,7 +290,7 @@
                 <x-filament::avatar
                     src="https://ui-avatars.com/api/?name={{ urlencode($selectedConversation->other_person_name) }}"
                     alt="Profile" size="sm" />
-                <div class="max-w-md p-2 bg-gray-200 rounded-t-xl rounded-br-xl dark:bg-gray-800" >
+                <div class="max-w-md p-2 bg-gray-200 rounded-t-xl rounded-br-xl" >
                     <p class="text-sm">
                         <svg height="40" width="40" class="loader">
                             <circle class="dot" cx="10" cy="20" r="3" style="fill:grey;" />
@@ -339,7 +339,7 @@
                             @else
                                 <div class="w-6 h-6"></div> <!-- Placeholder to align the messages properly -->
                             @endif
-                            <div class="max-w-md p-2 bg-gray-200 rounded-t-xl rounded-br-xl dark:bg-gray-800">
+                            <div class="max-w-md p-2 bg-gray-200 rounded-t-xl rounded-br-xl">
                                 @if ($message->message)
                                     <p class="text-sm">{{ $message->message }}</p>
                                 @endif
@@ -348,8 +348,8 @@
                                         @php
                                             $originalFileName = $this->getOriginalFileName($attachment, $message->original_attachment_file_names);
                                         @endphp
-                                        <div wire:click="downloadFile('{{ $attachment }}', '{{ $originalFileName }}')" class="flex items-center gap-1 bg-gray-50 dark:bg-gray-700 p-2 my-2 rounded-lg group cursor-pointer">
-                                            <div class="p-2 text-white bg-gray-500 dark:bg-gray-600 rounded-full group-hover:bg-gray-700 group-hover:dark:bg-gray-800">
+                                        <div wire:click="downloadFile('{{ $attachment }}', '{{ $originalFileName }}')" class="flex items-center gap-1 bg-gray-50 p-2 my-2 rounded-lg group cursor-pointer">
+                                            <div class="p-2 text-white bg-gray-500 rounded-full group-hover:bg-gray-700 group-hover:">
                                                 @php
                                                     $icon = 'heroicon-m-x-mark';
 
@@ -372,13 +372,13 @@
                                                 @endphp
                                                 <x-filament::icon icon="{{ $icon }}" class="w-4 h-4" />
                                             </div>
-                                            <p class="text-sm text-gray-600 dark:text-white group-hover:underline">
+                                            <p class="text-sm text-gray-600 group-hover:underline">
                                                 {{ $originalFileName }}
                                             </p>
                                         </div>
                                     @endforeach
                                 @endif
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-600 text-start">
+                                <p class="mt-1 text-xs text-gray-500 text-start">
                                     @php
                                         $createdAt = \Carbon\Carbon::parse($message->created_at)->setTimezone(config('filachat.timezone', 'app.timezone'));
 
@@ -395,7 +395,7 @@
                     @else
                         <!-- Right Side -->
                         <div class="flex flex-col items-end gap-2 mb-2">
-                            <div class="max-w-md p-2 text-white rounded-t-xl rounded-bl-xl bg-primary-600 dark:bg-primary-500">
+                            <div class="max-w-md p-2 text-white rounded-t-xl rounded-bl-xl bg-primary-600">
                                 @if ($message->message)
                                 <p class="text-sm">{!! $message->message !!}</p>
                                 @endif
@@ -404,8 +404,8 @@
                                         @php
                                             $originalFileName = $this->getOriginalFileName($attachment, $message->original_attachment_file_names);
                                         @endphp
-                                        <div wire:click="downloadFile('{{ $attachment }}', '{{ $originalFileName }}')" class="flex items-center gap-1 bg-primary-500 dark:bg-primary-800 p-2 my-2 rounded-lg group cursor-pointer">
-                                            <div class="p-2 text-white bg-primary-600 rounded-full group-hover:bg-primary-700 group-hover:dark:bg-primary-900">
+                                        <div wire:click="downloadFile('{{ $attachment }}', '{{ $originalFileName }}')" class="flex items-center gap-1 bg-primary-500 p-2 my-2 rounded-lg group cursor-pointer">
+                                            <div class="p-2 text-white bg-primary-600 rounded-full group-hover:bg-primary-700 group-hover:">
                                                 @php
                                                     $icon = 'heroicon-m-x-circle';
 
@@ -434,7 +434,7 @@
                                         </div>
                                     @endforeach
                                 @endif
-                                <p class="text-xs text-primary-300 dark:text-primary-200 text-end">
+                                <p class="text-xs text-primary-300 text-end">
                                     @php
                                         $createdAt = \Carbon\Carbon::parse($message->created_at)->setTimezone(config('filachat.timezone', 'app.timezone'));
 
@@ -448,7 +448,7 @@
                                 </p>
                             </div>
                             <template x-if="markAsRead || @js($message->last_read_at) !== null">
-                                <p class="text-xs text-gray-600 dark:text-primary-200 text-end">
+                                <p class="text-xs text-gray-600 text-end">
                                     {{__('Seen at')}}
                                     @php
                                         $lastReadAt = \Carbon\Carbon::parse($message->last_read_at)->setTimezone(config('filachat.timezone', 'app.timezone'));
@@ -478,7 +478,7 @@
 
 
         <!-- Chat Input -->
-        <div class="w-full p-4 border-t dark:border-gray-800/60 border-gray-200/90">
+        <div class="w-full p-4 border-t border-gray-200/90">
             <form wire:submit="sendMessage" class="flex items-end justify-between w-full gap-4">
                 <div class="w-full max-h-96 overflow-y-auto">
                     {{ $this->form }}
@@ -492,10 +492,10 @@
         </div>
     @else
         <div class="flex flex-col items-center justify-center h-full p-3">
-            <div class="p-3 mb-4 bg-gray-100 rounded-full dark:bg-gray-500/20">
-                <x-filament::icon icon="heroicon-m-x-mark" class="w-6 h-6 text-gray-500 dark:text-gray-400" />
+            <div class="p-3 mb-4 bg-gray-100 rounded-full">
+                <x-filament::icon icon="heroicon-m-x-mark" class="w-6 h-6 text-gray-500" />
             </div>
-            <p class="text-base text-center text-gray-600 dark:text-gray-400">
+            <p class="text-base text-center text-gray-600">
                 {{__('No selected conversation')}}
             </p>
         </div>

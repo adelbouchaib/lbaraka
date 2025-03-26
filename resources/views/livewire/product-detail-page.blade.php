@@ -1,7 +1,7 @@
 @section('title', $product->name)
 
   
-  <section class="px-4 xl:px-24 overflow-hidden bg-white font-poppins dark:bg-gray-800">
+  <section class="px-4 xl:px-24 overflow-hidden bg-white font-poppins">
     <div class=" py-8 lg:py-16 mx-auto ">
       <div class="flex flex-wrap">
       <div class="w-full mb-8 md:w-1/2 md:mb-0" 
@@ -56,20 +56,20 @@
         </div>
         <div class="w-full px-4 md:w-1/2 ">
           <div class="lg:pl-4">
-          <h2 class="max-w-xl mb-6 text-xl xs:text-2xl font-bold dark:text-gray-400 md:text-4xl">
+          <h2 class="max-w-xl mb-6 text-xl xs:text-2xl font-bold md:text-4xl">
           {{$product->name}}</h2>
             <div class="mb-8 rounded-md border-2 shadow-md p-6">
 
-            <p class="text-gray-500 text-md mb-1 dark:text-gray-400">
+            <p class="text-gray-500 text-md mb-1">
                 Min. order: {{ $product->moq }} pieces
             </p>
 
              
-              <p class="inline-block text-4xl font-bold text-gray-700 dark:text-gray-400 ">
+              <p class="inline-block text-4xl font-bold text-gray-700 ">
                 <span>{{$product->price}} DZD</span>
               </p>
 
-              <div class="max-w-md py-4 text-gray-700 dark:text-gray-400 prose">
+              <div class="max-w-md py-4 text-gray-700 prose">
               {!! preg_replace(
                 [
                   '/<a\s+[^>]*href="([^"]+)"[^>]*>/',  // Remove href in <a>
@@ -81,7 +81,7 @@
 
 
               <button wire:click="createRow({{ $product->id }}, {{ $product->seller_id }})" 
-                    class="w-full py-3 bg-blue-500 rounded-md dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 flex items-center justify-center gap-2 
+                    class="w-full py-3 bg-blue-500 rounded-md text-gray-50 hover:bg-blue-600 flex items-center justify-center gap-2 
                     @if(auth()->user()->role !== 'buyer') opacity-50 cursor-not-allowed @endif"
                     @if(auth()->user()->role !== 'buyer') disabled @endif>
                     
@@ -160,8 +160,8 @@
         <!-- Decrement button -->
         <button type="button" 
                 @click="quantity = Math.max(quantity - 1, min); $wire.set('quantity', quantity)" 
-                class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-            <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+            <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
             </svg>
         </button>
@@ -170,14 +170,14 @@
         <input type="text" 
               x-model="quantity" 
               wire:model.defer="quantity" 
-              class="bg-gray-50 border-x-0 border h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+              class="bg-gray-50 border-x-0 border h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5" 
               required />
 
         <!-- Increment button -->
         <button type="button" 
                 @click="quantity++; $wire.set('quantity', quantity)" 
-                class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-            <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                class="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+            <svg class="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
             </svg>
         </button>
@@ -244,15 +244,15 @@
 
            <div class="w-full mb-8 md:mb-0">
                 <!-- Horizontal Line -->
-                <hr class="border-gray-300 dark:border-gray-600 mb-10">
+                <hr class="border-gray-300 mb-10">
                 
                 <!-- Title -->
-                <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                <h1 class="text-xl font-bold text-gray-900 mb-6">
                     Product description from the supplier
                 </h1>
 
                 <!-- Description Content -->
-                <div class="prose text-gray-700 dark:text-gray-400 w-full max-w-none">
+                <div class="prose text-gray-700 w-full max-w-none">
                     {!! preg_replace(
                         [
                             '/<a\s+[^>]*href="([^"]+)"[^>]*>/',  // Remove href in <a>

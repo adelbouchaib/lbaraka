@@ -5,18 +5,18 @@
 <section class="bg-[#f6f7f9] rtl border-b">
     <div class="grid grid-cols-1  lg:grid-cols-2 lg:gap-12 items-center bg-[#f6f7f9] lg:h-[600px] mx-4 lg:mx-32">
             <div class="py-16 lg:pb-16 text-center lg:text-start">
-                <h1 class="font-arabic rtl mb-8 text-4xl md:text-5xl md:leading-relaxed font-bold tracking-tight leading-relaxed text-gray-900 dark:text-white">
+                <h1 class="font-arabic rtl mb-8 text-4xl md:text-5xl md:leading-relaxed font-bold tracking-tight leading-relaxed text-gray-900">
                 أفضل تجار الجملة <br>
                 في مكان واحد!
                 </h1>
                 <p class="font-arabic rtl mb-8 text-md leading-relaxed text-gray-500 font-light md:text-xl">
                 نوفّر لك منصة لشراء المنتجات  بالجملة مباشرة من الموردين الموثوقين في الجزائر! تواصل مباشر، مع حلول رقمية متطورة لتبسيط عمليات البيع والشراء.        </p>
                 <div class="flex flex-col justify-center lg:justify-start lg:mb-16 space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                    <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                    <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                         انضم الان
                         <x-heroicon-o-arrow-left class="h-5 w-5" />
                     </a>  
-                    <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                    <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                         سجل كتاجر بالجملة
                         <x-heroicon-o-arrow-left class="h-5 w-5" />
                     </a>
@@ -152,15 +152,15 @@
     </div>
 </section>
 
-<section class="bg-[#f6f7f9] py-8 antialiased dark:bg-gray-900 pb-20 pt-16 md:pt-24">
+<section class="bg-[#f6f7f9] py-8 antialiased pb-20 pt-16 md:pt-24">
 <div class="flex flex-row justify-between items-center mb-8 mx-4 lg:mx-32">
       <div class="flex-shrink-0">
-        <a href="/login" class="font-arabic inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-black border rounded-lg bg-white focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+        <a href="/login" class="font-arabic inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-black border rounded-lg bg-white focus:ring-4 focus:ring-primary-300">
           عرض كل المنتجات
         </a>
       </div>
 
-      <h1 class="font-arabic text-xl rtl font-semibold tracking-tight leading-none text-gray-900 md:text-2xl lg:text-3xl dark:text-white">
+      <h1 class="font-arabic text-xl rtl font-semibold tracking-tight leading-none text-gray-900 md:text-2xl lg:text-3xl">
         منتجات متنوعة
       </h1>
     </div>
@@ -174,7 +174,7 @@
         
         @foreach($products as $product)
             <a href="{{ url('/products/' . $product->slug) }}" 
-               class="flex-none w-3/4 sm:w-1/2 md:w-full snap-center rounded-lg border border-gray-200 bg-white p-3 sm:p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+               class="flex-none w-3/4 sm:w-1/2 md:w-full snap-center rounded-lg border border-gray-200 bg-white p-3 sm:p-6 shadow-sm">
                 
                <div class="w-full aspect-square overflow-hidden rounded mb-2 relative">
                 <div class="absolute top-0 left-0">
@@ -188,11 +188,11 @@
             </div>
 
                 <div>
-                    <p class="font-arabic rtl line-clamp-2 text-sm sm:text-base leading-tight text-gray-900 dark:text-white">
+                    <p class="font-arabic rtl line-clamp-2 text-sm sm:text-base leading-tight text-gray-900">
                         {{ $product->name }}
                     </p>
                     <div class="mt-2 rtl flex items-center justify-between gap-4">
-                        <p class="text-lg sm:text-xl font-bold leading-tight text-gray-900 dark:text-white mt-2">
+                        <p class="text-lg sm:text-xl font-bold leading-tight text-gray-900 mt-2">
                             {{ $product->price }} دج
                         </p>
                     </div>
@@ -208,20 +208,20 @@
   <!-- Filter modal -->
 </section>
 
-<section class="px-2 bg-white py-8 antialiased dark:bg-gray-900 pt-16 md:pt-24">
-    <h1 class="font-arabic mb-8 text-2xl text-center font-semibold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+<section class="px-2 bg-white py-8 antialiased pt-16 md:pt-24">
+    <h1 class="font-arabic mb-8 text-2xl text-center font-semibold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">
     إذا كنت تاجر بالجملة إنضم إلينا  
     </h1>
-    <p class="font-arabic rtl text-md font-normal leading-relaxed text-gray-500 lg:text-xl text-center dark:text-gray-400">
+    <p class="font-arabic rtl text-md font-normal leading-relaxed text-gray-500 lg:text-xl text-center">
     يرجى ملء النموذج أدناه لتزويدنا بتفاصيلك وتسهيل التواصل معك لاحقًا حول حلولنا المصممة خصيصًا لمتطلبات عملك.
     </p>
 
     <div class="flex rtl flex-col mb-8 mt-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-3">
-            <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+            <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                 سجل الآن
                 <x-heroicon-o-arrow-left class="h-5 w-5" />
             </a> 
-            <a href="https://wa.me/+213559913711" class="font-arabic inline-flex gap-2 justify-center items-center py-3 px-5 text-base font-medium text-center border text-gray-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+            <a href="https://wa.me/+213559913711" class="font-arabic inline-flex gap-2 justify-center items-center py-3 px-5 text-base font-medium text-center border text-gray-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                 تواصل معنا
                 <x-heroicon-o-arrow-left class="h-5 w-5" />
             </a>  
