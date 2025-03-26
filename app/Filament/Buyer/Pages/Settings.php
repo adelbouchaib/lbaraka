@@ -61,7 +61,8 @@ public function save()
             'max:255',
             Rule::unique('users', 'email')->ignore($user->id), // More readable syntax
         ],
-        'phone' => 'nullable|string|max:15',
+        'phone' => 'nullable|string|max:15|min:9|unique:users,phone',
+
     ], [
         'email.unique' => 'This email has already been used.',
     ]);

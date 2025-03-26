@@ -34,7 +34,7 @@ class Register extends AuthRegister
     {
         return TextInput::make('phone')
         ->label('Phone Number')
-        ->unique('users', 'phone')
+        ->unique('seller_leads', 'phone')
         ->prefix('+213')
         ->required()
         ->tel(); // Example default country code (Algeria)

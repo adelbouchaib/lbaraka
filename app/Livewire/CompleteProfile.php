@@ -31,7 +31,7 @@ class CompleteProfile extends Component
     {
         $this->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required',
+            'phone' => 'required|string|max:15|min:9|unique:users,phone',
         ]);
 
         // Create the user
