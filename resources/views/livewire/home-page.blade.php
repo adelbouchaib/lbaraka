@@ -16,7 +16,7 @@
                         انضم الان
                         <x-heroicon-o-arrow-left class="h-5 w-5" />
                     </a>  
-                    <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                    <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                         سجل كتاجر بالجملة
                         <x-heroicon-o-arrow-left class="h-5 w-5" />
                     </a>
