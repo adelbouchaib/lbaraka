@@ -33,6 +33,7 @@ class Register extends BaseRegister
     {
         return TextInput::make('phone')
         ->label('Phone Number')
+        ->unique('users', 'phone')
         // ->prefix('+213')
         ->required()
         ->tel(); // Example default country code (Algeria)
