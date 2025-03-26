@@ -3,7 +3,7 @@
 <nav class="bg-white border-gray-200 dark:bg-gray-900 border">
   <div class="max-w-screen-xl px-3 py-3 sm:mx-auto flex flex-wrap items-center">
     <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="/images/LOGO.png"  class="h-7" alt="Flowbite Logo" />
+        <img src="/images/LOGO.png"  class="h-7" alt="Logo" />
     </a>
     
     <div class="max-w-md ml-2 md:ml-20 lg:ml-44 flex-1 lg:w-full">   
@@ -39,8 +39,13 @@
    
 
         @if(!auth()->user())
-        <button wire:click="goToLogin" type="button" class="font-arabic ml-2 text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            الدخول</button>
+        <button wire:click="goToLogin" type="button" class="flex gap-1 font-arabic ml-2 text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M12 14a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 1.79-8 4v1h16v-1c0-2.21-3.582-4-8-4z"/>
+            </svg>    
+            Sign in</button>
+
         @else
         <a href="{{ auth()->user()->role === 'seller' ? '/seller/filachat' : '/filachat' }}">
         <button class="relative px-1 mx-1 ml-4 mr-2 sm:mr-4 border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Messages">

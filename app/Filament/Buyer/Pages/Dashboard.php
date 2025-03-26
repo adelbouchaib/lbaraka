@@ -35,14 +35,6 @@ class Dashboard extends Page
     public function mount(){
         $this->categories = Category::All();
 
-
-        foreach ($this->categoriesId as $categoryId) {
-            $category = Category::find($categoryId); // Fetch category
-            $this->topProducts[$category->name] = Product::where('category_id', $categoryId)
-                ->take(2)
-                ->get();
-        }
-
         $this->newProducts = Product::latest()->take(5)->get();
 
         $this->allProducts = Product::latest()->take(20)->get();

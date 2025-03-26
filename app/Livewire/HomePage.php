@@ -13,7 +13,7 @@ class HomePage extends Component
 
         $productQuery = Product::query()->where('is_active', 1);
         return view('livewire.home-page', [
-            'products' => $productQuery->paginate(8),
+            'products' => $productQuery->paginate(4),
         ]);
     }
 }

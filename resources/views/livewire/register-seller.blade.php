@@ -4,7 +4,7 @@
 <div class="bg-gray-50 w-full h-screen flex items-center justify-center dark:bg-gray-900 rtl">
     <div class="w-full max-w-lg p-6 px-6 sm:px-12 bg-white dark:bg-gray-800 rounded-lg border">
 
-        <img src="{{ asset('images/logo.png') }}" class="mx-auto mt-4" alt="logo" width="100">
+        <img src="{{ asset('images/LOGO.png') }}" class="mx-auto mt-4" alt="logo" width="100">
 
         <h2 class="text-2xl font-arabic mt-2 font-bold text-center text-gray-900 dark:text-white">
             التسجيل
