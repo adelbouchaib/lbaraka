@@ -5,11 +5,11 @@
 @endphp
 
 <div class="flex items-center gap-x-3">
-    <h2 class="text-base font-semibold leading-6 text-gray-950">
+    <h2 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
         {{ __('filament-panels::widgets/account-widget.welcome', ['app' => config('app.name')]) }}
     </h2>
 
-    <p class="text-sm text-gray-500">
+    <p class="text-sm text-gray-500 dark:text-gray-400">
         {{ filament()->getUserName($user) }}
     </p>
 
@@ -60,7 +60,7 @@
                             <p class="text-sm font-semibold truncate"> 
                                 Inquiry from {{$inquiry->product->name}}
                             </p>
-                            <p class="text-sm font-light text-gray-600">
+                            <p class="text-sm font-light text-gray-600 dark:text-gray-500">
                             </p>
                     </div>
 
@@ -70,7 +70,7 @@
                                     <p class="text-sm font-semibold truncate"> 
                                         Sender
                                     </p>
-                                    <p class="text-sm font-light text-gray-600">
+                                    <p class="text-sm font-light text-gray-600 dark:text-gray-500">
                                         {{$inquiry->buyer->name}}
                                     </p>
                                 </div>
@@ -78,7 +78,7 @@
                                     <p class="text-sm font-semibold truncate"> 
                                         New Inquiry
                                     </p>
-                                    <p class="text-sm font-light text-gray-600">
+                                    <p class="text-sm font-light text-gray-600 dark:text-gray-500">
                                         Pending: {{$inquiry->created_at->diffForHumans()}}
                                     </p>
                                 </div>

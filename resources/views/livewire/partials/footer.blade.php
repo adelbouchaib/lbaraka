@@ -1,6 +1,6 @@
 <!-- Footer container -->
 <footer
-  class="bg-black/5 text-center text-surface/75 lg:text-left">
+  class="bg-black/5 text-center text-surface/75 dark:bg-neutral-700 dark:text-white/75 lg:text-left">
 
 
   <!--Copyright section-->

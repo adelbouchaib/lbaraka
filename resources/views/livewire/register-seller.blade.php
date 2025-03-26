@@ -1,19 +1,19 @@
 @section('title', 'تسجيل')
 
 
-<div class="bg-gray-50 w-full h-screen flex items-center justify-center rtl">
-    <div class="w-full max-w-lg p-6 px-6 sm:px-12 bg-white rounded-lg border">
+<div class="bg-gray-50 w-full h-screen flex items-center justify-center dark:bg-gray-900 rtl">
+    <div class="w-full max-w-lg p-6 px-6 sm:px-12 bg-white dark:bg-gray-800 rounded-lg border">
 
         <img src="{{ asset('images/LOGO.png') }}" class="mx-auto mt-4" alt="logo" width="100">
 
-        <h2 class="text-2xl font-arabic mt-2 font-bold text-center text-gray-900">
+        <h2 class="text-2xl font-arabic mt-2 font-bold text-center text-gray-900 dark:text-white">
             التسجيل
         </h2>
-        <h2 class="text-xl mt-2 font-bold text-center text-gray-900">
+        <h2 class="text-xl mt-2 font-bold text-center text-gray-900 dark:text-white">
             {{ $step === 1 ? '' : '' }}
         </h2>
     
-        <p class="text-xs font-arabic pb-4 text-center text-gray-900">
+        <p class="text-xs font-arabic pb-4 text-center text-gray-900 dark:text-white">
             أو 
             <a href="/seller/login" class="hover:underline text-secondary font-semibold">تسجيل الدخول إلى حسابك</a>
         </p>
@@ -26,31 +26,31 @@
             @if ($step === 1)
 
                 <div>
-                    <label class="mb-2 font-arabic block text-sm  text-gray-700">الإسم الكامل*</label>
+                    <label class="mb-2 font-arabic block text-sm  text-gray-700 dark:text-gray-300">الإسم الكامل*</label>
                     <input type="text" wire:model="name" autocomplete="name"
-                        class="block w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg" autofocus>
+                        class="block w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg dark:bg-gray-700 dark:text-white" autofocus>
                     @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
-                    <label class="mb-2 font-arabic block text-sm  text-gray-700">البريد الإلكتروني*</label>
+                    <label class="mb-2 font-arabic block text-sm  text-gray-700 dark:text-gray-300">البريد الإلكتروني*</label>
                     <input type="text" wire:model="email" autocomplete="email"
-                        class="block w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg">
+                        class="block w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg dark:bg-gray-700 dark:text-white">
                     @error('email') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
-                    <label class="mb-2 font-arabic block text-sm  text-gray-700">رقم الهاتف*</label>
+                    <label class="mb-2 font-arabic block text-sm  text-gray-700 dark:text-gray-300">رقم الهاتف*</label>
                     <input type="tel" wire:model="phone" autocomplete="tel"
-                        class="block rtl w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg">
+                        class="block rtl w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg dark:bg-gray-700 dark:text-white">
                     @error('phone') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
 
                 <div>
-                    <label class="mb-2 font-arabic block text-sm  text-gray-700">كلمة المرور*</label>
+                    <label class="mb-2 font-arabic block text-sm  text-gray-700 dark:text-gray-300">كلمة المرور*</label>
                     <div x-data="{ showPassword: false }" class="flex border rounded-lg">
                         <input :type="showPassword ? 'text' : 'password'" wire:model="password"
-                            class="w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg">
+                            class="w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg dark:bg-gray-700 dark:text-white">
                         <button type="button" @click="showPassword = !showPassword" class="px-3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 2C4.477 2 0 7.163 0 10c0 2.837 4.477 8 10 8s10-5.163 10-8c0-2.837-4.477-8-10-8zM2 10c0-1.883 4.031-6 8-6s8 4.117 8 6-4.031 6-8 6-8-4.117-8-6zm8-4c-2.21 0-4 1.79-4 4a4 4 0 008 0c0-2.21-1.79-4-4-4zm0 6a2 2 0 110-4 2 2 0 010 4z"/>
@@ -61,10 +61,10 @@
                 </div>
 
                 <div>
-                    <label class="mb-2 font-arabic block text-sm  text-gray-700">تأكيد كلمة المرور*</label>
+                    <label class="mb-2 font-arabic block text-sm  text-gray-700 dark:text-gray-300">تأكيد كلمة المرور*</label>
                     <div x-data="{ showCPassword: false }" class="flex border rounded-lg">
                         <input :type="showCPassword ? 'text' : 'password'" wire:model="password_confirmation"
-                            class="w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg">
+                            class="w-full px-4 py-2 border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 outline-none rounded-lg dark:bg-gray-700 dark:text-white">
                         <button type="button" @click="showCPassword = !showCPassword" class="px-3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 2C4.477 2 0 7.163 0 10c0 2.837 4.477 8 10 8s10-5.163 10-8c0-2.837-4.477-8-10-8zM2 10c0-1.883 4.031-6 8-6s8 4.117 8 6-4.031 6-8 6-8-4.117-8-6zm8-4c-2.21 0-4 1.79-4 4a4 4 0 008 0c0-2.21-1.79-4-4-4zm0 6a2 2 0 110-4 2 2 0 010 4z"/>
@@ -93,7 +93,7 @@
 
 
     <div x-data="{ open: false, selected: '' }" class="relative w-full rtl text-sm font-arabic">
-                        <label for="dropdown1" class="block mb-2 text-sm text-gray-700">ما هو نوع عملك؟</label>
+                        <label for="dropdown1" class="block mb-2 text-sm text-gray-700 dark:text-gray-300">ما هو نوع عملك؟</label>
                         <input type="hidden" wire:model.defer="business_type">
 
                         <button @click="open = !open" class="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg flex justify-between items-center focus:outline-none hover:bg-gray-50">
@@ -118,7 +118,7 @@
                 </div>
 
                     <div x-data="{ open: false, selected: '' }" class="relative w-full rtl text-sm font-arabic">
-                        <label for="dropdown1" class="block mb-2 text-sm text-gray-700">ما هي ولاية عملك؟ </label>
+                        <label for="dropdown1" class="block mb-2 text-sm text-gray-700 dark:text-gray-300">ما هي ولاية عملك؟ </label>
                         <input type="hidden" wire:model.defer="business_wilaya">
 
                         <button @click="open = !open" class="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg flex justify-between items-center focus:outline-none hover:bg-gray-50">
@@ -139,7 +139,7 @@
                     </div>
 
                     <div x-data="{ open: false, selected: '' }" class="relative w-full rtl text-sm font-arabic">
-                        <label for="dropdown1" class="block mb-2 text-sm text-gray-700">هل توفر التوصيل؟</label>
+                        <label for="dropdown1" class="block mb-2 text-sm text-gray-700 dark:text-gray-300">هل توفر التوصيل؟</label>
                         <input type="hidden" wire:model.defer="business_delivery">
 
                         <button @click="open = !open" class="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg flex justify-between items-center focus:outline-none hover:bg-gray-50">
@@ -161,7 +161,7 @@
                     </div>
 
                     <div x-data="{ open: false, selected: '' }" class="relative w-full rtl text-sm font-arabic">
-                        <label for="dropdown1" class="block mb-2 text-sm text-gray-700">كم عدد المنتجات المتوفرة لديك للبيع بالجملة حاليا؟</label>
+                        <label for="dropdown1" class="block mb-2 text-sm text-gray-700 dark:text-gray-300">كم عدد المنتجات المتوفرة لديك للبيع بالجملة حاليا؟</label>
                         <input type="hidden" wire:model.defer="business_products">
 
                         <button @click="open = !open" class="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg  flex justify-between items-center focus:outline-none hover:bg-gray-50">
@@ -189,7 +189,7 @@
                     </div>
 
                     <div x-data="{ open: false, selected: [], toggleSelection(value) { if (this.selected.includes(value)) { this.selected = this.selected.filter(item => item !== value); } else { this.selected.push(value); } $wire.set('products_type', this.selected.join(', ')); } }" class="relative w-full text-sm rtl font-arabic">
-                        <label for="dropdown1" class="block mb-1 text-sm text-gray-700">ما هو نوع عملك؟</label>
+                        <label for="dropdown1" class="block mb-1 text-sm text-gray-700 dark:text-gray-300">ما هو نوع عملك؟</label>
                         <input type="hidden" wire:model.defer="products_type">
 
                         <button @click="open = !open" class="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg flex justify-between items-center focus:outline-none hover:bg-gray-50">
