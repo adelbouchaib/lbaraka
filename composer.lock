@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a9d9172cf0444d0a158852a1e18d857",
+    "content-hash": "cf8b246600bdbd7d3abdac56a181b283",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1186,6 +1186,72 @@
                 }
             ],
             "time": "2024-12-27T00:36:43+00:00"
+        },
+        {
+            "name": "erag/laravel-pwa",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eramitgupta/laravel-pwa.git",
+                "reference": "29c3a19b77cb87bd48de61475af367eba89fd713"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eramitgupta/laravel-pwa/zipball/29c3a19b77cb87bd48de61475af367eba89fd713",
+                "reference": "29c3a19b77cb87bd48de61475af367eba89fd713",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.12|^9.0|^10.0|^11.0|^12.0",
+                "laravel/pint": "^1.13",
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Pwa": "EragLaravelPwa\\Facades\\Pwa"
+                    },
+                    "providers": [
+                        "EragLaravelPwa\\EragLaravelPwaServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Pwahelpers.php"
+                ],
+                "psr-4": {
+                    "EragLaravelPwa\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Er Amiit Gupta",
+                    "email": "info.eramitgupta@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple and easy-to-use PWA (Progressive Web App) package for Laravel applications.",
+            "keywords": [
+                "Progressive Web App",
+                "laravel",
+                "laravel package",
+                "laravel pwa",
+                "manifest",
+                "offline",
+                "pwa",
+                "service worker"
+            ],
+            "support": {
+                "issues": "https://github.com/eramitgupta/laravel-pwa/issues",
+                "source": "https://github.com/eramitgupta/laravel-pwa/tree/v1.4.0"
+            },
+            "time": "2025-03-28T20:12:09+00:00"
         },
         {
             "name": "evenement/evenement",
@@ -2700,6 +2766,72 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2025-01-30T13:25:22+00:00"
+        },
+        {
+            "name": "laravel/pint",
+            "version": "v1.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pint.git",
+                "reference": "53072e8ea22213a7ed168a8a15b96fbb8b82d44b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/53072e8ea22213a7ed168a8a15b96fbb8b82d44b",
+                "reference": "53072e8ea22213a7ed168a8a15b96fbb8b82d44b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-tokenizer": "*",
+                "ext-xml": "*",
+                "php": "^8.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.66.0",
+                "illuminate/view": "^10.48.25",
+                "larastan/larastan": "^2.9.12",
+                "laravel-zero/framework": "^10.48.25",
+                "mockery/mockery": "^1.6.12",
+                "nunomaduro/termwind": "^1.17.0",
+                "pestphp/pest": "^2.36.0"
+            },
+            "bin": [
+                "builds/pint"
+            ],
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "App\\": "app/",
+                    "Database\\Seeders\\": "database/seeders/",
+                    "Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "An opinionated code formatter for PHP.",
+            "homepage": "https://laravel.com",
+            "keywords": [
+                "format",
+                "formatter",
+                "lint",
+                "linter",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/pint/issues",
+                "source": "https://github.com/laravel/pint"
+            },
+            "time": "2025-01-14T16:20:53+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -6377,56 +6509,6 @@
             "time": "2024-02-26T18:08:49+00:00"
         },
         {
-            "name": "silviolleite/laravelpwa",
-            "version": "2.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/silviolleite/laravel-pwa.git",
-                "reference": "5f7135d2ee870af01793c9fdf6b1b932b546e20e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/silviolleite/laravel-pwa/zipball/5f7135d2ee870af01793c9fdf6b1b932b546e20e",
-                "reference": "5f7135d2ee870af01793c9fdf6b1b932b546e20e",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "LaravelPWA\\Providers\\LaravelPWAServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "LaravelPWA\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Silvio Luis Leite",
-                    "email": "silviolleite@gmail.com"
-                }
-            ],
-            "description": "Looks like an app, feels like an app, but NOT an app.",
-            "keywords": [
-                "laravel",
-                "php",
-                "progressive web apps",
-                "pwa"
-            ],
-            "support": {
-                "issues": "https://github.com/silviolleite/laravel-pwa/issues",
-                "source": "https://github.com/silviolleite/laravel-pwa/tree/2.0.3"
-            },
-            "time": "2020-08-20T12:19:16+00:00"
-        },
-        {
             "name": "spatie/color",
             "version": "1.7.0",
             "source": {
@@ -9360,63 +9442,6 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
-            "name": "ladumor/laravel-pwa",
-            "version": "v0.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shailesh-ladumor/laravel-pwa.git",
-                "reference": "1867899d6916803aef7ea02f489597555cc4ab02"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shailesh-ladumor/laravel-pwa/zipball/1867899d6916803aef7ea02f489597555cc4ab02",
-                "reference": "1867899d6916803aef7ea02f489597555cc4ab02",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": ">=5.4",
-                "php": ">=5.6"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "LaravelPwa": "Ladumor\\LaravelPwa\\LaravelPwa"
-                    },
-                    "providers": [
-                        "\\Ladumor\\LaravelPwa\\PWAServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Ladumor\\LaravelPwa\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shailesh Ladumor",
-                    "email": "shaileshmladumor@gmail.com"
-                }
-            ],
-            "description": "this package used for the make pwa website.",
-            "keywords": [
-                "laravel",
-                "laravel-pwa",
-                "php",
-                "pwa-laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/shailesh-ladumor/laravel-pwa/issues",
-                "source": "https://github.com/shailesh-ladumor/laravel-pwa/tree/v0.0.4"
-            },
-            "time": "2023-09-02T13:09:30+00:00"
-        },
-        {
             "name": "laravel/pail",
             "version": "v1.2.2",
             "source": {
@@ -9493,72 +9518,6 @@
                 "source": "https://github.com/laravel/pail"
             },
             "time": "2025-01-28T15:15:15+00:00"
-        },
-        {
-            "name": "laravel/pint",
-            "version": "v1.20.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/pint.git",
-                "reference": "53072e8ea22213a7ed168a8a15b96fbb8b82d44b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/53072e8ea22213a7ed168a8a15b96fbb8b82d44b",
-                "reference": "53072e8ea22213a7ed168a8a15b96fbb8b82d44b",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "ext-tokenizer": "*",
-                "ext-xml": "*",
-                "php": "^8.1.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.66.0",
-                "illuminate/view": "^10.48.25",
-                "larastan/larastan": "^2.9.12",
-                "laravel-zero/framework": "^10.48.25",
-                "mockery/mockery": "^1.6.12",
-                "nunomaduro/termwind": "^1.17.0",
-                "pestphp/pest": "^2.36.0"
-            },
-            "bin": [
-                "builds/pint"
-            ],
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "App\\": "app/",
-                    "Database\\Seeders\\": "database/seeders/",
-                    "Database\\Factories\\": "database/factories/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nuno Maduro",
-                    "email": "enunomaduro@gmail.com"
-                }
-            ],
-            "description": "An opinionated code formatter for PHP.",
-            "homepage": "https://laravel.com",
-            "keywords": [
-                "format",
-                "formatter",
-                "lint",
-                "linter",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/laravel/pint/issues",
-                "source": "https://github.com/laravel/pint"
-            },
-            "time": "2025-01-14T16:20:53+00:00"
         },
         {
             "name": "laravel/sail",
