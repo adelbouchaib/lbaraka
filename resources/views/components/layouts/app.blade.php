@@ -21,6 +21,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
         @vite('resources/css/app.css')
         @livewireStyles
+        @laravelPWA
+
     </head>
 
     <body>
