@@ -37,8 +37,8 @@ class ProductResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('images')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('short_description')
-                    ->columnSpanFull(),
+                // Forms\Components\Textarea::make('short_description')
+                //     ->columnSpanFull(),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('price')

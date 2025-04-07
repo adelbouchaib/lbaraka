@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->index();
             $table->json('images')->nullable();
-            $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->decimal('price', 10, 0);
             $table->decimal('moq', 10, 0);

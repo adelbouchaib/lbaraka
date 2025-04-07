@@ -1,5 +1,9 @@
 {
     "Dashboard": "لوحة التحكم",
+    "Stores": "المتاجر",
+    "Store": "المتجر",
+    "Select main products": "اختر منتجاتك الأساسية",
+    "Products mentioned in your chat history with the supplier": "المنتجات المذكورة في سجل محادثتك مع هذا الشخص",
     "Inquiries": "الاستفسارات",
     "Orders": "الطلبات",
     "Order": "الطلب",

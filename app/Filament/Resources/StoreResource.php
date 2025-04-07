@@ -27,6 +27,21 @@ class StoreResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Store'); // Change Dashboard name
+    }
+
+    public static function getLabel(): string
+    {
+        return __('Store'); // Change Dashboard name
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Store');
+    }
+
     public static function getNavigationBadge(): ?string
     {
         if (Auth::user()->type === 'individual') {
@@ -41,25 +56,21 @@ class StoreResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('logo')
-                    ->required()
-                    ->translateLabel()
-                    ->directory('stores'),
+
+                // Forms\Components\TextInput::make('name')
+                //     ->required()
+                //     ->translateLabel()
+                //     ->maxLength(255),
                 Forms\Components\Select::make('featured_products')
                     ->options(Product::all()->pluck('name', 'id')) // Assuming you have a 'name' and 'id' in Product model
                     ->multiple()
                     ->maxItems(4)
-                    ->label('Select Products')
-                    ,
-                
-                
-                
-                
-
-                    
+                    ->translateLabel()
+                    ->label('Select main products'),
+                // Forms\Components\FileUpload::make('logo')
+                //     ->required()
+                //     ->translateLabel()
+                //     ->directory('stores'),
                 
             ]);
     }

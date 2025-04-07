@@ -71,13 +71,13 @@
                 <span>{{$product->price}} DZD</span>
               </p>
 
-              <div class="max-w-md py-4 text-gray-700 dark:text-gray-400 prose">
+              <!-- <div class="max-w-md py-4 text-gray-700 dark:text-gray-400 prose">
               {!! preg_replace(
                 [
                   '/<a\s+[^>]*href="([^"]+)"[^>]*>/',  // Remove href in <a>
                   '/<figcaption\b[^>]*>.*?<\/figcaption>/i' // Remove <figcaption> completely
               ], ['<a>', ''], $product->short_description) !!}    
-              </div>
+              </div> -->
 
 
 
@@ -258,7 +258,7 @@
                 
                 <!-- Title -->
                 <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                    Product description from the supplier
+                    Product details
                 </h1>
 
                 <!-- Description Content -->
@@ -267,7 +267,7 @@
                         [
                             '/<a\s+[^>]*href="([^"]+)"[^>]*>/',  // Remove href in <a>
                             '/<figcaption\b[^>]*>.*?<\/figcaption>/i' // Remove <figcaption> completely
-                        ], ['<a>', ''], $product->short_description) !!}
+                        ], ['<a>', ''], $product->description) !!}
                 </div>
             </div>
 

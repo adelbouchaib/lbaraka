@@ -71,10 +71,10 @@ class ProductResource extends Resource
                                 // Forms\Components\MarkdownEditor::make('description')
                                 // RichEditor::make('description')
 
-                                Textarea::make('short_description')
-                                ->translateLabel()
+                                // Textarea::make('short_description')
+                                // ->translateLabel()
                                
-                                    ->columnSpanFull(),
+                                //     ->columnSpanFull(),
 
                             RichEditor::make('description')
                             ->translateLabel()
@@ -104,6 +104,7 @@ class ProductResource extends Resource
 
                         Forms\Components\TextInput::make('moq')
                         ->label('Minimum quantity')
+                        ->default(10)
                         ->translateLabel()
                         ->required()
                         ->numeric(),

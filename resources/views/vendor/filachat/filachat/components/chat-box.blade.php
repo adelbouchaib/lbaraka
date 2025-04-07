@@ -55,7 +55,7 @@
             <div x-show="currentStep === 1" class="mt-4">
                 <!-- Product Selection -->
                 <label for="selectedProduct" class="text-sm font-medium text-gray-950 mb-2 block">
-                {{__('Select a Product')}}
+                {{__('Products mentioned in your chat history with the supplier')}}
                 </label>
                 <div class="max-h-[500px] overflow-y-auto space-y-4">
                     @foreach ($selectedInquiries as $selectedInquiry)
@@ -100,10 +100,76 @@
                             </div>
                         </label>
                     @endforeach
+
+                    <div x-data="{ showDiv: false }">
+                        <!-- Check Button -->
+                        <label class="inline-flex items-center">
+        <span class="mr-2">Show the div</span>
+        <button type="button" 
+            x-on:click="showDiv = !showDiv" 
+            :class="showDiv ? 'bg-green-600' : 'bg-gray-400'" 
+            class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors duration-200 ease-in-out">
+            <span :class="showDiv ? 'translate-x-5' : 'translate-x-0'" 
+                class="inline-block w-5 h-5 bg-white rounded-full transform transition-transform duration-200 ease-in-out"></span>
+        </button>
+    </label>
+
+
+                        <div x-show="showDiv" x-transition>
+
+                    @foreach ($selectedProducts as $selectedProduct)
+                        <label class="border rounded-md p-4 flex items-center cursor-pointer shadow-sm hover:bg-gray-100 transition"
+                        x-data="{ isChecked: false }"
+                        :class="{ 'bg-primary-100 border-primary-500': isChecked }"
+                        x-init="$watch('isChecked', value => { 
+                            if (value) { 
+                                $wire.set('selectedProduct', {{ $selectedProduct->id }});
+                            } 
+                        })"                        
+                        x-effect="isChecked = ($wire.selectedProduct == {{ $selectedProduct->id }})">
+                            
+                            <!-- Visible Custom Radio -->
+                            <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center mr-4">
+                                <div class="w-3 h-3 bg-primary-500 rounded-full" x-show="isChecked"></div>
+                            </div>
+
+                            <!-- Hidden Radio Input -->
+                            <input type="radio" value="{{ $selectedProduct->id }}" name="product_selection"
+                                wire:model="selectedProduct"
+                                wire:click="processStepTwo({{ $selectedProduct->quantity ?? 0}})"
+                                class="hidden"
+                                x-on:change="isChecked = true">
+
+                            <!-- Product Image -->
+                            @if ($selectedProduct->images[0])  
+                                <img src="{{ asset('storage/' . $selectedProduct->images[0]) }}" 
+                                    alt="{{ $selectedProduct->name }}" 
+                                    class="w-20 h-20 object-cover rounded mr-4">
+                            @else
+                                <div class="w-20 h-20 bg-gray-300 rounded flex items-center justify-center"> 
+                                    <span class="text-gray-500">No Image</span>
+                                </div>
+                            @endif
+
+                            <!-- Product Info -->
+                            <div class="text-sm">
+                                <p class="font-medium text-gray-900">{{ $selectedProduct->name }}</p>
+                                <p class="text-gray-500">{{ $selectedProduct->price }}</p>
+                            </div>
+                        </label>
+                    @endforeach
+
+                </div>
+
+                    </div>
+
+
+
+                    
                 </div>
 
 
-                <div class="flex justify-end space-x-2 mt-4 border-t pt-3">
+                <div class="flex gap-2 justify-end space-x-2 mt-4 border-t pt-3">
                     <x-filament::button @click="currentStep = 2" color="primary">{{__('Next')}}</x-filament::button>
                     <x-filament::button type="button" color="danger" @click="isOpen = false">{{__('Cancel')}}</x-filament::button>
                 </div>
