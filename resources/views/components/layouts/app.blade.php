@@ -21,8 +21,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
         @vite('resources/css/app.css')
         @livewireStyles
-        @laravelPWA
-
     </head>
 
     <body>
@@ -32,7 +30,6 @@
         </main>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.1/dist/flowbite.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <script src="{{ asset('serviceworker.js') }}"></script>
         @livewireScripts
         @livewire('partials.footer')
     </body>
