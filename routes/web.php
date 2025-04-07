@@ -49,6 +49,7 @@ Route::get('/thankyou', ThankyouSeller::class)->name('thankyou.seller');
 
 use Google\Client as GoogleClient;
 use Illuminate\Support\Facades\Http;
+use App\Models\User;
 
 Route::get('/testnotification', function () {
     // Get the FCM token for the user you want to send the message to.
