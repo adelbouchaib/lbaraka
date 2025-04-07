@@ -106,7 +106,7 @@ class InquiryResource extends Resource
                 Tables\Actions\Action::make('chat')
                 ->label('Chat') // Set the button label
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->url(fn (Inquiry $record) => url("/filachat/{$record->filachat_conversation_id}"))
+                ->url(fn (Inquiry $record) => url("/chat/{$record->filachat_conversation_id}"))
                 ->openUrlInNewTab()
                 ->color('secondary'),
                 ])
@@ -131,5 +131,10 @@ class InquiryResource extends Resource
             'create' => Pages\CreateInquiry::route('/create'),
             'edit' => Pages\EditInquiry::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('seller_id', auth()->id());
     }
 }

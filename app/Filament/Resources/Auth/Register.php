@@ -23,8 +23,6 @@ class Register extends AuthRegister
                         $this->getPhoneFormComponent(), 
                         $this->getPasswordFormComponent(),
                         $this->getPasswordConfirmationFormComponent(),
-                        Hidden::make('role')  // Use Hidden instead of TextInput
-                            ->default('seller'), // Set default value for the role
                     ])
                     ->statePath('data');
         

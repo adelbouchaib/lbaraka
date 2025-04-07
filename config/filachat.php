@@ -193,7 +193,7 @@ return [
     | customize this if you have a different route slug in your application.
     |
     */
-    'slug' => 'filachat',
+    'slug' => 'chat',
 
     /*
     |--------------------------------------------------------------------------

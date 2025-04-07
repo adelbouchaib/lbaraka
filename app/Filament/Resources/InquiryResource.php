@@ -120,7 +120,7 @@ class InquiryResource extends Resource
                 ->label('Chat') // Set the button 
                 ->translateLabel()
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->url(fn (Inquiry $record) => url("/seller/filachat/{$record->filachat_conversation_id}"))
+                ->url(fn (Inquiry $record) => url("/seller/chat/{$record->filachat_conversation_id}"))
                 ->openUrlInNewTab()
                 ->color('primary'),
             ])
@@ -150,5 +150,10 @@ class InquiryResource extends Resource
     public static function getNavigationSort(): int
     {
         return 2; // Lower number = higher priority
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('seller_id', auth()->id());
     }
 }

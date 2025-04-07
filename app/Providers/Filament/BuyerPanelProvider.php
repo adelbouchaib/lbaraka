@@ -27,6 +27,10 @@ use Filament\Support\Facades\FilamentColor;
 use App\Filament\Buyer\Pages\Auth\Register;
 use Filament\View\PanelsRenderHook;
 
+use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
+use App\Http\Responses\LoginResponse;
+use Illuminate\Support\Facades\Session;
+
 
 class BuyerPanelProvider extends PanelProvider
 {
@@ -92,7 +96,8 @@ class BuyerPanelProvider extends PanelProvider
 
             ]);
     }
-  
+
+    
    
 
 }

@@ -48,7 +48,7 @@ class Dashboard extends Page
 
     public function redirectToConversation($conversationId)
     {
-        return redirect("/seller/filachat/{$conversationId}");
+        return redirect("/seller/chat/{$conversationId}");
     }
 
 

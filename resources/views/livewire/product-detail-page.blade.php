@@ -10,22 +10,24 @@
             <div class="relative w-full h-[350px] md:h-[500px]"> <!-- Full width, fixed height -->
                 <img :src="mainImage" 
                     class="w-full h-full object-contain rounded-lg border bg-gray-100">
-                    @if(auth()->user()->role == 'buyer')
-                    <button wire:click="toggleFavorite"
-                            class="absolute top-4 right-4 border rounded-full p-2 transition 
-                                {{ $isFavorited ? 'border-red-400 bg-red-100' : 'border-gray-400 bg-white hover:bg-gray-100' }}">
-                            
-                        <!-- Heroicons Heart Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                            class="w-6 h-6 transition" 
-                            viewBox="0 0 24 24"
-                            fill="{{ $isFavorited ? 'red' : 'white' }}" 
-                            stroke="{{ $isFavorited ? 'red' : 'gray' }}" stroke-width="2">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A5.98 5.98 0 0 1 16.5 3 5.5 5.5 0 0 1 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                        </svg>
-                    </button>
-                    @endif
+                    @auth
+                        @if(auth()->user()->role == 'buyer')
+                        <button wire:click="toggleFavorite"
+                                class="absolute top-4 right-4 border rounded-full p-2 transition 
+                                    {{ $isFavorited ? 'border-red-400 bg-red-100' : 'border-gray-400 bg-white hover:bg-gray-100' }}">
+                                
+                            <!-- Heroicons Heart Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                class="w-6 h-6 transition" 
+                                viewBox="0 0 24 24"
+                                fill="{{ $isFavorited ? 'red' : 'white' }}" 
+                                stroke="{{ $isFavorited ? 'red' : 'gray' }}" stroke-width="2">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A5.98 5.98 0 0 1 16.5 3 5.5 5.5 0 0 1 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                            </svg>
+                        </button>
+                        @endif
+                    @endauth
             </div>
 
           <div class="flex-wrap flex">
@@ -79,7 +81,7 @@
 
 
 
-
+              @auth
               <button wire:click="createRow({{ $product->id }}, {{ $product->seller_id }})" 
                     class="w-full py-3 bg-blue-500 rounded-md dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 flex items-center justify-center gap-2 
                     @if(auth()->user()->role !== 'buyer') opacity-50 cursor-not-allowed @endif"
@@ -90,7 +92,15 @@
                         <path fill-rule="evenodd" d="M4.5 6.75A2.25 2.25 0 0 1 6.75 4.5h10.5a2.25 2.25 0 0 1 2.25 2.25v6.75a2.25 2.25 0 0 1-2.25 2.25H9.622L5.707 18.764a.75.75 0 0 1-1.207-.592V9a2.25 2.25 0 0 1 0-2.25ZM6.75 6a.75.75 0 0 0-.75.75v8.76l2.693-2.54a.75.75 0 0 1 .507-.19h7.8a.75.75 0 0 0 .75-.75V6.75a.75.75 0 0 0-.75-.75H6.75Z" clip-rule="evenodd"/>
                     </svg>
                 </button>
-
+              @else
+              <a href="{{ route('filament.buyer.auth.login') }}"
+       class="w-full py-3 bg-blue-500 rounded-md dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700 flex items-center justify-center gap-2">
+        <span class="font-medium">Login to Contact Supplier</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+            <path fill-rule="evenodd" d="M4.5 6.75A2.25 2.25 0 0 1 6.75 4.5h10.5a2.25 2.25 0 0 1 2.25 2.25v6.75a2.25 2.25 0 0 1-2.25 2.25H9.622L5.707 18.764a.75.75 0 0 1-1.207-.592V9a2.25 2.25 0 0 1 0-2.25ZM6.75 6a.75.75 0 0 0-.75.75v8.76l2.693-2.54a.75.75 0 0 1 .507-.19h7.8a.75.75 0 0 0 .75-.75V6.75a.75.75 0 0 0-.75-.75H6.75Z" clip-rule="evenodd"/>
+        </svg>
+    </a>
+              @endauth
 
 
 
@@ -188,7 +198,7 @@
 
 </div>
 
-                    <p class="text-sm text-gray-600">Write a message to start your chat:</p>
+                    <p class="text-sm text-gray-600">Details:</p>
                     <!-- Message Input -->
                     <textarea wire:model="message" 
                               class="w-full mt-2 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 

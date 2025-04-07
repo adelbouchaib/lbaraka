@@ -25,6 +25,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -120,6 +121,8 @@ class ProductResource extends Resource
                 ])->columnSpan(1),
 
             ])->columns(3);
+
+          
     }
 
     public static function table(Table $table): Table
@@ -174,6 +177,7 @@ class ProductResource extends Resource
                     // ->requiresConfirmation()
                     ->url(fn (Product $record) => url("/products/{$record->slug}")) // Generates the correct URL
                     ->openUrlInNewTab(), // Optional: Opens in a new tab
+                    
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
@@ -202,4 +206,10 @@ class ProductResource extends Resource
             'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('seller_id', auth()->id());
+    }
+
 }

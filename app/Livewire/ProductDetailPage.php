@@ -90,7 +90,7 @@ class ProductDetailPage extends Component
         
         
 
-        return redirect()->to('buyer/filachat/' . $existingConversation->id);    
+        return redirect()->to('buyer/chat/' . $existingConversation->id);    
     }
 
     public function toggleFavorite()
@@ -117,9 +117,9 @@ class ProductDetailPage extends Component
 
     public function mount($product)
     {
-        if (auth()->guest()) {
-            return redirect('/login');
-        }
+        // if (auth()->guest()) {
+        //     return redirect('/login');
+        // }
 
         $this->product = Product::where('slug', $product)->firstOrFail();
 

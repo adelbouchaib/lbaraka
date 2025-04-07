@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('buyer');
+            $table->string('type')->default('individual');
+            $table->integer('products_limit')->default(10); // Default 10, but admin can change
+            $table->string('google_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -31,7 +31,10 @@ class User extends Authenticatable implements FilamentUser
         'google_id', 
         'email_verified_at',
         'role',
+        'products_limit',
+        'type',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -58,7 +61,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'seller_id');
     }
 
     public function buyerOrders()
@@ -96,6 +99,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Report::class, 'seller_id');
     }
 
+    public function store()
+    {
+        return $this->hasOne(Store::class, 'seller_id');
+    }
+
 
     /**
      * Check if the user is an seller.
@@ -112,15 +120,28 @@ class User extends Authenticatable implements FilamentUser
         return $this->role === 'buyer'; // Assuming you have a 'role' column in your users table
     }
 
+    public function isSadmin(): bool
+    {
+        return $this->role === 'sadmin'; // Assuming you have a 'role' column in your users table
+    }
+
     
     public function canAccessPanel(Panel $panel): bool
     {
     return match ($panel->getId()) {
         'seller' => $this->isSeller(), // or whatever checks you have
         'buyer' => $this->isBuyer(), // or whatever checks you have
+        'sadmin' => $this->isSadmin(), // or whatever checks you have
         default => false,
     };
     }
+
+    public function canPostProduct(): bool
+    {
+        return $this->role === 'seller' && $this->products()->count() < $this->products_limit;
+    }
+    
+
 
 
     

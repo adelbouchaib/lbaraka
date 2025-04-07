@@ -111,6 +111,7 @@ class AdminPanelProvider extends PanelProvider
     {
 
 
+
         Filament::serving(function () {
             if (Filament::getCurrentPanel()?->getId() === 'seller') { 
                 app()->setLocale('ar');

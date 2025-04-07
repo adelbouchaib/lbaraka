@@ -44,17 +44,24 @@
               </button>
           </div> -->
 
-          <div class="mr-0" x-data="{ open: false, search: '' }">
+          <div class="relative w-full sm:w-64">
+                    <form wire:submit.prevent="showResults">
+                        <input type="text" wire:model.defer="searchTerm" placeholder="Search products..." 
+                            class="w-full rounded-md border border-gray-300 px-3 py-2 pr-16 text-sm focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:ring-gray-500">
+                    </form>
+                </div>
+
+<div class="mr-0" x-data="{ open: false, search: '' }">
     <!-- Button to Open Modal -->
     <button @click="open = true" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto">
-    <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M6 12h12m-9 6h6" />
-    </svg>
-    Filters
-    <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
-    </svg>
-</button>
+      <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M6 12h12m-9 6h6" />
+      </svg>
+      Filters
+      <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
+      </svg>
+    </button>
 
 
     <!-- Modal -->
@@ -179,24 +186,17 @@
               <div>
                   <p class="font-arabic rtl line-clamp-2 font-light  overflow-hidden  text-base leading-tight text-gray-900 dark:text-white">
                     {{ $product->name }}</p>
-                  <p class="text-xl  sm:text-2xl  rtl mt-2  font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} دج</p>
-                  
-                  <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
-                    أقل كمية : {{ $product->moq }} قطعة</p>
-                  <!-- <div class="mt-4 flex items-center justify-between gap-4">
-                    <button type="button" 
-                        class="w-full items-center rounded-lg bg-white px-5 py-1 sm:py-2.5 text-sm font-medium border border-gray-700 text-gray-700 
-                            hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 
-                            dark:bg-white dark:hover:bg-blue-700 dark:text-blue-700 dark:hover:text-white dark:focus:ring-blue-800 
-                            @if(!auth()->check() || auth()->user()->role !== 'buyer') opacity-50 cursor-not-allowed @endif"
-                        @if(!auth()->check() || auth()->user()->role !== 'buyer') disabled @endif>
-                        Chat Now
-                    </button>
-                  </div> -->
+                                     
+
+                      <p class="text-xl  sm:text-2xl  rtl mt-2  font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} دج</p>
+                      
+                      <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
+                        أقل كمية : {{ $product->moq }} قطعة</p>
+
               </div>
           </a>
           @endforeach
-          </div>
+        </div>
 
           </div>
           <div class="mt-6 flex justify-center">

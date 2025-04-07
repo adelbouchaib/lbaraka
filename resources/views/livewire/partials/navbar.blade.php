@@ -47,7 +47,7 @@
             Sign in</button>
 
         @else
-        <a href="{{ auth()->user()->role === 'seller' ? '/seller/filachat' : '/filachat' }}">
+        <a href="{{ auth()->user()->role === 'seller' ? '/seller/chat' : '/chat' }}">
         <button class="relative px-1 mx-1 ml-4 mr-2 sm:mr-4 border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Messages">
             <x-heroicon-o-chat-bubble-left-ellipsis class="h-7 w-7" />
 

@@ -46,10 +46,9 @@ class ProductsPage extends Component
     public function mount()
     {
         // Check if the user is not authenticated
-        if (auth()->guest()) {
-            // Redirect to the buyer login page if the user is not authenticated
-            return redirect('/login');
-        }
+        // if (auth()->guest()) {
+        //     return redirect('/login');
+        // }
 
         // Read query parameters from the URL (after the redirect)
         if (request()->has('searchTerm')) {

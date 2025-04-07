@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Product;
 
 class ProductPolicy
 {
@@ -14,11 +15,13 @@ class ProductPolicy
         //
     }
 
-    public function delete(){
-        return false;
+    public function delete(User $user, Product $product): bool
+    {
+        return $user->role === 'sadmin';
     }
 
-    public function deleteAny(){
-        return false;
+    public function deleteAny(User $user): bool
+    {
+        return $user->role === 'sadmin';
     }
 }

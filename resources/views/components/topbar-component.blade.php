@@ -1,6 +1,6 @@
 
 
-<a href="/filachat" >
+<a href="/chat" >
 <button class="py-4 px-0 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out sm:hidden" aria-label="Messages">
 <x-heroicon-o-chat-bubble-left-ellipsis class="h-7 w-7" />
 

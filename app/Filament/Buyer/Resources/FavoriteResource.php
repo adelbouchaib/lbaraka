@@ -107,4 +107,9 @@ class FavoriteResource extends Resource
             'edit' => Pages\EditFavorite::route('/{record}/edit'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('seller_id', auth()->id());
+    }
 }

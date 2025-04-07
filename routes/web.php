@@ -10,6 +10,7 @@ use App\Livewire\CategoriesPage;
 use App\Http\Controllers\SocialiteController;
 use App\Livewire\CompleteProfile;
 use App\Livewire\ThankyouSeller;
+use App\Livewire\StorePage;
 
 // use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -25,6 +26,9 @@ Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback']
 Route::get('/', HomePage::class)->name('home');
 Route::get('/products', ProductsPage::class)->name('products');
 Route::get('/products/{product}', ProductDetailPage::class);
+
+Route::get('/stores/{store}', StorePage::class);
+
 
 Route::get('/thankyou', ThankyouSeller::class)->name('thankyou.seller');
 

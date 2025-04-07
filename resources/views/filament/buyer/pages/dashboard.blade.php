@@ -1,10 +1,12 @@
 <x-filament-panels::page>
 
 
-<section class="rounded-xl bg-center bg-no-repeat bg-[url('https://lbaraka.com/images/background.jpg')] bg-gray-700 bg-blend-multiply">
-    <div class="px-4 mx-auto max-w-screen-xl text-center py-12 sm:py-24">
-        <h1 class="mb-8 text-3xl font-extrabold tracking-tight leading-tight text-white md:text-4xl lg:text-5xl">Start searching for winning products</h1>
-        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 mb-4">
+<section class="rounded-xl bg-center bg-primaryx bg-blend-multiply">
+<!-- <section class="rounded-xl bg-center bg-no-repeat bg-[url('https://lbaraka.com/images/background.jpg')] bg-gray-700 bg-blend-multiply"> -->
+    
+    <div class="px-4 mx-auto max-w-screen-xl text-center py-8 sm:py-24">
+        <h1 class="mb-8 text-3xl font-extrabold tracking-tight leading-tight text-white md:text-4xl lg:text-5xl">Start searching for products</h1>
+        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
             <div class="max-w-xl w-full px-2">
                 <form action="{{ route('products') }}" method="GET">
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
