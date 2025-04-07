@@ -59,6 +59,7 @@ $user = User::find($userId);  // Assuming $userId is the ID of the user receivin
 $fcm = $user->fcm_token;  // Get the FCM token from the user's record
 
 
+
     $title = "New Message";
     $description = "You have a new message.";
 
