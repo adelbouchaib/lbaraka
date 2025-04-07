@@ -32,7 +32,7 @@
         </main>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.1/dist/flowbite.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <script src="{{ asset('service-worker.js') }}"></script>
+        <script src="{{ asset('serviceworker.js') }}"></script>
         @livewireScripts
         @livewire('partials.footer')
     </body>
