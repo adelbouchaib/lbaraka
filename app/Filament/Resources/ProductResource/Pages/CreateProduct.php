@@ -41,7 +41,7 @@ class CreateProduct extends CreateRecord
     {
        $notice = $this->record;
     
-       $credentialsFilePath = storage_path('app/private/json/file.json');
+       $credentialsFilePath = storage_path('app/private/file.json');
     //    dd($credentialsFilePath);
   
        $client = new GoogleClient();
