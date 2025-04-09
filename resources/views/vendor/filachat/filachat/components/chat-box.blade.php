@@ -637,7 +637,7 @@
 
   // Foreground notification handler
   messaging.onMessage((payload) => {
-    // console.log("Foreground message:", payload);
+    console.log("Foreground message:", payload);
     new Notification(payload.notification.title, {
       body: payload.notification.body,
     //   icon: '/icon.png'
