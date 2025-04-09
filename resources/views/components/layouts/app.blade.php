@@ -9,8 +9,7 @@
 <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
 <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging-compat.js"></script>
+
 
 
         <style>

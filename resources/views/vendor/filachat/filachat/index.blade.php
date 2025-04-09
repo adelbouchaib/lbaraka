@@ -9,8 +9,11 @@
 </x-filament-panels::page>
 
 @script
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging-compat.js"></script>
 
 <script>
+    
     if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register("/sw.js").then(
           (registration) => {
