@@ -11,6 +11,7 @@ use App\Http\Controllers\SocialiteController;
 use App\Livewire\CompleteProfile;
 use App\Livewire\ThankyouSeller;
 use App\Livewire\StorePage;
+use App\Livewire\Notification;
 
 // use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -31,6 +32,10 @@ Route::get('/stores/{store}', StorePage::class);
 
 
 Route::get('/thankyou', ThankyouSeller::class)->name('thankyou.seller');
+
+Route::get('/notification', Notification::class)->name('notification');
+
+// Route::post('/store-user-token', [Notification::class, 'storeUserToken']);
 
 
 // Route::get('/categories', CategoriesPage::class)->name('categories');

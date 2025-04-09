@@ -39,6 +39,8 @@ use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 
 
 use Filament\Events\ServingFilament;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
 
 
 
@@ -110,6 +112,14 @@ class AdminPanelProvider extends PanelProvider
     public function boot()
     {
 
+        FilamentAsset::register([
+            Js::make('custom-script', asset('js/custom.js')),
+        ]);
+        
+            // Event::listen(AdminServing::class, function () {
+            //     Filament::script('custom-js', asset('js/custom.js')); // This links your custom JS file
+            // });
+        
 
 
         Filament::serving(function () {

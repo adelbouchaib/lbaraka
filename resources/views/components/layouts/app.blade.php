@@ -9,6 +9,10 @@
 <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
 <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging-compat.js"></script>
+
+
         <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Noto+Kufi+Arabic:wght@100..900&display=swap');
@@ -43,23 +47,8 @@
         @livewire('partials.footer')
 
 
-        <script src="{{ asset('/sw.js') }}"></script>
-        <script>
-        if ("serviceWorker" in navigator) {
-            // Register a service worker hosted at the root of the
-            // site using the default scope.
-            navigator.serviceWorker.register("/sw.js").then(
-            (registration) => {
-                console.log("Service worker registration succeeded:", registration);
-            },
-            (error) => {
-                console.error(`Service worker registration failed: ${error}`);
-            },
-            );
-        } else {
-            console.error("Service workers are not supported.");
-        }
-        </script>
+
+       
 
 
     </body>

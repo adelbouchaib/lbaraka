@@ -11,6 +11,7 @@ use Filament\Notifications\Notification;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use App\Models\User;
+
 use Google\Client as GoogleClient;
 
 
@@ -39,9 +40,10 @@ class CreateProduct extends CreateRecord
 
     protected function afterCreate(): void
     {
+        
        $notice = $this->record;
     
-       $credentialsFilePath = storage_path('app/private/file.json');
+       $credentialsFilePath = public_path('json/file.json');
     //    dd($credentialsFilePath);
   
        $client = new GoogleClient();
@@ -60,23 +62,46 @@ class CreateProduct extends CreateRecord
            'Content-Type: application/json'
        ];
 
-       $data = [
-           "message" => [
-               "topic" => "shyam",
-               "notification" => [
-                   "title" => "New Notification",
-                   "body" => "Notification Content",
+    //    $data = [
+    //        "message" => [
+    //            "topic" => "shyam",
+    //            "notification" => [
+    //                "title" => "New Notification",
+    //                "body" => "Notification Content",
 
-               ],
-               "apns" => [
-                   "payload" => [
-                       "aps" => [
-                           "sound" => "default"
-                       ]
-                   ]
-               ]
-           ]
-       ];
+    //            ],
+    //            "apns" => [
+    //                "payload" => [
+    //                    "aps" => [
+    //                        "sound" => "default"
+    //                    ]
+    //                ]
+    //            ]
+    //        ]
+    //    ];
+
+    $userToken = "cyuvE0vobzoHkIjSl43XmZ:APA91bHJdIJ3QVTFS0_oSIgLIsd5tjaiSDLJilLTCLr0eYNjXItwUxvzKqcqVtJTaRu_dqTqeyeKkg3igSF_4uKOcdMy9biB2S_ZuEi3ubS5pU4sCEmcY8s";
+
+    $data = [
+        "message" => [
+          "token" => $userToken, // from JS frontend
+          "notification" => [
+            "title" => "New Product!",
+            "body" => "Check out the latest product",
+          ],
+          "webpush" => [
+            "headers" => [
+              "Urgency" => "high"
+            ],
+            "notification" => [
+              "title" => "New Product!",
+              "body" => "Check it out now!",
+            //   "icon" => "/icon-192x192.png",
+            ],
+          ],
+        ]
+      ];
+      
        $payload = json_encode($data);
 
        $ch = curl_init();
