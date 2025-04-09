@@ -587,19 +587,19 @@
 
 
     console.log("i am working");
-//   const firebaseConfig = {
-//     apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
-//     authDomain: "lbaraka-1f464.firebaseapp.com",
-//     projectId: "lbaraka-1f464",
-//     storageBucket: "lbaraka-1f464.firebasestorage.app",
-//     messagingSenderId: "825065799200",
-//     appId: "1:825065799200:web:e790fe16dc95fef0c50645",
-//     measurementId: "G-JRRLJHPNCX"
-//   };
+  const firebaseConfig = {
+    apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
+    authDomain: "lbaraka-1f464.firebaseapp.com",
+    projectId: "lbaraka-1f464",
+    storageBucket: "lbaraka-1f464.firebasestorage.app",
+    messagingSenderId: "825065799200",
+    appId: "1:825065799200:web:e790fe16dc95fef0c50645",
+    measurementId: "G-JRRLJHPNCX"
+  };
 
-//   firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 
-//   const messaging = firebase.messaging();
+  const messaging = firebase.messaging();
 
   let currentToken = null; // Declare a global variable
 
@@ -635,14 +635,14 @@
     }
 
 
-//   // Foreground notification handler
-//   messaging.onMessage((payload) => {
-//     console.log("Foreground message:", payload);
-//     new Notification(payload.notification.title, {
-//       body: payload.notification.body,
-//     //   icon: '/icon.png'
-//     });
-//   });
+  // Foreground notification handler
+  messaging.onMessage((payload) => {
+    console.log("Foreground message:", payload);
+    new Notification(payload.notification.title, {
+      body: payload.notification.body,
+    //   icon: '/icon.png'
+    });
+  });
 
 
  
