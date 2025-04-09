@@ -609,7 +609,7 @@
       messaging.getToken({ vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY' })
         .then((currentToken) => {
           if (currentToken) {
-            // console.log("FCM Token:", currentToken);
+            console.log("FCM Token:", currentToken);
 
             // Send this token to your server
             sendTokenToServer(currentToken); // Example: send the token to your server

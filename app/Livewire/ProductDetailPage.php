@@ -90,7 +90,7 @@ class ProductDetailPage extends Component
         
         
 
-        return redirect()->to('buyer/chat/' . $existingConversation->id);    
+        return redirect()->to('chat/' . $existingConversation->id);    
     }
 
     public function toggleFavorite()
