@@ -25,17 +25,6 @@ firebaseMessagingScript.onload = () => {
     navigator.serviceWorker.register('/firebase-messaging-sw.js')
       .then(function (registration) {
         console.log('Firebase Service Worker registered with scope:', registration.scope);
-
-        // Wait until the global init function is available, then call it
-        const checkInit = () => {
-          if (typeof window.initFirebaseMessaging === "function") {
-            window.initFirebaseMessaging(registration);
-          } else {
-            setTimeout(checkInit, 100); // Keep checking every 100ms
-          }
-        };
-        checkInit();
-        
       }).catch(function (error) {
         console.log('Service Worker registration failed:', error);
       });
