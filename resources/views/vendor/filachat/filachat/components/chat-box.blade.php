@@ -586,54 +586,55 @@
         }, 400);
     });
 
-    window.initFirebaseMessaging = async function(registration) {
+
+
+    window.initFirebaseMessaging = function(registration) {
     console.log("Firebase init called after SW registration");
 
-    // Only initialize if not already initialized
-    if (!firebase.apps.length) {
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
-            authDomain: "lbaraka-1f464.firebaseapp.com",
-            projectId: "lbaraka-1f464",
-            storageBucket: "lbaraka-1f464.firebasestorage.app",
-            messagingSenderId: "825065799200",
-            appId: "1:825065799200:web:e790fe16dc95fef0c50645",
-            measurementId: "G-JRRLJHPNCX"
-        };
-        firebase.initializeApp(firebaseConfig);
-    }
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
+        authDomain: "lbaraka-1f464.firebaseapp.com",
+        projectId: "lbaraka-1f464",
+        storageBucket: "lbaraka-1f464.firebasestorage.app",
+        messagingSenderId: "825065799200",
+        appId: "1:825065799200:web:e790fe16dc95fef0c50645",
+        measurementId: "G-JRRLJHPNCX"
+    };
+
+    firebase.initializeApp(firebaseConfig);
 
     const messaging = firebase.messaging();
 
-    try {
-        const permission = await Notification.requestPermission();
+    Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
-            const currentToken = await messaging.getToken({
+            messaging.getToken({
                 vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY',
-                serviceWorkerRegistration: registration
+                serviceWorkerRegistration: registration // 👈 VERY IMPORTANT
+            })
+            .then((currentToken) => {
+                if (currentToken) {
+                    console.log("FCM Token:", currentToken);
+                    @this.call('storeUserToken', currentToken);
+                } else {
+                    console.log("No registration token available.");
+                }
+            })
+            .catch((err) => {
+                console.error("Error getting token:", err);
             });
-            
-            if (currentToken) {
-                console.log("FCM Token:", currentToken);
-                @this.call('storeUserToken', currentToken);
-            } else {
-                console.log("No registration token available.");
-            }
         } else {
             console.warn("Permission not granted");
         }
-    } catch (err) {
-        console.error("Error in FCM setup:", err);
-    }
+    });
 
     messaging.onMessage((payload) => {
         console.log("Foreground message:", payload);
         new Notification(payload.notification.title, {
             body: payload.notification.body,
-            icon: '/icon.png' // Add icon for better UX
         });
     });
 };
+ 
 
 
 </script>

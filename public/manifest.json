@@ -6,8 +6,6 @@
     "description": "Tutorial of Laravel Package",
     "display": "fullscreen",
     "theme_color": "#6777ef",
-    "gcm_sender_id": "103953800507",
-    "permissions": ["gcm"],
     "icons": [
         {
             "src": "logo.png",

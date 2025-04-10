@@ -13,14 +13,14 @@ document.head.appendChild(firebaseMessagingScript);
 firebaseMessagingScript.onload = () => {
   // Your service worker logic
   if ('serviceWorker' in navigator) {
-    // navigator.serviceWorker.register("/sw.js").then(
-    //   (registration) => {
-    //     console.log("Service worker registration succeeded:", registration);
-    //   },
-    //   (error) => {
-    //     console.error(`Service worker registration failed: ${error}`);
-    //   }
-    // );
+    navigator.serviceWorker.register("/sw.js").then(
+      (registration) => {
+        console.log("Service worker registration succeeded:", registration);
+      },
+      (error) => {
+        console.error(`Service worker registration failed: ${error}`);
+      }
+    );
 
     navigator.serviceWorker.register('/firebase-messaging-sw.js')
       .then(function (registration) {
@@ -35,7 +35,7 @@ firebaseMessagingScript.onload = () => {
           }
         };
         checkInit();
-
+        
       }).catch(function (error) {
         console.log('Service Worker registration failed:', error);
       });
