@@ -587,20 +587,8 @@
     });
 
 
-    // Dynamically add Firebase script links
-const firebaseAppScript = document.createElement('script');
-firebaseAppScript.src = "https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js";
-firebaseAppScript.defer = true;
-document.head.appendChild(firebaseAppScript);
 
-const firebaseMessagingScript = document.createElement('script');
-firebaseMessagingScript.src = "https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging-compat.js";
-firebaseMessagingScript.defer = true;
-document.head.appendChild(firebaseMessagingScript);
 
-// Wait until both scripts are loaded
-firebaseMessagingScript.onload = () => {
-  
     console.log("i am working");
   const firebaseConfig = {
     apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
@@ -618,40 +606,66 @@ firebaseMessagingScript.onload = () => {
 
   let currentToken = null; // Declare a global variable
 
+  /**
+ * Service Worker explicit registration to explicitly define sw location at a path - New method 'getToken'
+ */
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('firebase-messaging-sw.js')
+        .then(function(registration) {
+            console.log('Registration successful, scope is:', registration.scope);
+            messaging.getToken({
+                // add your VPAID key here
+                vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY'})
+                .then((currentToken) => {
+                    if (currentToken) {
+                        //TODO: Send the token to your server and update the UI if necessary
+                        console.log(currentToken);
+                    } else {
+            // Show permission request UI
+            console.log('No registration token available. Request permission to generate one.');
+            askForPermissionToReceiveNotifications();
+        }
+    }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+    });
+}).catch(function(err) {
+    console.log('Service worker registration failed, error:', err);
+});
+}
 
 
   // Ask permission and get token
-  Notification.requestPermission().then((permission) => {
-    if (permission === "granted") {
-      messaging.getToken({ vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY' })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log("FCM Token:", currentToken);
+//   Notification.requestPermission().then((permission) => {
+//     if (permission === "granted") {
+//       messaging.getToken({ vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY' })
+//         .then((currentToken) => {
+//           if (currentToken) {
+//             console.log("FCM Token:", currentToken);
 
-            // Send this token to your server
-            // sendTokenToServer(currentToken); // Example: send the token to your server
+//             // Send this token to your server
+//             sendTokenToServer(currentToken); // Example: send the token to your server
            
            
 
-          } else {
-            console.log("No registration token available.");
-          }
-        }).catch((err) => {
-          console.error("Error getting token:", err);
-        });
-    } else {
-      console.warn("Permission not granted");
-    }
-  });
+//           } else {
+//             console.log("No registration token available.");
+//           }
+//         }).catch((err) => {
+//           console.error("Error getting token:", err);
+//         });
+//     } else {
+//       console.warn("Permission not granted");
+//     }
+//   });
 
 
-  function sendTokenToServer(currentToken) {
+//   function sendTokenToServer(currentToken) {
         
-        // Call the Livewire method and pass the JavaScript variable
-        @this.call('storeUserToken', currentToken);
-        // window.livewire.emit('storeUserToken', currentToken);
+//         // Call the Livewire method and pass the JavaScript variable
+//         @this.call('storeUserToken', currentToken);
+//         // window.livewire.emit('storeUserToken', currentToken);
 
-    }
+//     }
 
 
   // Foreground notification handler
@@ -662,15 +676,6 @@ firebaseMessagingScript.onload = () => {
     //   icon: '/icon.png'
     });
   });
-
-
-};
-
-
-
-  
-
-
 
 
 
