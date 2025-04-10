@@ -650,47 +650,6 @@
 
 
 
-
-  let deferredPrompt; // Variable to hold the event
-const installButton = document.getElementById('install-button'); // Customize this ID as needed
-
-// Listen for the beforeinstallprompt event to capture the install prompt
-window.addEventListener('beforeinstallprompt', (event) => {
-  // Prevent the default install prompt
-  event.preventDefault();
-
-  // Store the event so it can be triggered later
-  deferredPrompt = event;
-
-  // Show the install button to prompt the user to install
-  installButton.style.display = 'block';
-
-  // Trigger the installation when the user clicks the button
-  installButton.addEventListener('click', () => {
-    // Hide the install button
-    installButton.style.display = 'none';
-
-    // Show the install prompt
-    deferredPrompt.prompt();
-
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt');
-      } else {
-        console.log('User dismissed the A2HS prompt');
-      }
-      deferredPrompt = null;
-    });
-  });
-});
-
-// Optionally, listen for the appinstalled event to track if the app was installed
-window.addEventListener('appinstalled', () => {
-  console.log('PWA was installed');
-});
-
-
  
 
 
