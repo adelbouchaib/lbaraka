@@ -16,6 +16,18 @@ firebaseMessagingScript.onload = () => {
     navigator.serviceWorker.register("/sw.js").then(
       (registration) => {
         console.log("Service worker registration succeeded:", registration);
+
+        
+            // Wait until Blade defines initFirebaseMessaging
+            const waitForInit = () => {
+              if (typeof window.initFirebaseMessaging === 'function') {
+                  window.initFirebaseMessaging(registration);
+              } else {
+                  setTimeout(waitForInit, 100);
+              }
+          };
+          waitForInit();
+          
       },
       (error) => {
         console.error(`Service worker registration failed: ${error}`);
