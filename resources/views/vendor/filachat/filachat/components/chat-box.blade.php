@@ -567,8 +567,11 @@
         </div>
     @endif
 
-    <!-- Install Button (hidden by default) -->
-<button id="install-button" >Install App</button>
+    <div>
+    <input type="hidden" x-data="{ token: '' }" x-ref="token" x-model="token">
+    <button x-on:click="$wire.saveToken()" class="btn btn-primary">Save Token</button>
+</div>
+
 
 
 </div>
@@ -619,6 +622,8 @@
 
             // Send this token to your server
             sendTokenToServer(currentToken); // Example: send the token to your server
+           
+           
 
           } else {
             console.log("No registration token available.");
@@ -636,6 +641,8 @@
         
         // Call the Livewire method and pass the JavaScript variable
         @this.call('storeUserToken', currentToken);
+        // window.livewire.emit('storeUserToken', currentToken);
+
     }
 
 
