@@ -568,7 +568,7 @@
     @endif
 
     <!-- Install Button (hidden by default) -->
-<button id="install-button" style="display: none;">Install App</button>
+<button id="install-button" >Install App</button>
 
 
 </div>
