@@ -587,8 +587,20 @@
     });
 
 
+    // Dynamically add Firebase script links
+const firebaseAppScript = document.createElement('script');
+firebaseAppScript.src = "https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js";
+firebaseAppScript.defer = true;
+document.head.appendChild(firebaseAppScript);
 
+const firebaseMessagingScript = document.createElement('script');
+firebaseMessagingScript.src = "https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging-compat.js";
+firebaseMessagingScript.defer = true;
+document.head.appendChild(firebaseMessagingScript);
 
+// Wait until both scripts are loaded
+firebaseMessagingScript.onload = () => {
+  
     console.log("i am working");
   const firebaseConfig = {
     apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
@@ -650,6 +662,15 @@
     //   icon: '/icon.png'
     });
   });
+
+
+};
+
+
+
+  
+
+
 
 
 
