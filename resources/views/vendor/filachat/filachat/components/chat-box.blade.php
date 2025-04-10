@@ -588,53 +588,64 @@
 
 
 
-    window.initFirebaseMessaging = function(registration) {
-    console.log("Firebase init called after SW registration");
+    window.addEventListener('load', async () => {
+        console.log("Page loaded. Registering Service Worker...");
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
-        authDomain: "lbaraka-1f464.firebaseapp.com",
-        projectId: "lbaraka-1f464",
-        storageBucket: "lbaraka-1f464.firebasestorage.app",
-        messagingSenderId: "825065799200",
-        appId: "1:825065799200:web:e790fe16dc95fef0c50645",
-        measurementId: "G-JRRLJHPNCX"
-    };
+        try {
+            // Register the service worker
+            const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+            console.log("Service Worker registered:", registration);
 
-    firebase.initializeApp(firebaseConfig);
+            // Initialize Firebase
+            const firebaseConfig = {
+                apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
+                authDomain: "lbaraka-1f464.firebaseapp.com",
+                projectId: "lbaraka-1f464",
+                storageBucket: "lbaraka-1f464.firebasestorage.app",
+                messagingSenderId: "825065799200",
+                appId: "1:825065799200:web:e790fe16dc95fef0c50645",
+                measurementId: "G-JRRLJHPNCX"
+            };
 
-    const messaging = firebase.messaging();
+            firebase.initializeApp(firebaseConfig);
+            const messaging = firebase.messaging();
 
-    Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-            messaging.getToken({
+            // Use the same service worker for messaging
+            messaging.useServiceWorker(registration);
+
+            // Ask permission for notifications
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                console.warn("Notification permission not granted");
+                return;
+            }
+
+            // Get FCM token
+            const currentToken = await messaging.getToken({
                 vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY',
-                serviceWorkerRegistration: registration // 👈 VERY IMPORTANT
-            })
-            .then((currentToken) => {
-                if (currentToken) {
-                    console.log("FCM Token:", currentToken);
-                    @this.call('storeUserToken', currentToken);
-                } else {
-                    console.log("No registration token available.");
-                }
-            })
-            .catch((err) => {
-                console.error("Error getting token:", err);
+                serviceWorkerRegistration: registration
             });
-        } else {
-            console.warn("Permission not granted");
+
+            if (currentToken) {
+                console.log("FCM Token:", currentToken);
+                // Send to backend via Livewire
+                @this.call('storeUserToken', currentToken);
+            } else {
+                console.warn("No registration token available.");
+            }
+
+            // Listen for foreground messages
+            messaging.onMessage((payload) => {
+                console.log("Foreground message:", payload);
+                new Notification(payload.notification.title, {
+                    body: payload.notification.body
+                });
+            });
+
+        } catch (error) {
+            console.error("Error getting token or registering service worker:", error);
         }
     });
-
-    messaging.onMessage((payload) => {
-        console.log("Foreground message:", payload);
-        new Notification(payload.notification.title, {
-            body: payload.notification.body,
-        });
-    });
-};
-
 
  
 
