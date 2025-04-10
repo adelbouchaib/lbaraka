@@ -116,24 +116,24 @@ class AdminPanelProvider extends PanelProvider
             Js::make('custom-script', asset('js/custom.js')),
         ]);
         
-        // Filament::serving(function () {
-        //     if (auth()->check()) {
-        //         $user = auth()->user();
-        //         if($user->role === "seller"){
-        //             FilamentView::registerRenderHook(
-        //                 PanelsRenderHook::HEAD_START ,
-        //                 function () {
+        Filament::serving(function () {
+            if (auth()->check()) {
+                $user = auth()->user();
+                if($user->role === "seller"){
+                    FilamentView::registerRenderHook(
+                        PanelsRenderHook::HEAD_START ,
+                        function () {
                            
-        //                     // Render the component with the data
-        //                     return Blade::renderComponent(
-        //                         new \App\View\Components\HeadComponent()
-        //                     );
-        //                 }
-        //             ); 
-        //         }
+                            // Render the component with the data
+                            return Blade::renderComponent(
+                                new \App\View\Components\HeadComponent()
+                            );
+                        }
+                    ); 
+                }
                
-        //     }
-        // });
+            }
+        });
         
 
 
