@@ -608,6 +608,40 @@
 
 
 
+  // Ask permission and get token
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      messaging.getToken({ vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY' })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log("FCM Token:", currentToken);
+
+            // Send this token to your server
+            sendTokenToServer(currentToken); // Example: send the token to your server
+           
+           
+
+          } else {
+            console.log("No registration token available.");
+          }
+        }).catch((err) => {
+          console.error("Error getting token:", err);
+        });
+    } else {
+      console.warn("Permission not granted");
+    }
+  });
+
+
+  function sendTokenToServer(currentToken) {
+        
+        // Call the Livewire method and pass the JavaScript variable
+        @this.call('storeUserToken', currentToken);
+        // window.livewire.emit('storeUserToken', currentToken);
+
+    }
+
+
   // Foreground notification handler
   messaging.onMessage((payload) => {
     console.log("Foreground message:", payload);
