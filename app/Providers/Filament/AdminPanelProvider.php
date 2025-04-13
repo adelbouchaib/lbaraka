@@ -112,9 +112,9 @@ class AdminPanelProvider extends PanelProvider
     public function boot()
     {
 
-        FilamentAsset::register([
-            Js::make('custom-script', asset('js/custom.js')),
-        ]);
+        // FilamentAsset::register([
+        //     Js::make('custom-script', asset('js/custom.js')),
+        // ]);
         
         Filament::serving(function () {
             if (auth()->check()) {

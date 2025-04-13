@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\FilachatConversation;
 use App\Models\Inquiry;
 use App\Models\FilachatMessage;
+use Filament\Support\Facades\FilamentAsset;
+use Filament\Events\ServingFilament;
+use Filament\Support\Assets\Js;
 
 
 class Dashboard extends Page
@@ -34,6 +37,9 @@ class Dashboard extends Page
 
     public function mount()
     {   
+        FilamentAsset::register([
+            Js::make('custom-script', asset('js/custom.js')),
+        ]);
 
         $userId = Auth::id();
         $this->inquiries = Inquiry::whereHas('conversation', function ($query) use ($userId) {
