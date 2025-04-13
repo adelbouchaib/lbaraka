@@ -51,5 +51,20 @@ class Dashboard extends Page
         return redirect("/seller/chat/{$conversationId}");
     }
 
+    public $token;
+
+    public function storeUserToken($currentToken)
+    {
+        // dd($currentToken);
+        $this->token = $currentToken;
+        $user = Auth::user();
+            if ($user && $user->fcm_token !== $this->token) {
+                // Store the FCM token in the `fcm_token` column in the users table
+                $user->fcm_token = $this->token;
+                $user->save();
+            }    
+    }
+
+
 
 }

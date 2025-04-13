@@ -14,8 +14,17 @@
     </p>
 
    
-
 </div>
+
+<button
+    class="px-4 py-2 flex items-center justify-center gap-2 text-sm bg-primary-600 text-white font-semibold rounded-xl shadow-md transition duration-200"
+    id="install-button"
+    style="display: none">
+    <span>تحصل على إشعارات الرسائل</span>
+    <x-heroicon-o-bell class="h-6 w-6 inline-flex" />
+</button>
+
+
 
 
     <div class="">
@@ -104,5 +113,109 @@
     
 
 </x-filament-panels::page>
+
+
+@script
+<script>
+
+            let deferredPrompt; // This will hold the prompt event
+
+            // Listen for the 'beforeinstallprompt' event
+            window.addEventListener('beforeinstallprompt', (event) => {
+                // Prevent the default behavior of the prompt
+                event.preventDefault();
+                // Save the event for later use
+                deferredPrompt = event;
+
+                // Show the install button
+                const installButton = document.getElementById('install-button');
+                installButton.style.display = 'block'; // Make the button visible
+
+                // When the install button is clicked, trigger the install prompt
+                installButton.addEventListener('click', () => {
+                    deferredPrompt.prompt(); // Show the install prompt to the user
+
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the install prompt');
+                        } else {
+                            console.log('User dismissed the install prompt');
+                        }
+                        deferredPrompt = null; // Reset the prompt after the user responds
+                    });
+                });
+            });
+
+            window.addEventListener('appinstalled', (event) => {
+                
+                       
+                console.log("i am working");
+            const firebaseConfig = {
+            apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
+            authDomain: "lbaraka-1f464.firebaseapp.com",
+            projectId: "lbaraka-1f464",
+            storageBucket: "lbaraka-1f464.firebasestorage.app",
+            messagingSenderId: "825065799200",
+            appId: "1:825065799200:web:e790fe16dc95fef0c50645",
+            measurementId: "G-JRRLJHPNCX"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+
+            const messaging = firebase.messaging();
+
+            let currentToken = null; // Declare a global variable
+
+
+
+            // Ask permission and get token
+            Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+            // new Notification("You're now subscribed to notifications!");
+            messaging.getToken({ vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY' })
+                .then((currentToken) => {
+                if (currentToken) {
+                    console.log("FCM Token:", currentToken);
+
+                    // Send this token to your server
+                    sendTokenToServer(currentToken); // Example: send the token to your server  
+
+                } else {
+                    console.log("No registration token available.");
+                }
+                }).catch((err) => {
+                console.error("Error getting token:", err);
+                });
+            } else {
+            console.warn("Permission not granted");
+            }
+            });
+
+            function sendTokenToServer(currentToken) {
+                
+                // Call the Livewire method and pass the JavaScript variable
+                @this.call('storeUserToken', currentToken);
+                // window.livewire.emit('storeUserToken', currentToken);
+
+            }
+
+
+
+
+
+            });
+
+
+
+            
+
+ 
+
+
+</script>
+
+
+
+@endscript
 
 

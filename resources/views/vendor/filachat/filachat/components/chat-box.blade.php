@@ -352,7 +352,11 @@
                             @endif
                             <div class="max-w-md p-2 bg-gray-200 rounded-t-xl rounded-br-xl dark:bg-gray-800">
                                 @if ($message->message)
-                                    <p class="text-sm">{{ $message->message }}</p>
+                                @php
+                                    $isRtl = preg_match('/^[\x{0600}-\x{06FF}]/u', trim($message->message));
+                                @endphp
+
+                                <p class="text-sm" dir="{{ $isRtl ? 'rtl' : 'ltr' }}">{!! $message->message !!}</p>
                                 @endif
                                 @if ($message->attachments && count($message->attachments) > 0)
                                     @foreach ($message->attachments as $attachment)
@@ -510,15 +514,8 @@
                 {{__('No selected conversation')}}
             </p>
 
-            <button
-  class="px-6 py-2 bg-primary-600 mt-4 text-white font-semibold rounded-xl shadow-md transition duration-200"
-  id="notify-btn"
+           
 
->
-اضغط هنا لاستقبال الإشعارات
-</button>
-
-<button id="install-button" style="display: none;">Install App</button>
 
 
         </div>
@@ -529,156 +526,22 @@
 
 
 </div>
+
+
 @script
 <script>
-    $wire.on('chat-box-scroll-to-bottom', () => {
+     $wire.on('chat-box-scroll-to-bottom', () => {
 
-        chatContainer = document.getElementById('chatContainer');
-        chatContainer.scrollTo({
-            top: chatContainer.scrollHeight,
-            behavior: 'smooth',
-        });
-
-        setTimeout(() => {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }, 400);
-    });
-
-
-
-    const notifyBtn = document.getElementById('notify-btn');
-
-
-notifyBtn.addEventListener('click', () => {
-
-    
-    console.log("i am working");
-  const firebaseConfig = {
-    apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
-    authDomain: "lbaraka-1f464.firebaseapp.com",
-    projectId: "lbaraka-1f464",
-    storageBucket: "lbaraka-1f464.firebasestorage.app",
-    messagingSenderId: "825065799200",
-    appId: "1:825065799200:web:e790fe16dc95fef0c50645",
-    measurementId: "G-JRRLJHPNCX"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-
-  const messaging = firebase.messaging();
-
-  let currentToken = null; // Declare a global variable
-
-
-
-  // Ask permission and get token
-  Notification.requestPermission().then((permission) => {
-    if (permission === "granted") {
-        new Notification("You're now subscribed to notifications!");
-      messaging.getToken({ vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY' })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log("FCM Token:", currentToken);
-
-            // Send this token to your server
-            sendTokenToServer(currentToken); // Example: send the token to your server  
-
-          } else {
-            console.log("No registration token available.");
-          }
-        }).catch((err) => {
-          console.error("Error getting token:", err);
-        });
-    } else {
-      console.warn("Permission not granted");
-    }
-  });
-
-  function sendTokenToServer(currentToken) {
-        
-        // Call the Livewire method and pass the JavaScript variable
-        @this.call('storeUserToken', currentToken);
-        // window.livewire.emit('storeUserToken', currentToken);
-
-    }
-
-
-//   // Foreground notification handler
-//   messaging.onMessage((payload) => {
-//     console.log("Foreground message:", payload);
-//     new Notification(payload.notification.title, {
-//       body: payload.notification.body,
-//     //   icon: '/icon.png'
-//     });
-//   });
-
-
-// onMessage(messaging, (payload) => {
-//   console.log("Foreground message received:", payload);
-
-//   if (Notification.permission === 'granted') {
-//     new Notification(payload.notification.title, {
-//       body: payload.notification.body,
-//     });
-//   }
-// });
-
-
-
-
+chatContainer = document.getElementById('chatContainer');
+chatContainer.scrollTo({
+    top: chatContainer.scrollHeight,
+    behavior: 'smooth',
 });
 
-
-
-let deferredPrompt; // This will hold the prompt event
-
-// Listen for the 'beforeinstallprompt' event
-window.addEventListener('beforeinstallprompt', (event) => {
-    // Prevent the default behavior of the prompt
-    event.preventDefault();
-    // Save the event for later use
-    deferredPrompt = event;
-
-    // Show the install button
-    const installButton = document.getElementById('install-button');
-    installButton.style.display = 'block'; // Make the button visible
-
-    // When the install button is clicked, trigger the install prompt
-    installButton.addEventListener('click', () => {
-        deferredPrompt.prompt(); // Show the install prompt to the user
-
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-            } else {
-                console.log('User dismissed the install prompt');
-            }
-            deferredPrompt = null; // Reset the prompt after the user responds
-        });
-    });
+setTimeout(() => {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}, 400);
 });
-
-window.addEventListener('appinstalled', (event) => {
-    console.log('PWA was installed');
-    
-    // 👉 Add your code here
-    // For example:
-    alert('Thanks for installing our app!');
-    
-    // You could also do something like:
-    // localStorage.setItem('pwaInstalled', 'true');
-    // or redirect to a welcome screen
-});
-
-
-
-  
-
- 
-
 
 </script>
-
-
-
 @endscript

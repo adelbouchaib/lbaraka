@@ -43,7 +43,6 @@ Route::get('/stores/{store}', StorePage::class)->name('store');
 
 Route::get('/thankyou', ThankyouSeller::class)->name('thankyou.seller');
 
-Route::get('/notification', Notification::class)->name('notification');
 
 // Route::post('/store-user-token', [Notification::class, 'storeUserToken']);
 
