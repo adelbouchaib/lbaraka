@@ -135,6 +135,6 @@ class InquiryResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('seller_id', auth()->id());
+        return parent::getEloquentQuery()->where('buyer_id', auth()->id());
     }
 }

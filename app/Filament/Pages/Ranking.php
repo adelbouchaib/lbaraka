@@ -28,8 +28,7 @@ class Ranking extends Page
     {
 
         $userId = Auth::id();
-        $this->deliveredOrdersCount = Order::where('approved', 1)
-                  ->where('status', 'Delivered')
+        $this->deliveredOrdersCount = Order::where('status', 'Delivered')
                   ->count();
     }
 

@@ -11,6 +11,9 @@
             .rtl {
   direction: rtl;
 }
+.ltr {
+  direction: ltr;
+}
             </style>
 
         <title>@yield('title', 'Default Title')</title>

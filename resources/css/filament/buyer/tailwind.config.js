@@ -13,6 +13,7 @@ export default {
         extend: {
             colors: {
                 primaryx: '#0071f5', // Custom primary color
+                secondaryx: '#fbbc04', // Custom primary color
             },
             fontFamily: {
                 arabic: ['Alexandria', 'Noto Sans Arabic', 'Arial', 'sans-serif'],

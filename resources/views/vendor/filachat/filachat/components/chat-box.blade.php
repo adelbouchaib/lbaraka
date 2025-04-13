@@ -101,77 +101,15 @@
                         </label>
                     @endforeach
 
-                    <div x-data="{ showDiv: false }">
-                        <!-- Check Button -->
-                        <label class="inline-flex items-center">
-        <span class="mr-2">Show the div</span>
-        <button type="button" 
-            x-on:click="showDiv = !showDiv" 
-            :class="showDiv ? 'bg-green-600' : 'bg-gray-400'" 
-            class="relative inline-flex items-center h-6 rounded-full w-11 transition-colors duration-200 ease-in-out">
-            <span :class="showDiv ? 'translate-x-5' : 'translate-x-0'" 
-                class="inline-block w-5 h-5 bg-white rounded-full transform transition-transform duration-200 ease-in-out"></span>
-        </button>
-    </label>
-
-
-                        <div x-show="showDiv" x-transition>
-
-                    @foreach ($selectedProducts as $selectedProduct)
-                        <label class="border rounded-md p-4 flex items-center cursor-pointer shadow-sm hover:bg-gray-100 transition"
-                        x-data="{ isChecked: false }"
-                        :class="{ 'bg-primary-100 border-primary-500': isChecked }"
-                        x-init="$watch('isChecked', value => { 
-                            if (value) { 
-                                $wire.set('selectedProduct', {{ $selectedProduct->id }});
-                            } 
-                        })"                        
-                        x-effect="isChecked = ($wire.selectedProduct == {{ $selectedProduct->id }})">
-                            
-                            <!-- Visible Custom Radio -->
-                            <div class="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center mr-4">
-                                <div class="w-3 h-3 bg-primary-500 rounded-full" x-show="isChecked"></div>
-                            </div>
-
-                            <!-- Hidden Radio Input -->
-                            <input type="radio" value="{{ $selectedProduct->id }}" name="product_selection"
-                                wire:model="selectedProduct"
-                                wire:click="processStepTwo({{ $selectedProduct->quantity ?? 0}})"
-                                class="hidden"
-                                x-on:change="isChecked = true">
-
-                            <!-- Product Image -->
-                            @if ($selectedProduct->images[0])  
-                                <img src="{{ asset('storage/' . $selectedProduct->images[0]) }}" 
-                                    alt="{{ $selectedProduct->name }}" 
-                                    class="w-20 h-20 object-cover rounded mr-4">
-                            @else
-                                <div class="w-20 h-20 bg-gray-300 rounded flex items-center justify-center"> 
-                                    <span class="text-gray-500">No Image</span>
-                                </div>
-                            @endif
-
-                            <!-- Product Info -->
-                            <div class="text-sm">
-                                <p class="font-medium text-gray-900">{{ $selectedProduct->name }}</p>
-                                <p class="text-gray-500">{{ $selectedProduct->price }}</p>
-                            </div>
-                        </label>
-                    @endforeach
-
-                </div>
-
-                    </div>
-
+                    
 
 
                     
                 </div>
 
 
-                <div class="flex gap-2 justify-end space-x-2 mt-4 border-t pt-3">
-                    <x-filament::button @click="currentStep = 2" color="primary">{{__('Next')}}</x-filament::button>
-                    <x-filament::button type="button" color="danger" @click="isOpen = false">{{__('Cancel')}}</x-filament::button>
+                <div class="flex gap-2 space-x-2 mt-4 border-t pt-3">
+                    <x-filament::button @click="currentStep = 2" color="success">{{__('Next')}}</x-filament::button>
                 </div>
             </div>
 
@@ -197,10 +135,17 @@
                      </div>
                 </div>
 
+                @error('selectedProduct')
+                                <div class="text-red-500 text-sm">يرجى اختيار المنتج</div>
+                @enderror
+                @error('quantity')
+                                <div class="text-red-500 text-sm">يرجى تحديد الكمية</div>
+                @enderror
+
                 <!-- Modal Footer (Back & Submit) -->
                 <div class="flex justify-between space-x-2 mt-4 border-t pt-3">
-                    <x-filament::button @click="currentStep = 1" color="gray">{{__('Back')}}</x-filament::button>
                     <x-filament::button wire:click="submitForm" color="success">{{__('Submit')}}</x-filament::button>
+                    <x-filament::button @click="currentStep = 1" color="gray">{{__('Back')}}</x-filament::button>
                 </div>
             </div>
         </div>
@@ -564,8 +509,21 @@
             <p class="text-base text-center text-gray-600 dark:text-gray-400">
                 {{__('No selected conversation')}}
             </p>
+
+            <button
+  class="px-6 py-2 bg-primary-600 mt-4 text-white font-semibold rounded-xl shadow-md transition duration-200"
+  id="notify-btn"
+
+>
+اضغط هنا لاستقبال الإشعارات
+</button>
+
+<button id="install-button" style="display: none;">Install App</button>
+
+
         </div>
     @endif
+
 
 
 
@@ -588,7 +546,12 @@
 
 
 
+    const notifyBtn = document.getElementById('notify-btn');
 
+
+notifyBtn.addEventListener('click', () => {
+
+    
     console.log("i am working");
   const firebaseConfig = {
     apiKey: "AIzaSyCzz91VFPinYPTQ97Gjoq_lkGObCWib_88",
@@ -611,15 +574,14 @@
   // Ask permission and get token
   Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
+        new Notification("You're now subscribed to notifications!");
       messaging.getToken({ vapidKey: 'BLX4N79hrhWKADdk6elMxsY9nijOccotAwR0mtsv00A8WtAtjK-LRqeR64uCLBNY0RlYCfVy8c5c0n3bnntfsiY' })
         .then((currentToken) => {
           if (currentToken) {
             console.log("FCM Token:", currentToken);
 
             // Send this token to your server
-            sendTokenToServer(currentToken); // Example: send the token to your server
-           
-           
+            sendTokenToServer(currentToken); // Example: send the token to your server  
 
           } else {
             console.log("No registration token available.");
@@ -632,7 +594,6 @@
     }
   });
 
-
   function sendTokenToServer(currentToken) {
         
         // Call the Livewire method and pass the JavaScript variable
@@ -642,16 +603,76 @@
     }
 
 
-  // Foreground notification handler
-  messaging.onMessage((payload) => {
-    console.log("Foreground message:", payload);
-    new Notification(payload.notification.title, {
-      body: payload.notification.body,
-    //   icon: '/icon.png'
+//   // Foreground notification handler
+//   messaging.onMessage((payload) => {
+//     console.log("Foreground message:", payload);
+//     new Notification(payload.notification.title, {
+//       body: payload.notification.body,
+//     //   icon: '/icon.png'
+//     });
+//   });
+
+
+// onMessage(messaging, (payload) => {
+//   console.log("Foreground message received:", payload);
+
+//   if (Notification.permission === 'granted') {
+//     new Notification(payload.notification.title, {
+//       body: payload.notification.body,
+//     });
+//   }
+// });
+
+
+
+
+});
+
+
+
+let deferredPrompt; // This will hold the prompt event
+
+// Listen for the 'beforeinstallprompt' event
+window.addEventListener('beforeinstallprompt', (event) => {
+    // Prevent the default behavior of the prompt
+    event.preventDefault();
+    // Save the event for later use
+    deferredPrompt = event;
+
+    // Show the install button
+    const installButton = document.getElementById('install-button');
+    installButton.style.display = 'block'; // Make the button visible
+
+    // When the install button is clicked, trigger the install prompt
+    installButton.addEventListener('click', () => {
+        deferredPrompt.prompt(); // Show the install prompt to the user
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+            deferredPrompt = null; // Reset the prompt after the user responds
+        });
     });
-  });
+});
+
+window.addEventListener('appinstalled', (event) => {
+    console.log('PWA was installed');
+    
+    // 👉 Add your code here
+    // For example:
+    alert('Thanks for installing our app!');
+    
+    // You could also do something like:
+    // localStorage.setItem('pwaInstalled', 'true');
+    // or redirect to a welcome screen
+});
 
 
+
+  
 
  
 

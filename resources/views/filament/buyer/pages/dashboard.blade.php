@@ -114,12 +114,14 @@
      x-init="window.addEventListener('resize', () => isMobile = window.innerWidth < 640)">
 
     <div class="flex gap-4 flex-row items-center mb-4">
+    <a href="/products">
         <h1 class="text-2xl sm:text-3xl font-bold leading-6 text-gray-950 dark:text-white">
             Products
         </h1>
+    </a>
         <a href="/products" class="ml-auto mr-4">
         <h1 class="text-lg leading-6 text-gray-950 dark:text-white">
-            <span class="hidden sm:inline underline">View more</span>
+            <span class="hidden sm:inline underline">View all</span>
             <span class="text-2xl font-bold">-></span>
         </h1>
         </a>
@@ -145,6 +147,9 @@
                   <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
                     أقل كمية : {{ $product->moq }} قطعة</p>
                     
+                          
+                       
+
                 </div>
             </a>
         @endforeach

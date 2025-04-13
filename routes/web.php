@@ -28,7 +28,7 @@ Route::get('/', HomePage::class)->name('home');
 Route::get('/products', ProductsPage::class)->name('products');
 Route::get('/products/{product}', ProductDetailPage::class);
 
-Route::get('/stores/{store}', StorePage::class);
+Route::get('/stores/{store}', StorePage::class)->name('store');
 
 
 Route::get('/thankyou', ThankyouSeller::class)->name('thankyou.seller');

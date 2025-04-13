@@ -8,14 +8,14 @@ use Illuminate\Auth\Access\Response;
 
 class StorePolicy
 {
-    public function viewAny(User $user)
-    {
-        if ($user->type === 'individual') {
-            return redirect()->route('filament.seller.pages.upgrade');
+    // public function viewAny(User $user)
+    // {
+    //     if ($user->type === 'individual') {
+    //         return redirect()->route('filament.seller.pages.upgrade');
 
-        }
-        return true;
-    }
+    //     }
+    //     return true;
+    // }
 
     /**
      * Determine whether the user can create models.

@@ -39,7 +39,7 @@ class OrderStats extends BaseWidget
                         ->toArray()
                 ),
             Stat::make(__('Open orders'), $this->getPageTableQuery()->where('status', 'pending')->count()),
-            Stat::make(__('Delivered orders'), $this->getPageTableQuery()->where('status', 'delivered')->where('approved', 1)->count()),
+            Stat::make(__('Delivered orders'), $this->getPageTableQuery()->where('status', 'delivered')->count()),
            
         ];
     }

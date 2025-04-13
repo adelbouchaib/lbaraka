@@ -23,7 +23,6 @@ class Performance extends BaseWidget
 
         $deliveredCount = Order::where('seller_id', auth()->id())
         ->where('status', 'delivered')
-        ->where('approved', 1)
         ->count();
 
         return [
@@ -42,7 +41,6 @@ class Performance extends BaseWidget
 
             Stat::make('Delivered Orders', Order::where('seller_id', auth()->id())
                 ->where('status', 'delivered')
-                ->where('approved', 1)
                 ->count())
             ->color('success')
             ->label(__('Delivered Orders'))       

@@ -120,14 +120,14 @@
               @endif
 
 
-
+    
 
 <div class="lg:px-48 py-8 bg-gray-50">
-
-
     <!-- Featured Products -->
+    @if(!$featuredProducts->isEmpty())
+
     <section class="container bg-white py-6 px-10 mx-auto mt-6">
-        <h3 class="text-xl font-bold mb-4">Main products</h3>
+        <h3 class="text-xl font-bold mb-4">Best sellers</h3>
         <div class="mb-4 grid gap-4 grid-cols-2 md:mb-8 lg:grid-cols-4">
 
           @foreach($featuredProducts as $product)
@@ -155,6 +155,9 @@
           @endforeach
         </div>
     </section>
+
+    @endif
+
 
    <!-- Products -->
    <section class="container bg-white py-6 px-10 mx-auto mt-6">
@@ -246,6 +249,7 @@
         </div>
     </div>
 </div>
+
 
         <div class="mb-4 grid gap-4 grid-cols-2 md:mb-8 lg:grid-cols-4">
 

@@ -21,7 +21,7 @@ class StatsDelivered extends ChartWidget
     protected function getData(): array
     {
         $data = Trend::query(
-            Order::query()->where('status', 'delivered')->where('approved', 1)
+            Order::query()->where('status', 'delivered')
         )
         ->between(
             start: now()->startOfYear(),

@@ -193,6 +193,29 @@
                       <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
                         أقل كمية : {{ $product->moq }} قطعة</p>
 
+
+
+                        @auth
+                          <button wire:click="createRow({{ $product->id }}, {{ $product->seller_id }})" 
+                                class="w-full px-4 py-1.5 mt-4 font-semibold border-gray-900 text-gray-900 border rounded-lg hover:text-white hover:border-secondary hover:bg-secondary transition duration-200
+                                @if(auth()->user()->role !== 'buyer') cursor-not-allowed @endif"
+                                @if(auth()->user()->role !== 'buyer') disabled @endif>
+                                
+                                <span class="font-medium">Contact supplier</span>
+                               
+                          </button>
+                        @else
+
+                        <button wire:click="loginContact()" 
+                            class="w-full px-4 py-1.5 mt-4 font-semibold border-gray-900 text-gray-900 border rounded-lg hover:text-white hover:border-secondary hover:bg-secondary transition duration-200">
+                              
+                            <span class="font-medium">Contact supplier</span>
+                               
+                        </button>
+                           
+                        @endauth
+
+
               </div>
           </a>
           @endforeach

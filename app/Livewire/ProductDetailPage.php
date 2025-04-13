@@ -121,6 +121,8 @@ class ProductDetailPage extends Component
         //     return redirect('/login');
         // }
 
+        
+
         $this->product = Product::where('slug', $product)->firstOrFail();
 
         $this->products = Product::where('category_id', $this->product->category_id)
@@ -136,9 +138,28 @@ class ProductDetailPage extends Component
 
     public function render()
     {
+
+        $sellerId = $this->product->seller_id;
+        $currentProductId = $this->product->id;
+        
+        $featuredProducts = Product::where('seller_id', $sellerId)
+            ->where('id', '!=', $currentProductId) // Exclude current product directly in query
+            ->whereHas('orders', function ($query) {
+                $query->where('status', 'delivered');
+            })
+            ->withCount(['orders as delivered_orders_count' => function ($query) {
+                $query->where('status', 'delivered');
+            }])
+            ->orderByDesc('delivered_orders_count')
+            ->take(8)
+            ->get();
+        
+
+
         return view('livewire.product-detail-page', [
             'product' => $this->product,
-            'quantity' => $this->product->moq
+            'quantity' => $this->product->moq,
+            'featuredProducts' => $featuredProducts,
         ]);
     }
 }

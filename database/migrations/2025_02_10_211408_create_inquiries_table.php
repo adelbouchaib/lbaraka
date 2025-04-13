@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('filachat_conversation_id')->constrained('filachat_conversations')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->foreignId('message_id')->constrained('filachat_messages')->cascadeOnDelete();
-            $table->integer('quantity')->nullable();
+            $table->integer('quantity')->default(0);
             $table->string('status')->default('New');
             $table->timestamps();
         });

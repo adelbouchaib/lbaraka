@@ -124,11 +124,24 @@ public function createRow($seller_id)
     {
         // dd($this->store->featured_products);
 
-        $featuredProductIds = $this->store->featured_products; // Decode the JSON array
+        // $featuredProductIds = $this->store->featured_products; // Decode the JSON array
 
-        if($featuredProductIds !== null) {
-            $featuredProducts = \App\Models\Product::whereIn('id', $featuredProductIds)->get();
-        }
+        // if($featuredProductIds !== null) {
+        //     $featuredProducts = \App\Models\Product::whereIn('id', $featuredProductIds)->get();
+        // }
+
+        $sellerId = $this->store->seller_id; // Replace with your store ID
+
+        $featuredProducts = Product::where('seller_id', $sellerId)
+    ->whereHas('orders', function ($query) {
+        $query->where('status', 'delivered');
+    })
+    ->withCount(['orders as delivered_orders_count' => function ($query) {
+        $query->where('status', 'delivered');
+    }])
+    ->orderByDesc('delivered_orders_count')
+    ->take(4) // Top 4 products
+    ->get();
 
         $query = $this->store->user->products()->where('is_active', true);
 
@@ -149,7 +162,8 @@ public function createRow($seller_id)
             'store' => $this->store,
             // 'storeProducts' => $this->store->user->products()->get(),
             'storeProducts' => $query->get(),
-            'featuredProducts' => $featuredProducts ?? [],
+            // 'featuredProducts' => $featuredProducts ?? [],
+            'featuredProducts' => $featuredProducts,
             'categories' => \App\Models\Category::all(),
         ]);
     }

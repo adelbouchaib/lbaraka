@@ -82,16 +82,7 @@ class OrderResource extends Resource
                 ->live() // Important: Ensures real-time updates
                 ->required(), 
 
-                Forms\Components\FileUpload::make('delivery_receipt')
-                ->translateLabel()
-                    ->label('Upload Delivery Receipt')
-                    ->visible(fn ($get) => $get('status') === 'Delivered') // Show only if 'Delivered' is selected
-                    ->multiple()
-                    ->required()
-                    ->maxFiles(5)
-                    ->reorderable()
-                    ->directory('receipts') // Folder where files are stored
-                    ->columnSpanFull(),
+
                 ])->columns(2),
 
                 Section::make(__('Product'))->schema([
@@ -175,29 +166,7 @@ class OrderResource extends Resource
                         default => 'Pending' // ❓ Default case (unknown status)
                     })
                     ->searchable(),
-                Tables\Columns\TextColumn::make('approved')
-                ->translateLabel()
-
-                ->badge()
-                ->icon(fn ($record) => match (true) {
-                    $record->status === 'Pending' && $record->approved === 0 => 'heroicon-o-clock',  // ❌ Pending & not approved
-                    $record->status === 'Delivered' && $record->approved === 1 => 'heroicon-o-check-circle', // ✅ Delivered & approved
-                    $record->status === 'Delivered' && $record->approved === 0 => 'heroicon-o-clock', // ✅ Delivered & approved
-                    default => 'heroicon-o-check-circle' // ❓ Default case (unknown status)
-                })
-                ->color(fn ($record) => match (true) {
-                    $record->status === 'Pending' && $record->approved === 0 => 'warning',  // ❌ Pending & not approved
-                    $record->status === 'Delivered' && $record->approved === 1 => 'success', // ✅ Delivered & approved
-                    $record->status === 'Delivered' && $record->approved === 0 => 'warning', // ✅ Delivered & approved
-                    default => 'success' // ❓ Default case (unknown status)
-                })
-                ->formatStateUsing(fn ($record) => match (true) {
-                    $record->status === 'Cancelled' => __(''),  // ❌ Pending & not approved
-                    $record->status === 'Pending' => __(''),  // ❌ Pending & not approved
-                    $record->status === 'Delivered' && $record->approved === 1 => __('Approval'), // ✅ Delivered & approved
-                    $record->status === 'Delivered' && $record->approved === 0 => __('Pending'), // ✅ Delivered & approved
-                    default => 'Approved' // ❓ Default case (unknown status)
-                }),
+                
                 
                
                 Tables\Columns\TextColumn::make('product.name')

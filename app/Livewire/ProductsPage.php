@@ -24,7 +24,9 @@ class ProductsPage extends Component
 
     public $sortOption = 'Newest';
 
-   
+   public function loginContact(){
+                return redirect('/login');
+   }
 
     public function updatingSearchTerm()
     {

@@ -161,7 +161,7 @@
       </div>
 
       <h1 class="font-arabic text-xl rtl font-semibold tracking-tight leading-none text-gray-900 md:text-2xl lg:text-3xl dark:text-white">
-        منتجات متنوعة
+        أحدث المنتجات
       </h1>
     </div>
 
@@ -173,32 +173,29 @@
          :class="isMobile ? 'flex-nowrap' : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'">
         
         @foreach($products as $product)
-            <a href="{{ url('/products/' . $product->slug) }}" 
-               class="flex-none w-3/4 sm:w-1/2 md:w-full snap-center rounded-lg border border-gray-200 bg-white p-3 sm:p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <a href="{{ url('/products/' . $product->slug) }}" 
+               class="flex-none w-2/3 sm:w-1/2 md:w-full snap-center rounded-lg border border-gray-200 bg-white p-2 sm:p-3  shadow-sm dark:border-gray-700 dark:bg-gray-800">
                 
-               <div class="w-full aspect-square overflow-hidden rounded mb-2 relative">
-                <div class="absolute top-0 left-0">
-                    <span class="bg-yellow-500 text-white px-2 py-1 rounded-tr-md rounded-bl-md text-sm font-bold">
-                        {{$product->category->name}}
-                    </span>
+                <div class="w-full aspect-square overflow-hidden rounded mb-2">
+                    <img class="w-full h-full object-cover object-center" 
+                         src="{{ asset('storage/' . $product->images[0]) }}" alt="" />
                 </div>
-                <img class="w-full h-full object-cover object-center" 
-                    src="{{ asset('storage/' . $product->images[0]) }}" 
-                    alt="" />
-            </div>
 
                 <div>
-                    <p class="font-arabic rtl line-clamp-2 text-sm sm:text-base leading-tight text-gray-900 dark:text-white">
-                        {{ $product->name }}
-                    </p>
-                    <div class="mt-2 rtl flex items-center justify-between gap-4">
-                        <p class="text-lg sm:text-xl font-bold leading-tight text-gray-900 dark:text-white mt-2">
-                            {{ $product->price }} دج
-                        </p>
-                    </div>
+                <p class="font-arabic rtl line-clamp-2 font-light  overflow-hidden  text-base leading-tight text-gray-900 dark:text-white">
+                    {{ $product->name }}</p>
+                  <p class="text-xl  sm:text-2xl  rtl mt-2  font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} دج</p>
+                  
+                  <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
+                    أقل كمية : {{ $product->moq }} قطعة</p>
                     
+                          
+                       
+
                 </div>
             </a>
+
+          
         @endforeach
     </div>
 </div>
