@@ -6,8 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL; 
 
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
-use Illuminate\Mail\MailManager;
-use App\Mail\BrevoTransport;
+
 
 
 
@@ -33,9 +32,7 @@ class AppServiceProvider extends ServiceProvider
  
     public function boot(): void
     {
-        app(MailManager::class)->extend('brevo', function ($config) {
-            return new BrevoTransport($config['api_key']);
-        });
+    
 
         URL::forceScheme('https');
         
