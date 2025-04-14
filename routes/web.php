@@ -17,14 +17,6 @@ use App\Livewire\Notification;
 
 use Illuminate\Support\Facades\Mail;
 
-Route::get('/test-mail', function () {
-    Mail::raw('This is a test email from Brevo SMTP + Laravel!', function ($message) {
-        $message->to('your@email.com')
-                ->subject('Brevo SMTP Test');
-    });
-
-    return 'Email Sent!';
-});
 
 
 Route::get('/complete-profile', CompleteProfile::class)->name('complete.profile');

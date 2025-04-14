@@ -61,39 +61,31 @@
             <div class="p-2 rounded-xl mt-2 border">
                 <a wire:key="{{ $inquiry->id }}" wire:navigate>
                     <div class="flex items-center justify-start w-full gap-4">
-                        <img src="{{ asset('storage/' . $inquiry->product->images[0]) }}" 
-                            alt="Profile" 
-                            class="object-cover rounded-md"
-                            style="width: 80px; height: 80px;"  />
-                    <div class="flex flex-col self-start">
-                            <p class="text-sm font-semibold truncate"> 
-                                Inquiry from {{$inquiry->product->name}}
-                            </p>
-                            <p class="text-sm font-light text-gray-600 dark:text-gray-500">
-                            </p>
-                    </div>
+                        <div class="flex-1 inline-flex gap-4">
+                            <img src="{{ asset('storage/' . $inquiry->product->images[0]) }}" 
+                                alt="Profile" 
+                                class="object-cover rounded-md"
+                                style="width: 80px; height: 80px;"  />
 
-                        <div class="hidden md:flex w-full justify-between items-center gap-4">
-
-                                <div class="flex flex-col ml-auto">
-                                    <p class="text-sm font-semibold truncate"> 
-                                        Sender
+                                <div class="flex-1 flex-col justify-center self-start">
+                                    <p class="text-sm font-semibold"> 
+                                    استفسار جديد: {{$inquiry->product->name}}
                                     </p>
                                     <p class="text-sm font-light text-gray-600 dark:text-gray-500">
-                                        {{$inquiry->buyer->name}}
-                                    </p>
-                                </div>
-                                <div class="flex flex-col ml-4">
-                                    <p class="text-sm font-semibold truncate"> 
-                                        New Inquiry
+                                            من طرف:  {{$inquiry->buyer->name}}
                                     </p>
                                     <p class="text-sm font-light text-gray-600 dark:text-gray-500">
-                                        Pending: {{$inquiry->created_at->diffForHumans()}}
+                                            {{$inquiry->created_at->diffForHumans()}}
                                     </p>
-                                </div>
+                            </div>
+                        </div>
+                            
 
-                                <button wire:click="redirectToConversation({{ $inquiry->conversation->id }})" class="bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition duration-300 hover:bg-blue-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
-                                    Reply now
+                            <div class="ml-auto">
+                                
+                                <button wire:click="redirectToConversation({{ $inquiry->conversation->id }})" class="bg-[#fbbc04] flex gap-2 text-white font-semibold px-3 py-2 rounded-lg shadow-md transition duration-300 hover:bg-blue-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
+                                <span class="hidden sm:block text-sm font-semibold"> الرسائل </span>    
+                                <x-heroicon-o-chat-bubble-bottom-center class="h-5 w-5 inline-flex" />
                                 </button>
                             </div>
 
