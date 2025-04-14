@@ -37,9 +37,9 @@ class Dashboard extends Page
 
     public function mount()
     {   
-        // FilamentAsset::register([
-        //     Js::make('custom-script', asset('js/custom.js')),
-        // ]);
+        FilamentAsset::register([
+            Js::make('custom-script', asset('js/custom.js')),
+        ]);
 
         $userId = Auth::id();
         $this->inquiries = Inquiry::whereHas('conversation', function ($query) use ($userId) {
