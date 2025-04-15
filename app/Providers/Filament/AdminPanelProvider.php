@@ -102,7 +102,7 @@ class AdminPanelProvider extends PanelProvider
                 
             ])
             ->brandLogo(fn () => view('components.custom-logo'))
-            ->favicon(fn () => asset('images/icon.png'))
+            ->favicon(fn () => asset('images/ICON.png'))
             ->darkMode(false)
             ->plugins([
                 FilaChatPlugin::make()

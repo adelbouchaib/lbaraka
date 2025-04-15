@@ -17,7 +17,7 @@
             </style>
 
         <title>@yield('title', 'Default Title')</title>
-        <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('images/ICON.png') }}">
 
         <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.1/dist/flowbite.min.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">

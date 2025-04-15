@@ -83,7 +83,7 @@ class BuyerPanelProvider extends PanelProvider
                 fn () => view('auth.socialite.google')
             )
             ->brandLogo(fn () => view('components.custom-logo'))
-            ->favicon(fn () => asset('images/icon.png'))
+            ->favicon(fn () => asset('images/ICON.png'))
             ->darkMode(false)
             ->userMenuItems([
                 MenuItem::make()
