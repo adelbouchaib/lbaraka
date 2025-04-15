@@ -166,7 +166,7 @@
 <section class="bg-[#f6f7f9] py-8 antialiased dark:bg-gray-900 pb-20 pt-16 md:pt-24">
 <div class="flex flex-row justify-between items-center mb-8 mx-4 lg:mx-32">
       <div class="flex-shrink-0">
-        <a href="/login" class="font-arabic inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-black border rounded-lg bg-white focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+        <a href="/products" class="font-arabic inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-black border rounded-lg bg-white focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
           عرض كل المنتجات
         </a>
       </div>
