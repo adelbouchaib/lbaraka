@@ -16,6 +16,14 @@ use App\Livewire\Notification;
 // use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\PasswordResetController;
+
+
+use App\Http\Controllers\EmailController;
+
+Route::post('/resend-verification', [EmailController::class, 'sendMail'])->name('sendMail');
+Route::post('/reset-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.sendResetLink');
 
 
 

@@ -113,6 +113,9 @@
                                 <li @click="selected = 'مورد'; $wire.set('business_type', 'مورد'); open = false" :class="{'bg-gray-300': selected === 'مورد'}"  class="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-200">
                                     <span>مورد</span>
                                 </li>
+                                <li @click="selected = 'مورد'; $wire.set('business_type', 'مورد'); open = false" :class="{'bg-gray-300': selected === 'مورد'}"  class="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-200">
+                                    <span>وسيط</span>
+                                </li>
                             </ul>
                         </div>
                 </div>
@@ -188,31 +191,60 @@
                         </div>
                     </div>
 
-                    <div x-data="{ open: false, selected: [], toggleSelection(value) { if (this.selected.includes(value)) { this.selected = this.selected.filter(item => item !== value); } else { this.selected.push(value); } $wire.set('products_type', this.selected.join(', ')); } }" class="relative w-full text-sm rtl font-arabic">
-                        <label for="dropdown1" class="block mb-1 text-sm text-gray-700 dark:text-gray-300">ما هو نوع عملك؟</label>
+                    <div 
+                    x-data="{
+    open: false,
+    selected: [],
+    translations: {
+        'Electronics': 'أجهزة إلكترونية',
+        'Home appliance': 'أجهزة منزلية',
+        'Automobile accessories': 'أكسسوارات السيارات',
+        'Bags': 'حقائب',
+        'Beauty': 'تجميل',
+        'Fashion': 'ملابس',
+        'Garden': 'أدوات الحدائق',
+        'Health care': 'رعاية صحية',
+        'Home decoration': 'ديكور المنزل',
+        'Jewelry and watches': 'مجوهرات وساعات',
+        'Kids': 'أطفال',
+        'Kitchen': 'مطبخ',
+        'Packaging': 'تغليف',
+        'Pets articles': 'مستلزمات الحيوانات',
+        'Shoes': 'أحذية',
+        'Sports equipment': 'معدات رياضية',
+        'Tools': 'خردوات',
+        'Toys': 'ألعاب'
+    },
+    toggleSelection(value) {
+        if (this.selected.includes(value)) {
+            this.selected = this.selected.filter(item => item !== value);
+        } else {
+            this.selected.push(value);
+        }
+        $wire.set('products_type', this.selected.join(', '));
+    }
+}"
+
+                    class="relative w-full text-sm rtl font-arabic">
+                        <label for="dropdown1" class="block mb-1 text-sm text-gray-700 dark:text-gray-300">ما هو نوع المنتجات؟</label>
                         <input type="hidden" wire:model.defer="products_type">
 
                         <button @click="open = !open" class="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg flex justify-between items-center focus:outline-none hover:bg-gray-50">
-                            <span x-text="selected.length > 0 ? selected.join(', ') : ''" class="truncate"></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                        <span x-text="selected.length > 0 ? selected.map(item => translations[item] || item).join(', ') : ''" class="truncate"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
 
                         <div x-show="open" @click.away="open = false" class="absolute left-0 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
                             <ul class="max-h-48 overflow-y-auto rounded-lg">
-                                <li @click="toggleSelection('بائع بالجملة')" :class="{'bg-gray-300': selected.includes('بائع بالجملة')}" class="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-200">
-                                    <span>بائع بالجملة</span>
-                                    <input type="checkbox" :checked="selected.includes('بائع بالجملة')" class="form-checkbox">
+                                @foreach($categories as $category)
+                                <li @click="toggleSelection('{{$category->name}}')" :class="{'bg-gray-300': selected.includes('{{$category->name}}')}" class="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-200">
+                                    <span>{{ __($category->name) }}</span>
+                                <input type="checkbox" :checked="selected.includes('{{$category->name}}')" class="form-checkbox">
                                 </li>
-                                <li @click="toggleSelection('مصنع')" :class="{'bg-gray-300': selected.includes('مصنع')}" class="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-200">
-                                    <span>مصنع</span>
-                                    <input type="checkbox" :checked="selected.includes('مصنع')" class="form-checkbox">
-                                </li>
-                                <li @click="toggleSelection('مورد')" :class="{'bg-gray-300': selected.includes('مورد')}" class="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-200">
-                                    <span>مورد</span>
-                                    <input type="checkbox" :checked="selected.includes('مورد')" class="form-checkbox">
-                                </li>
+                                @endforeach
+                               
                             </ul>
                         </div>
                     </div>

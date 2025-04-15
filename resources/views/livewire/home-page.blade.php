@@ -6,20 +6,38 @@
     <div class="grid grid-cols-1  lg:grid-cols-2 lg:gap-12 items-center bg-[#f6f7f9] lg:h-[600px] mx-4 lg:mx-32">
             <div class="py-16 lg:pb-16 text-center lg:text-start">
                 <h1 class="font-arabic rtl mb-8 text-4xl md:text-5xl md:leading-relaxed font-bold tracking-tight leading-relaxed text-gray-900 dark:text-white">
-                أفضل تجار الجملة <br>
-                في مكان واحد!
+                نجمعك بأفضل تجار <br>
+                الجملة في الجزائر
                 </h1>
                 <p class="font-arabic rtl mb-8 text-md leading-relaxed text-gray-500 font-light md:text-xl">
-                نوفّر لك منصة لشراء المنتجات  بالجملة مباشرة من الموردين الموثوقين في الجزائر! تواصل مباشر، مع حلول رقمية متطورة لتبسيط عمليات البيع والشراء.        </p>
+                منصة رقمية تربطك مباشرة بالموردين الموثوقين في الجزائر، وتوفر لك منتجات التجارة الإلكترونية للشراء بالجملة بأسعار تنافسية.
+
+                </p>
                 <div class="flex flex-col justify-center lg:justify-start lg:mb-16 space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
                     <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                         انضم الان
                         <x-heroicon-o-arrow-left class="h-5 w-5" />
                     </a>  
-                    <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-                        سجل كتاجر بالجملة
-                        <x-heroicon-o-arrow-left class="h-5 w-5" />
-                    </a>
+                    @guest
+                        <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                            سجل كتاجر بالجملة
+                            <x-heroicon-o-arrow-left class="h-5 w-5" />
+                        </a>
+                    @else
+                        @if(Auth::user()->role == 'seller')
+                            <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                                سجل كتاجر بالجملة
+                                <x-heroicon-o-arrow-left class="h-5 w-5" />
+                            </a>
+                        @else
+
+                            <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                                سجل كتاجر بالجملة
+                                <x-heroicon-o-arrow-left class="h-5 w-5" />
+                            </a>
+
+                        @endif
+                    @endauth
                 </div>
                 
             </div>
@@ -37,22 +55,29 @@
                 لماذا تختار Supplaio؟
             </div>
             <h2 class="text-3xl font-bold text-gray-900 mb-4">
-                شراء بالجملة مباشرة من المورد
+                شراء مباشر من المورد
             </h2>
             <p class="text-gray-600 text-lg">
-                نوفر لكم منصة تسهل عملية شراء وبيع المنتجات بالجملة، مع تواصل مباشر مع الموردين الموثوقين وبأسعار تنافسية.
+            وفّر وقتك ومالك! اشترِ بالجملة مباشرة من الموردين المعتمدين وبدون وسطاء.
             </p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6 md:px-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 md:px-12">
             @php
                 $features = [
+                    [
+                        'icon' => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 text-gray-700">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                                </svg>',
+                        'title' => 'تواصل مباشر مع الموردين',
+                        'description' => 'اسأل، استفسر، واطلب بكل سهولة أي منتج من المورد.',
+                    ],
                     [
                         'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M3 7l9-4 9 4M3 7v10l9 4 9-4V7M3 7l9 4 9-4" />
                    </svg>',
                                            'title' => 'منتجات متنوعة',
-                        'description' => 'تصفح آلاف المنتجات الخاصة بالتجارة الإلكترونية من موردين موثوقين.',
+                        'description' => 'تصفح المنتجات الخاصة بالتجارة الإلكترونية من موردينا الموثوقين.',
                     ],
                     [
                         'icon' => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 text-gray-700">
@@ -61,20 +86,6 @@
 </svg>',
                         'title' => 'أسعار تنافسية',
                         'description' => 'احصل على أفضل العروض بالجملة من موردين مختلفين.',
-                    ],
-                    [
-                        'icon' => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 text-gray-700">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-</svg>',
-                        'title' => 'وصول مباشر للموردين',
-                        'description' => 'تواصل مباشرة مع موردينا واستفسر على منتجاتهم.',
-                    ],
-                    [
-                        'icon' => '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8 text-gray-700">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
-</svg>',
-                        'title' => 'تجربة مميزة للتجار بالجملة',
-                        'description' => 'نظام كامل بأدوات إحترافية لإدارة الطلبات، والتواصل مع بائعي التجزئة.',
                     ],
                 ];
             @endphp

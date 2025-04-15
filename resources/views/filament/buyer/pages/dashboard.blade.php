@@ -87,7 +87,10 @@
                             
                             <a href="/products?categories[0]={{$cat->id}}">
 
-                            <img src="{{ asset('storage/' . $cat->image) }}" alt="{{ $cat->name }}" 
+                            <img src="{{ asset('images/categories/' . $cat->slug . '.jpg')  }}" alt="{{ $cat->name }}" 
+
+
+
                                 class="w-full object-cover rounded-full border-2 border-gray-300 shadow-sm">
                             </a>
 

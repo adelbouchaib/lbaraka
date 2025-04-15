@@ -30,6 +30,9 @@ use Filament\View\PanelsRenderHook;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
 use App\Http\Responses\LoginResponse;
 use Illuminate\Support\Facades\Session;
+use App\Filament\Buyer\Pages\Auth\EmailVerificationPromptCustom;
+use App\Filament\Buyer\Pages\Auth\RequestPasswordResetCustom;
+
 
 
 class BuyerPanelProvider extends PanelProvider
@@ -41,8 +44,8 @@ class BuyerPanelProvider extends PanelProvider
             ->path('')
             ->login()
             ->registration(Register::class) 
-            ->passwordReset()
-            ->emailVerification()
+            ->passwordReset(RequestPasswordResetCustom::class) 
+            ->emailVerification(EmailVerificationPromptCustom::class)
             ->colors([
                 'primary' => '#0071f5',
                 'secondary' => '#fbbc04',
@@ -52,6 +55,8 @@ class BuyerPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Buyer/Pages'), for: 'App\\Filament\\Buyer\\Pages')
             ->pages([
                 // Pages\Dashboard::class,
+            //    EmailVerificationPromptCustom::class,
+
             ])
             ->discoverWidgets(in: app_path('Filament/Buyer/Widgets'), for: 'App\\Filament\\Buyer\\Widgets')
             ->widgets([

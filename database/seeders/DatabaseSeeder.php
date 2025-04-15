@@ -13,13 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Category::factory(10)->create();
-
-        Category::factory()->create([
-            'name' => 'Home',
-            'slug' => 'home',
-            'image' => '',
-            'is_active' => 'true',
+        $this->call([
+            CategorySeeder::class,
         ]);
     }
 }

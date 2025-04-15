@@ -69,6 +69,9 @@ class RegisterSeller extends Component
 
     public function render()
     {
-        return view('livewire.register-seller')->layout('components.layouts.guest');
+        $categories = \App\Models\Category::all();
+        return view('livewire.register-seller', [
+            'categories' => $categories, 
+        ])->layout('components.layouts.guest');
     }
 }
