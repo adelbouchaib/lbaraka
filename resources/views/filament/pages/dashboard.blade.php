@@ -81,13 +81,12 @@
                         </div>
                             
 
-                            <div class="ml-auto">
-                                
-                                <button wire:click="redirectToConversation({{ $inquiry->conversation->id }})" class="bg-[#fbbc04] flex gap-2 text-white font-semibold px-3 py-2 rounded-lg shadow-md transition duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
-                                <span class="hidden sm:block text-sm font-semibold"> الرسائل </span>    
-                                <x-heroicon-o-chat-bubble-bottom-center class="h-5 w-5 inline-flex" />
-                                </button>
-                            </div>
+                        <div class="ml-auto">
+                            <button wire:click="redirectToConversation({{ $inquiry->conversation->id }})" class="bg-[#fbbc04] flex gap-2 text-white font-semibold px-3 py-2 rounded-lg shadow-md transition duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
+                            <span class="hidden sm:block text-sm font-semibold"> الرسائل </span>    
+                            <x-heroicon-o-chat-bubble-bottom-center class="h-5 w-5 inline-flex" />
+                            </button>
+                        </div>
 
                     </div>
                 </a>

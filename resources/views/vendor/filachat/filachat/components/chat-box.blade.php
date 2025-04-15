@@ -38,7 +38,7 @@
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        class="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
 
         <!-- Modal Content -->
         <div class="bg-white rounded-lg shadow-xl xl:w-1/3 p-6">

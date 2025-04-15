@@ -55,7 +55,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             // ->spa()
             ->registration(RegisterSeller::class)
-            ->passwordReset()
+            // ->passwordReset()
             // ->emailVerification()
             ->colors([
                 'primary' => '#fbbc04',
