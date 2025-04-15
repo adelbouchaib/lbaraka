@@ -110,6 +110,6 @@ class FavoriteResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('buyer_id', auth()->id());
+        return parent::getEloquentQuery()->where('user_id', auth()->id());
     }
 }

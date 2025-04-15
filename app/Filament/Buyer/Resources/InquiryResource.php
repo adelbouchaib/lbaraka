@@ -84,8 +84,9 @@ class InquiryResource extends Resource
                     return $state === 'Replied' ? 'success' : 'warning';
                 })
                 ->sortable(),
-            Tables\Columns\TextColumn::make('seller.name')
+            Tables\Columns\TextColumn::make('seller.store.name')
                 ->label("Supplier")
+                ->extraAttributes(['class' => 'font-arabic'])
                 ->sortable(),
             Tables\Columns\TextColumn::make('created_at')
                 ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->diffForHumans())

@@ -59,7 +59,7 @@
                                         @if($conversation->is_sender)
                                             <span class="text-primary-600 dark:text-primary-400 font-bold">You: </span>
                                         @endif
-                                        {{ $conversation->latest_message }}
+                                        {!! $conversation->latest_message !!}
                                     </p>
                                     @if ($conversation->unread_count > 0)
                                         <x-filament::badge>
