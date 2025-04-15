@@ -13,25 +13,25 @@
                 منصة رقمية تربطك مباشرة بالموردين الموثوقين في الجزائر، وتوفر لك منتجات التجارة الإلكترونية للشراء بالجملة بأسعار تنافسية.
 
                 </p>
-                <div class="flex flex-col justify-center lg:justify-start lg:mb-16 space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                    <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                <div class="flex flex-col justify-center lg:justify-start lg:mb-16 space-y-1.5 sm:flex-row sm:space-y-0 sm:space-x-4">
+                    <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-2 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                         انضم الان
                         <x-heroicon-o-arrow-left class="h-5 w-5" />
                     </a>  
                     @guest
-                        <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                        <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-2 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                             سجل كتاجر بالجملة
                             <x-heroicon-o-arrow-left class="h-5 w-5" />
                         </a>
                     @else
                         @if(Auth::user()->role == 'seller')
-                            <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                            <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-2 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                                 سجل كتاجر بالجملة
                                 <x-heroicon-o-arrow-left class="h-5 w-5" />
                             </a>
                         @else
 
-                            <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                            <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-2 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                                 سجل كتاجر بالجملة
                                 <x-heroicon-o-arrow-left class="h-5 w-5" />
                             </a>
@@ -107,7 +107,7 @@
 </section>
 
 <div class="bg-blue-50 flex justify-center items-center">
-                <img class="w-full max-w-xl h-full object-cover object-center" src="images/7.png" alt="">
+                <img class="w-full max-w-xl h-full object-cover object-center" src="images/8.png" alt="">
             </div>
 
 
@@ -224,7 +224,7 @@
     يرجى ملء النموذج أدناه لتزويدنا بتفاصيلك وتسهيل التواصل معك لاحقًا حول حلولنا المصممة خصيصًا لمتطلبات عملك.
     </p>
 
-    <div class="flex rtl flex-col mb-8 mt-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-3">
+    <div class="flex rtl flex-col mb-8 mt-8 lg:mb-16 space-y-2 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-3">
             <a href="/seller/login" class="font-arabic gap-2 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                 سجل الآن
                 <x-heroicon-o-arrow-left class="h-5 w-5" />
