@@ -11,7 +11,7 @@ class HomePage extends Component
     public function render()
     {
 
-        $productQuery = Product::query()->where('is_active', 1);
+        $productQuery = Product::query()->where('is_active', '1')->where('is_approved', '1');
         return view('livewire.home-page', [
             'products' => $productQuery->paginate(4),
         ]);

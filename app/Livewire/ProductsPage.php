@@ -91,7 +91,7 @@ class ProductsPage extends Component
     public function render()
     {
 
-        $query = Product::where('is_active', '1');
+        $query = Product::where('is_active', '1')->where('is_approved', '1');
 
         switch ($this->sortOption) {
             case 'Oldest':

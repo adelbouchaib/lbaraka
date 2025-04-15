@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+
 class StoreResource extends Resource
 {
     protected static ?string $model = Store::class;
@@ -26,6 +27,9 @@ class StoreResource extends Resource
                 Forms\Components\TextInput::make('seller_id')
                     ->required()
                     ->numeric(),
+                Forms\Components\FileUpload::make('logo')
+                    ->required()
+                    ->directory('stores'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),

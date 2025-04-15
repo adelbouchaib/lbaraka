@@ -66,7 +66,9 @@ class ProductResource extends Resource
                                 ->translateLabel()
                                 ->searchable()
                                 ->preload()
-                                ->relationship('category', 'name'),                        
+                                ->relationship('category', 'name')
+                                ->getOptionLabelFromRecordUsing(fn ($record) => __($record->name)),
+                      
 
                                 // Forms\Components\MarkdownEditor::make('description')
                                 // RichEditor::make('description')

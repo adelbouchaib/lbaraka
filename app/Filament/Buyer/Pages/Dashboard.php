@@ -35,9 +35,9 @@ class Dashboard extends Page
     public function mount(){
         $this->categories = Category::All();
 
-        $this->newProducts = Product::latest()->take(5)->get();
+        $this->newProducts = Product::latest()->take(5)->where('is_active', '1')->where('is_approved', '1')->get();
 
-        $this->allProducts = Product::latest()->take(20)->get();
+        $this->allProducts = Product::latest()->take(20)->where('is_active', '1')->where('is_approved', '1')->get();
     }
 
 }

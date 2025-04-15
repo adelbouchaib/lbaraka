@@ -6,8 +6,8 @@
         <div class="text-center">
             <img src="{{ asset('storage/' . $store->logo) }}" alt="Store Logo" class="w-32 h-32 rounded-full mx-auto">
 
-            <div>
-                <h1 class="text-2xl font-extrabold">{{$store->name}}</h1>
+            <div class="pt-6 space-y-2">
+                <h1 class="font-arabic text-2xl font-extrabold">{{$store->name}}</h1>
                 <p class="text-gray-500 font-arabic text-sm">بائع معتمد - {{$store->location}}</p>
             </div>
 
@@ -142,13 +142,35 @@
               <div>
                   <p class="font-arabic rtl line-clamp-2 font-light  overflow-hidden  text-base leading-tight text-gray-900 dark:text-white">
                     {{ $product->name }}</p>
-                 
-                    
+                                     
 
                       <p class="text-xl  sm:text-2xl  rtl mt-2  font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} دج</p>
                       
                       <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
                         أقل كمية : {{ $product->moq }} قطعة</p>
+
+
+
+                        @auth
+                          <button wire:click="createRow({{ $product->id }}, {{ $product->seller_id }})" 
+                                class="w-full px-4 py-1.5 mt-4 font-semibold border-gray-900 text-gray-900 border rounded-lg hover:text-white hover:border-secondary hover:bg-secondary transition duration-200
+                                @if(auth()->user()->role !== 'buyer') cursor-not-allowed @endif"
+                                @if(auth()->user()->role !== 'buyer') disabled @endif>
+                                
+                                <span class="font-medium">Contact supplier</span>
+                               
+                          </button>
+                        @else
+
+                        <button wire:click="redirectToLogin()" 
+                            class="w-full px-4 py-1.5 mt-4 font-semibold border-gray-900 text-gray-900 border rounded-lg hover:text-white hover:border-secondary hover:bg-secondary transition duration-200">
+                              
+                            <span class="font-medium">Contact supplier</span>
+                               
+                        </button>
+                           
+                        @endauth
+
 
               </div>
           </a>
@@ -265,12 +287,35 @@
               <div>
                   <p class="font-arabic rtl line-clamp-2 font-light  overflow-hidden  text-base leading-tight text-gray-900 dark:text-white">
                     {{ $product->name }}</p>
-                             
+                                     
 
                       <p class="text-xl  sm:text-2xl  rtl mt-2  font-bold leading-tight text-gray-900 dark:text-white mt-2">{{ $product->price }} دج</p>
                       
                       <p class="font-arabic rtl line-clamp-2 mt-1 overflow-hidden text-ellipsis text-xs font-light  leading-tight text-gray-800 dark:text-white">
                         أقل كمية : {{ $product->moq }} قطعة</p>
+
+
+
+                        @auth
+                          <button wire:click="createRow({{ $product->id }}, {{ $product->seller_id }})" 
+                                class="w-full px-4 py-1.5 mt-4 font-semibold border-gray-900 text-gray-900 border rounded-lg hover:text-white hover:border-secondary hover:bg-secondary transition duration-200
+                                @if(auth()->user()->role !== 'buyer') cursor-not-allowed @endif"
+                                @if(auth()->user()->role !== 'buyer') disabled @endif>
+                                
+                                <span class="font-medium">Contact supplier</span>
+                               
+                          </button>
+                        @else
+
+                        <button wire:click="redirectToLogin()" 
+                            class="w-full px-4 py-1.5 mt-4 font-semibold border-gray-900 text-gray-900 border rounded-lg hover:text-white hover:border-secondary hover:bg-secondary transition duration-200">
+                              
+                            <span class="font-medium">Contact supplier</span>
+                               
+                        </button>
+                           
+                        @endauth
+
 
               </div>
           </a>
