@@ -13,7 +13,7 @@
                 منصة رقمية تربطك مباشرة بالموردين الموثوقين في الجزائر، وتوفر لك منتجات التجارة الإلكترونية للشراء بالجملة بأسعار تنافسية.
 
                 </p>
-                <div class="flex flex-col justify-center lg:justify-start lg:mb-16 space-y-1.5 sm:flex-row sm:space-y-0 sm:space-x-4">
+                <div class="flex flex-col justify-center lg:justify-start lg:mb-16 space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
                     <a href="/login" class="font-arabic gap-2 inline-flex justify-center items-center py-2 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                         انضم الان
                         <x-heroicon-o-arrow-left class="h-5 w-5" />
