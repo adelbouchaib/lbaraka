@@ -10,7 +10,7 @@
                 <nav class="flex" aria-label="Breadcrumb">
                   <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li class="inline-flex items-center">
-                      <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
+                      <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
                         <svg class="me-2.5 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                           <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
                         </svg>
@@ -22,7 +22,7 @@
                         <svg class="h-5 w-5 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7" />
                         </svg>
-                        <a href="#" class="ms-1 text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Products</a>
+                        <a href="/products" class="ms-1 text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white md:ms-2">Products</a>
                       </div>
                     </li>
                   </ol>
@@ -47,7 +47,7 @@
           <div class="relative w-full sm:w-64">
                     <form wire:submit.prevent="showResults">
                         <input type="text" wire:model.defer="searchTerm" placeholder="Search products..." 
-                            class="w-full rounded-md border border-gray-300 px-3 py-2 pr-16 text-sm focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:ring-gray-500">
+                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:ring-gray-500">
                     </form>
                 </div>
 
@@ -65,7 +65,7 @@
 
 
     <!-- Modal -->
-    <div x-show="open" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div x-show="open" class="fixed px-4 inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div @click.away="open = false" class="w-full max-w-md rounded-lg bg-white shadow-lg dark:bg-gray-800">
             
             <!-- Modal Header -->
@@ -81,7 +81,7 @@
                     <h3 class="text-md font-medium text-gray-800 border-b pb-2">Categories</h3>
 
                     <!-- Categories Grid -->
-                    <div class="grid grid-cols-2 gap-3 mt-3 max-h-40 overflow-y-auto p-2 border rounded-lg">
+                    <div class="grid grid-cols-2 gap-3 mt-3 overflow-y-auto p-2 border rounded-lg">
                         @foreach($categories as $cat)
                         <div wire:key="{{ $cat->id }}" x-show="$el.textContent.toLowerCase().includes(search.toLowerCase())">
                             <label for="{{ $cat->slug }}" class="flex items-center space-x-2">
@@ -112,8 +112,8 @@
             <div class="border-t px-4 py-3 text-right">
                 
                 <button wire:click="showResults" @click="open = false"
-                    class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
-                    Show Results
+                    class="rounded-lg bg-primary px-4 py-2 text-white hover:bg-blue-700">
+                    Show results
                 </button>
             </div>
         </div>
@@ -166,7 +166,7 @@
                 <li>- Try different keywords</li>
             </ul>
             <a href="{{ route('products') }}" class="mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition">
-                Browse All Products
+                Browse all products
             </a>
         </div>
     </div>

@@ -54,10 +54,10 @@ class OrderResource extends Resource
                 Forms\Components\Select::make('buyer_id')
                 ->label('Buyer')
                 ->translateLabel()
-                ->options(\App\Models\Inquiry::with('buyer')->get()->pluck('buyer.name', 'buyer.id')->toArray()) // Fetch buyer name from related User
-                ->searchable() // Allows search in dropdown
-                ->default(fn () => \App\Models\Inquiry::with('buyer')->first()?->buyer?->id) // Set default
+                ->relationship('buyer', 'name')
+                ->disabled() // Remove if you want it editable
                 ->required(),
+
                 
                 Forms\Components\ToggleButtons::make('status')
                 ->translateLabel()

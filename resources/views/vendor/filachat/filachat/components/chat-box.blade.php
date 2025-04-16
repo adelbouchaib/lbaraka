@@ -94,9 +94,9 @@
                             @endif
 
                             <!-- Product Info -->
-                            <div class="text-sm">
+                            <div class="text-sm mr-4">
                                 <p class="font-medium text-gray-900">{{ $selectedInquiry->product->name }}</p>
-                                <p class="text-gray-500">{{ $selectedInquiry->product->price }}</p>
+                                <p class="text-gray-500">{{ $selectedInquiry->product->price }} دج</p>
                             </div>
                         </label>
                     @endforeach
