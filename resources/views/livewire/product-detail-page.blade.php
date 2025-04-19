@@ -266,6 +266,7 @@
                  </div>
 
 
+                 @if(!$featuredProducts->isEmpty())
                  <div class="w-full mb-8">
                         
                         <!-- Title -->
@@ -323,6 +324,7 @@
                        
                             </div>
                  </div>
+                 @endif
 
            
 

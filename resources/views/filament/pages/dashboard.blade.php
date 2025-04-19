@@ -4,17 +4,30 @@
     $user = filament()->auth()->user();
 @endphp
 
-<div class="flex items-center gap-x-3">
-    <h2 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
-        {{ __('filament-panels::widgets/account-widget.welcome', ['app' => config('app.name')]) }}
-    </h2>
+<div class="flex items-center gap-3 text-end ltr rtl:flex-row-reverse">
+    <!-- Avatar -->
+    <div class="w-10 h-10 rounded-full border overflow-hidden">
+        <img src="{{ asset('storage/' . Auth::user()->store->logo) }}" alt="Avatar" class="w-full h-full object-cover">
+    </div>
 
-    <p class="text-sm text-gray-500 dark:text-gray-400">
-        {{ filament()->getUserName($user) }}
-    </p>
+    <!-- Text Content -->
+    <div class="space-y-0.5">
+        <p class="text-sm text-gray-600 dark:text-gray-300">مرحباً</p>
 
-   
+        <!-- User name + Store name on the same line -->
+        <div class="flex items-center gap-2 text-sm">
+        <a href="/stores/{{ Auth::user()->store->slug }}" class="font-medium text-primary-600 hover:underline">
+                {{ Auth::user()->store->name }}
+            </a>
+            <span class="text-gray-400">|</span>
+
+            <span class="text-gray-900 dark:text-white">{{ filament()->getUserName($user) }}</span>
+           
+        </div>
+    </div>
 </div>
+
+
 
 <button
     class="px-4 py-2 flex items-center justify-center gap-2 text-sm bg-primary-600 text-white font-semibold rounded-xl shadow-md transition duration-200"

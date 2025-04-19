@@ -1,8 +1,8 @@
 <x-filament-panels::page>
 
 
-<section class="rounded-xl bg-center bg-primaryx bg-blend-multiply">
-<!-- <section class="rounded-xl bg-center bg-no-repeat bg-[url('https://lbaraka.com/images/background.jpg')] bg-gray-700 bg-blend-multiply"> -->
+<!-- <section class="rounded-xl bg-center bg-primaryx bg-blend-multiply"> -->
+<section class="rounded-xl bg-center bg-no-repeat bg-[url('https://supplaio.com/images/background.jpg')] bg-gray-600 bg-blend-multiply">
     
     <div class="px-4 mx-auto max-w-screen-xl text-center py-8 sm:py-24">
         <h1 class="mb-8 text-3xl font-extrabold tracking-tight leading-tight text-white md:text-4xl lg:text-5xl">Start searching for products</h1>
@@ -43,7 +43,7 @@
     </div>
     <div x-data="{
         startIndex: 0,
-        perPage: 4, // Desktop: Show 4 items per page
+        perPage: window.innerWidth >= 1024 ? 6 : 4, // Desktop: Show 4 items per page
         isDesktop: window.innerWidth >= 769,
         mobileViewWidth: window.innerWidth < 769 ? 'calc(100% / 2.5)' : '25%', // Show 2.5 items on mobile
         next() {
@@ -58,9 +58,10 @@
         },
         updateScreenSize() {
             this.isDesktop = window.innerWidth >= 769;
-            this.mobileViewWidth = this.isDesktop ? '25%' : 'calc(100% / 2.5)'; // Adjust width dynamically
+            this.perPage = window.innerWidth >= 1024 ? 6 : 4; // dynamically adjust items on resize
+            this.mobileViewWidth = this.isDesktop ? (100 / this.perPage) + '%' : 'calc(100% / 2.5)';
             if (!this.isDesktop) {
-                this.startIndex = 0; // Reset for mobile
+                this.startIndex = 0;
             }
         }
         }" 
