@@ -26,40 +26,9 @@ class FilachatMessageResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('filachat_conversation_id')
-                    ->required()
-                    ->numeric(),
+
                 Forms\Components\Textarea::make('message')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('attachments')
-                    ->columnSpanFull(),
-                Forms\Components\Textarea::make('original_attachment_file_names')
-                    ->columnSpanFull(),
-                Forms\Components\Textarea::make('reactions')
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('is_starred')
-                    ->required(),
-                Forms\Components\Textarea::make('metadata')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('reply_to_message_id')
-                    ->numeric()
-                    ->default(null),
-                Forms\Components\TextInput::make('senderable_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('senderable_type')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('receiverable_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('receiverable_type')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('last_read_at'),
-                Forms\Components\DateTimePicker::make('edited_at'),
-                Forms\Components\DateTimePicker::make('sender_deleted_at'),
-                Forms\Components\DateTimePicker::make('receiver_deleted_at'),
             ]);
     }
 
@@ -70,6 +39,10 @@ class FilachatMessageResource extends Resource
                 Tables\Columns\TextColumn::make('filachat_conversation_id')
                     ->numeric()
                     ->sortable(),
+
+                Tables\Columns\TextColumn::make('message')
+                    ->limit(50)
+                    ->searchable(),
                 
                 Tables\Columns\TextColumn::make('senderable_id')
                     ->formatStateUsing(function ($state) {
@@ -106,6 +79,8 @@ class FilachatMessageResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                  ,
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
