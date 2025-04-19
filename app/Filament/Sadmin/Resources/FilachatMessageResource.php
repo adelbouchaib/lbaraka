@@ -42,18 +42,20 @@ class FilachatMessageResource extends Resource
 
                 Tables\Columns\TextColumn::make('message')
                     ->limit(50)
-                    ->searchable(),
+                    ,
                 
                 Tables\Columns\TextColumn::make('senderable_id')
                     ->formatStateUsing(function ($state) {
                         return \App\Models\User::find($state)?->store?->name ?? \App\Models\User::find($state)?->name  ;
                     })
+                    ->searchable()
                     ->sortable(),
                 
                 Tables\Columns\TextColumn::make('receiverable_id')
                     ->formatStateUsing(function ($state) {
                         return \App\Models\User::find($state)?->store?->name ?? \App\Models\User::find($state)?->name ;
                     })
+                    ->searchable()
                     ->sortable(),
                 
                 Tables\Columns\TextColumn::make('last_read_at')
@@ -71,8 +73,7 @@ class FilachatMessageResource extends Resource
                 //
                 SelectFilter::make('filachat_conversation_id')
                     ->label('Conversation')
-                    ->options(\App\Models\FilachatConversation::all()->pluck('id', 'id'))
-                    ->searchable(),
+                    ->options(\App\Models\FilachatConversation::all()->pluck('id', 'id')),
 
                
 
