@@ -3,9 +3,9 @@
 
 <!-- <section class="rounded-xl bg-center bg-primaryx bg-blend-multiply"> -->
 <section 
-  class="rounded-xl bg-center bg-no-repeat bg-gray-600 bg-blend-multiply"
+  class="rounded-xl bg-center bg-no-repeat bg-gray-500 bg-blend-multiply"
   style="background-image: url('{{ asset('images/background.jpg') }}')">
-      
+
     <div class="px-4 mx-auto max-w-screen-xl text-center py-8 sm:py-24">
         <h1 class="mb-8 text-3xl font-extrabold tracking-tight leading-tight text-white md:text-4xl lg:text-5xl">Start searching for products</h1>
         <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
