@@ -154,7 +154,7 @@ class AdminPanelProvider extends PanelProvider
                 $user = auth()->user();
                 if($user->role !== "seller"){
                     FilamentView::registerRenderHook(
-                        PanelsRenderHook::GLOBAL_SEARCH_BEFORE ,
+                        PanelsRenderHook::GLOBAL_SEARCH_AFTER,
                         function () {
                            
 

@@ -105,7 +105,7 @@
 </section>
 
 <div class="bg-blue-50 flex justify-center items-center">
-                <img class="w-full max-w-xl h-full object-cover object-center" src="images/8.png" alt="">
+                <img class="w-full max-w-xl h-full object-cover object-center" src="images/9.jpg" alt="">
             </div>
 
 
