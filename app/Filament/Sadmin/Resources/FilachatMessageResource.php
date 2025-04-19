@@ -43,20 +43,51 @@ class FilachatMessageResource extends Resource
                 Tables\Columns\TextColumn::make('message')
                     ->limit(50)
                     ,
-                
                 Tables\Columns\TextColumn::make('senderable_id')
-                    ->formatStateUsing(function ($state) {
-                        return \App\Models\User::find($state)?->store?->name ?? \App\Models\User::find($state)?->name  ;
-                    })
                     ->searchable()
                     ->sortable(),
+
+                    Tables\Columns\TextColumn::make('senderable_id')
+                    ->label('Sender')
+                    ->formatStateUsing(function ($state) {
+                        $user = \App\Models\User::find($state);
                 
-                Tables\Columns\TextColumn::make('receiverable_id')
-                    ->formatStateUsing(function ($state) {
-                        return \App\Models\User::find($state)?->store?->name ?? \App\Models\User::find($state)?->name ;
+                        if (!$user) {
+                            return "-";
+                        }
+                
+                        $name = $user->store?->name ?? $user->name;
+                
+                        return "{$user->id} - {$name}";
                     })
-                    ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(query: function ($query, $search) {
+                        // Exact match by receiverable_id
+                        $query->where('senderable_id', $search);
+                    }), // Still only searchable by ID here
+                
+                
+               
+
+                Tables\Columns\TextColumn::make('receiverable_id')
+                    ->label('Receiver')
+                    ->formatStateUsing(function ($state) {
+                        $user = \App\Models\User::find($state);
+                
+                        if (!$user) {
+                            return "-";
+                        }
+                
+                        $name = $user->store?->name ?? $user->name;
+                
+                        return "{$user->id} - {$name}";
+                    })
+                    ->sortable()
+                    ->searchable(query: function ($query, $search) {
+                        // Exact match by receiverable_id
+                        $query->where('receiverable_id', $search);
+                    }), // Still only searchable by ID here
+
                 
                 Tables\Columns\TextColumn::make('last_read_at')
                     ->dateTime()
